@@ -80,6 +80,8 @@ Possible additions:
 
 ## Phase 1: App Scaffold
 
+Status: complete for the local prototype shell
+
 Goal:
 
 Create a working local TypeScript app with a basic shell and clear directories.
@@ -117,7 +119,23 @@ Done when:
 - navigation between placeholder views works
 - project structure matches the roadmap closely enough
 
+Completed in this repo:
+
+- Vite + React + TypeScript app scaffold
+- responsive application shell and navigation
+- domain brief, field, patterns, opportunities, memory, activity, and report views
+- local mock mode and permission-mode selector
+- production build and local HTTP smoke check
+
+Follow-up notes:
+
+- `src/app/App.tsx` is still intentionally compact but should be split into route/view and layout components before the UI grows further.
+- Accessibility, keyboard navigation, loading states, and error states need a dedicated pass.
+- The current visual language is a prototype; final typography and brand assets are not yet locked.
+
 ## Phase 2: Shared Domain Model
+
+Status: complete for the initial semantic foundation
 
 Goal:
 
@@ -165,7 +183,22 @@ Done when:
 - app, mock services, and future backend can share the same types
 - recommendations can include evidence, confidence, and source references
 
+Completed in this repo:
+
+- domain-neutral types for domains, items, actors, signals, patterns, opportunities, plans, memory, activity, and approvals
+- confidence, permission, status, evidence, and source-reference fields
+- shared runtime guards for core domain objects
+- dataset-level cross-reference validation for seed fixtures
+
+Follow-up notes:
+
+- The current validators are lightweight TypeScript guards. Add JSON Schema or a similarly formal contract when backend/API boundaries are introduced.
+- Add typed identifiers or branded IDs only if they improve safety without making domain-pack forks cumbersome.
+- Add API schemas when the local backend shell begins; do not couple the browser-only fixture store to Firestore shapes prematurely.
+
 ## Phase 3: Hackathon Domain Pack And Seed Data
+
+Status: complete for the first offline demo dataset
 
 Goal:
 
@@ -203,7 +236,34 @@ Done when:
 - the app can load a realistic hackathon scenario without network access
 - the seed data can drive the whole demo flow
 
+Completed in this repo:
+
+- `hackathon` domain-pack contract
+- hackathon labels, ranking criteria, and prompt placeholders
+- All Things Agentic seed domain brief
+- seed actors, projects, signals, patterns, opportunities, and memory entries
+- fixture aggregator and load-time validation
+- deterministic evidence and cross-reference relationships
+
+Follow-up notes:
+
+- Verify the hackathon name, URL, deadlines, judging criteria, required technologies, and submission artifacts against the authoritative event materials before public demo or submission.
+- Replace placeholder seed claims with source references and collection timestamps where possible.
+- Collect a larger, representative project sample; the current three projects are designed for a readable demo, not field-level conclusions.
+- Add a second small fixture or domain-pack stub to prove forkability before making the seed format more elaborate.
+- Add fallback fixtures for missing URLs, incomplete project metadata, low-confidence extraction, and unavailable live pages.
+
+Data to collect or research:
+
+- authoritative hackathon rules, judging rubric, deadlines, technology requirements, and submission checklist
+- a curated set of public project links or descriptions with permission-safe source metadata
+- project authors/teams and public learning/contact context, avoiding unnecessary personal data
+- the builder’s interests, current project idea, time available, and networking intent for relevance testing
+- examples of high-confidence versus low-confidence evidence so the UI can communicate uncertainty honestly
+
 ## Phase 4: Local Store And Workflow State
+
+Status: foundation started; full workflow store remains future work
 
 Goal:
 
@@ -240,6 +300,18 @@ Done when:
 
 - all views can read from the same structured state
 - mock agent routes can write results into the store
+
+Completed so far:
+
+- read-only `createFixtureStore` boundary
+- centralized seed dataset consumed by the app
+- fail-fast validation when a dataset is loaded
+
+Next work:
+
+- add actions for opportunity saves, memory review, task events, and report generation
+- add reset-demo behavior and then localStorage persistence if useful
+- preserve an import/export shape that remains usable by future domain packs
 
 ## Phase 5: App Shell And Navigation
 
@@ -411,6 +483,12 @@ Done when:
 
 - the app clearly distinguishes observing, suggesting, and waiting for approval
 - blocked or fallback behavior is visible and understandable
+
+PathWarden-informed notes:
+
+- Reuse the principle that the UI displays state from a source-of-truth record; it must not infer or upgrade permission state.
+- Keep `observe`, `suggest`, and `act_with_approval` explicit, with plain-language explanations and visible next actions.
+- Adapt PathWarden’s fail-closed and evidence-oriented patterns for external-impact actions and long-term memory, without importing its filesystem execution authority model.
 
 ## Phase 9: Local Backend Shell
 
@@ -605,3 +683,40 @@ At the end of each phase:
 2. Add newly discovered steps to the next relevant phase.
 3. Move non-essential ideas to Deferred Ideas.
 4. Keep MVP scope aligned with `docs/scope.md`.
+
+## Cross-Project Reuse Notes: PathWarden
+
+The local PathWarden repository was reviewed as a design reference. It contains mature patterns for governed local execution, not drop-in Signal Scout modules.
+
+Patterns worth adapting:
+
+- schema-first validation with useful, human-readable validation errors
+- explicit lifecycle states rather than UI-inferred status
+- audit records with stable IDs, timestamps, route/decision context, and trace references
+- evidence lineage and deterministic ordering for reports
+- fail-closed behavior when data is missing, malformed, revoked, or inconsistent
+- replayable or reconstructable task history for debugging and user trust
+- plain-language state display with advanced identifiers and raw details available on demand
+
+Patterns to keep out of the MVP unless scope changes:
+
+- filesystem execution capabilities
+- permission tokens, capability grants, or local authority chains
+- policy hashing and cryptographic trust manifests
+- remote/federated authority negotiation
+
+The reusable lesson is the boundary: Signal Scout can borrow the evidence and governance ideas, but its core action is discovery and recommendation rather than governed machine execution.
+
+## Data And Research Backlog
+
+Before live integrations or a public demo, research and record:
+
+- authoritative event details and source URLs
+- source freshness and collection timestamps
+- acceptable public-source collection boundaries
+- project-field sampling method and inclusion criteria
+- evidence quality and confidence rubric
+- privacy rules for actor and networking data
+- Gemini structured-output requirements and fallback behavior
+- Google Cloud services and hackathon requirement alignment
+- demo script claims that need direct evidence rather than illustrative seed data

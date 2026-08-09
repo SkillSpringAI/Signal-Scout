@@ -1,0 +1,26 @@
+{
+  "name": "signal-scout",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "build": "tsc -b && vite build",
+    "preflight": "npm run typecheck && npm run test && npm run build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "typescript": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "vitest": "latest"
+  }
+}
