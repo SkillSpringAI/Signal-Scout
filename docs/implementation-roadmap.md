@@ -263,7 +263,7 @@ Data to collect or research:
 
 ## Phase 4: Local Store And Workflow State
 
-Status: foundation started; full workflow store remains future work
+Status: in progress; stateful local workflow foundation is working
 
 Goal:
 
@@ -306,11 +306,18 @@ Completed so far:
 - read-only `createFixtureStore` boundary
 - centralized seed dataset consumed by the app
 - fail-fast validation when a dataset is loaded
+- mutable `AppState` with user context, tasks, approvals, and report state
+- store subscription support for reactive UI updates
+- actions and selectors for task events, memory review, opportunity saves, and reports
+
+Current limitation:
+
+- the store is session-only and does not yet persist to localStorage or expose import/export
 
 Next work:
 
-- add actions for opportunity saves, memory review, task events, and report generation
-- add reset-demo behavior and then localStorage persistence if useful
+- add reset-demo behavior and stronger store-level action tests
+- add localStorage persistence if useful
 - preserve an import/export shape that remains usable by future domain packs
 
 ## Phase 5: App Shell And Navigation
@@ -406,6 +413,8 @@ Done when:
 
 ## Phase 7: Mock Agent Routes
 
+Status: in progress; full mock route chain is working
+
 Goal:
 
 Make the app behave as if agent work is happening, without real model calls yet.
@@ -445,6 +454,24 @@ Done when:
 - buttons or actions run mock agent tasks
 - every task leaves an Activity trail
 - Field Report is generated from structured state
+
+Completed so far:
+
+- deterministic mock `intake`, `itemScout`, `patternMap`, and `fieldReport` routes
+- deterministic mock `relationshipScout`, `opportunityRefine`, and `learningPlan` routes
+- workflow runner for intake → item scout → pattern map → relationship scout → opportunity refine → learning plan → field report
+- Activity task and event records for every route
+- fallback event when intake context is missing
+- logged memory review and opportunity-save actions
+- structured learning plan included in Field Report output
+- route and fallback regression tests
+
+Next work:
+
+- make route outputs more explicit instead of deriving directly from the fixture state
+- add configurable mock latency and failure-mode fixtures for demos
+- add route replay from Activity once task persistence exists
+- add route-specific input/output schemas before introducing a backend boundary
 
 ## Phase 8: Permissions, Approvals, And Fallbacks
 
@@ -720,3 +747,29 @@ Before live integrations or a public demo, research and record:
 - Gemini structured-output requirements and fallback behavior
 - Google Cloud services and hackathon requirement alignment
 - demo script claims that need direct evidence rather than illustrative seed data
+
+## End-of-Day Handoff: Before Moving On
+
+Current checkpoint:
+
+- the offline demo is stateful
+- the main mock workflow runs from intake through Field Report
+- Activity records, memory review, opportunity saves, and learning-plan output are wired into the local store
+- preflight currently passes with six tests, typecheck, and production build
+
+Before starting the backend or Gemini phases, complete these remaining foundation items:
+
+- add route-specific input/output schemas and validate mock outputs at the route boundary
+- add reset-demo behavior and stronger store action tests
+- decide whether localStorage persistence is useful for the demo; preserve import/export compatibility if added
+- implement the Phase 8 permission, approval, fallback, and low-confidence UI states
+- add explicit fallback fixtures for missing input, incomplete sources, and partial route failure
+- verify the hackathon seed facts and add source URLs, timestamps, and evidence quality notes
+- run a full demo-flow review covering intake, Activity, Memory, Opportunities, Learning Plan, and Field Report
+
+Defer until those checks are complete:
+
+- backend/API boundary
+- Gemini calls
+- Firestore, Cloud Run, and queue infrastructure
+- broader visual polish and additional domain packs
