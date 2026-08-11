@@ -1,6 +1,7 @@
-import type { Actor, Domain, Item, MemoryEntry, Opportunity, Pattern, Signal } from '../types'
+import type { Actor, Domain, Item, MemoryEntry, Opportunity, Pattern, Signal, SourceReference } from '../types'
 
 export interface DatasetLike {
+  sources: SourceReference[]
   domains: Domain[]
   actors: Actor[]
   items: Item[]
@@ -26,6 +27,7 @@ function requireRefs(collection: { id: string }[], refs: string[], targetIds: Se
 export function validateDataset(dataset: DatasetLike): string[] {
   const errors: string[] = []
   requireUniqueIds(dataset.domains, 'domains', errors)
+  requireUniqueIds(dataset.sources, 'sources', errors)
   requireUniqueIds(dataset.actors, 'actors', errors)
   requireUniqueIds(dataset.items, 'items', errors)
   requireUniqueIds(dataset.signals, 'signals', errors)
@@ -34,6 +36,7 @@ export function validateDataset(dataset: DatasetLike): string[] {
   requireUniqueIds(dataset.memory, 'memory', errors)
 
   const domainIds = new Set(dataset.domains.map((entry) => entry.id))
+  const sourceIds = new Set(dataset.sources.map((entry) => entry.id))
   const actorIds = new Set(dataset.actors.map((entry) => entry.id))
   const itemIds = new Set(dataset.items.map((entry) => entry.id))
   const signalIds = new Set(dataset.signals.map((entry) => entry.id))
@@ -41,14 +44,19 @@ export function validateDataset(dataset: DatasetLike): string[] {
 
   for (const item of dataset.items) {
     if (!domainIds.has(item.domainId)) errors.push(`item ${item.id} references missing domain ${item.domainId}`)
+    requireRefs([item], item.sourceIds, sourceIds, 'item', errors)
     requireRefs([item], item.actorIds, actorIds, 'item', errors)
     requireRefs([item], item.signalIds, signalIds, 'item', errors)
+  }
+  for (const domain of dataset.domains) {
+    requireRefs([domain], domain.sourceIds, sourceIds, 'domain', errors)
+    if (domain.researchStatus !== 'verified' && domain.researchNotes.length === 0) errors.push(`domain ${domain.id} needs research notes when not fully verified`)
   }
   for (const actor of dataset.actors) requireRefs([actor], actor.itemIds, itemIds, 'actor', errors)
   for (const signal of dataset.signals) {
     if (!domainIds.has(signal.domainId)) errors.push(`signal ${signal.id} references missing domain ${signal.domainId}`)
     requireRefs([signal], signal.itemIds, itemIds, 'signal', errors)
-    for (const evidence of signal.evidence) requireRefs([signal], evidence.sourceIds, itemIds, 'signal evidence', errors)
+    for (const evidence of signal.evidence) requireRefs([signal], evidence.sourceIds, sourceIds, 'signal evidence', errors)
   }
   for (const pattern of dataset.patterns) {
     if (!domainIds.has(pattern.domainId)) errors.push(`pattern ${pattern.id} references missing domain ${pattern.domainId}`)

@@ -12,6 +12,8 @@ export function reduceAppState(state: AppState, action: AppAction): AppState {
       return { ...state, tasks: state.tasks.map((task) => task.id === action.taskId ? { ...task, events: [...task.events, action.event] } : task) }
     case 'SET_MEMORY_STATUS':
       return { ...state, memory: state.memory.map((entry) => entry.id === action.memoryId ? { ...entry, status: action.status } : entry) }
+    case 'SET_APPROVAL_STATUS':
+      return { ...state, approvals: state.approvals.map((approval) => approval.id === action.approvalId ? { ...approval, status: action.status, decidedAt: action.decidedAt } : approval) }
     case 'SAVE_OPPORTUNITY':
       return { ...state, opportunities: state.opportunities.map((opportunity) => opportunity.id === action.opportunityId ? { ...opportunity, status: 'saved' } : opportunity) }
     case 'UPDATE_OPPORTUNITY':

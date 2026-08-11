@@ -17,12 +17,19 @@ export interface AppState extends SeedDataset {
   report?: FieldReport
 }
 
+export interface StorageAdapter {
+  getItem(key: string): string | null
+  setItem(key: string, value: string): void
+  removeItem(key: string): void
+}
+
 export type AppAction =
   | { type: 'SET_USER_CONTEXT'; payload: Partial<UserContext> }
   | { type: 'ADD_TASK'; task: ActivityTask }
   | { type: 'UPDATE_TASK'; taskId: string; patch: Partial<Pick<ActivityTask, 'status' | 'outputIds' | 'sourceIds'>> }
   | { type: 'ADD_TASK_EVENT'; taskId: string; event: ActivityTask['events'][number] }
   | { type: 'SET_MEMORY_STATUS'; memoryId: string; status: MemoryEntry['status'] }
+  | { type: 'SET_APPROVAL_STATUS'; approvalId: string; status: ApprovalRequest['status']; decidedAt?: string }
   | { type: 'SAVE_OPPORTUNITY'; opportunityId: string }
   | { type: 'UPDATE_OPPORTUNITY'; opportunityId: string; patch: Partial<Pick<Opportunity, 'explanation' | 'whyNow' | 'confidence'>> }
   | { type: 'SET_PLAN'; plan: Plan }
@@ -31,5 +38,8 @@ export type AppAction =
 export interface AppStore {
   getState(): AppState
   dispatch(action: AppAction): void
+  reset(): void
+  exportState(): string
+  importState(serialized: string): void
   subscribe(listener: () => void): () => void
 }

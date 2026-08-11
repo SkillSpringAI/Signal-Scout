@@ -248,7 +248,7 @@ Completed in this repo:
 Follow-up notes:
 
 - Verify the hackathon name, URL, deadlines, judging criteria, required technologies, and submission artifacts against the authoritative event materials before public demo or submission.
-- Replace placeholder seed claims with source references and collection timestamps where possible.
+- Replace remaining placeholder seed claims with authoritative source references and collection timestamps where possible.
 - Collect a larger, representative project sample; the current three projects are designed for a readable demo, not field-level conclusions.
 - Add a second small fixture or domain-pack stub to prove forkability before making the seed format more elaborate.
 - Add fallback fixtures for missing URLs, incomplete project metadata, low-confidence extraction, and unavailable live pages.
@@ -755,17 +755,59 @@ Current checkpoint:
 - the offline demo is stateful
 - the main mock workflow runs from intake through Field Report
 - Activity records, memory review, opportunity saves, and learning-plan output are wired into the local store
-- preflight currently passes with six tests, typecheck, and production build
+- route result contracts are validated at the mock-agent boundary
+- route-specific input contracts are validated before mock route execution
+- the session store supports reset and has action/workflow regression coverage
+- memory changes have explicit approval records and permission decisions
+- fallback fixtures and low-confidence signal display are present
+- the session store supports versioned localStorage persistence, export/import, and reset cleanup
+- preflight currently passes with sixteen tests, typecheck, and production build
 
 Before starting the backend or Gemini phases, complete these remaining foundation items:
 
-- add route-specific input/output schemas and validate mock outputs at the route boundary
-- add reset-demo behavior and stronger store action tests
-- decide whether localStorage persistence is useful for the demo; preserve import/export compatibility if added
-- implement the Phase 8 permission, approval, fallback, and low-confidence UI states
-- add explicit fallback fixtures for missing input, incomplete sources, and partial route failure
+- add richer partial-route failure handling on top of the route input contracts now in place
 - verify the hackathon seed facts and add source URLs, timestamps, and evidence quality notes
 - run a full demo-flow review covering intake, Activity, Memory, Opportunities, Learning Plan, and Field Report
+- keep the approval queue focused on memory review until report export or another approved action is actually implemented
+
+Slice 2 checkpoint:
+
+- deterministic route failure fixtures can target individual mock routes
+- failed routes create error Activity events and failed task states
+- missing-input routes create needs-input states and fallback events
+- non-blocking route failures preserve prior structured value and allow Field Report generation to continue
+- partial-failure behavior is covered by regression tests
+
+Slice 3 checkpoint:
+
+- source references now include URLs where available, collection dates, source kind, verification status, and notes
+- the event seed is marked partially verified because the public evidence found is a secondary listing, not confirmed organizer material
+- synthetic project records are explicitly marked illustrative rather than presented as real public submissions
+- signal evidence points to source references and carries an evidence-quality label
+- dataset validation checks domain, item, and signal source references
+
+Slice 4 checkpoint:
+
+- localStorage persistence is enabled when available and can be disabled through the store options
+- persistence uses a versioned state envelope and validates hydrated state before use
+- export/import uses the same versioned envelope for future fork-friendly portability
+- reset clears session state and removes persisted data
+- storage behavior is covered with an injected in-memory adapter in tests
+
+Slice 5 checkpoint:
+
+- the complete local MVP flow is covered by an integration test from reset through report regeneration
+- the flow verifies Activity records, learning-plan steps, pending approval resolution, saved opportunities, accepted memory, and reset cleanup
+- the local Vite app responds successfully over HTTP with the expected entrypoint
+- an interactive visual/browser review remains a separate check; no visual polish is being introduced as part of this slice
+
+Slice 6 checkpoint:
+
+- approval requests now carry scope, reason, requested time, decision time, and lifecycle status
+- the Activity view exposes a focused approval queue
+- memory review resolves its corresponding approval request
+- report export is reserved as the next possible approval scope
+- arbitrary external-impact actions remain blocked/deferred; no generic automation approval system is being added to the MVP
 
 Defer until those checks are complete:
 

@@ -8,6 +8,9 @@ export interface Domain {
   name: string
   summary: string
   sourceUrl?: string
+  sourceIds: EntityId[]
+  researchStatus: 'verified' | 'partially_verified' | 'unverified'
+  researchNotes: string[]
   constraints: string[]
   judgingCriteria: string[]
   requiredTechnologies: string[]

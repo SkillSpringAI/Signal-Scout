@@ -7,6 +7,7 @@ export interface Item {
   title: string
   summary: string
   url?: string
+  sourceIds: EntityId[]
   audience: string
   stack: string[]
   maturity: 'idea' | 'prototype' | 'working' | 'production'

@@ -4,6 +4,7 @@ export interface Evidence {
   label: string
   detail: string
   sourceIds: EntityId[]
+  quality?: 'high' | 'medium' | 'low' | 'illustrative'
 }
 
 export interface Signal {
