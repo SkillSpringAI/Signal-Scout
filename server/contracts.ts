@@ -36,25 +36,44 @@ export const fieldAnalysisSchema = z.object({
 export type FieldAnalysis = z.infer<typeof fieldAnalysisSchema>
 export type SourceRecord = z.infer<typeof sourceRecordSchema>
 
+export const feedbackRequestSchema = z.object({ feedback: z.string().trim().min(10).max(2_000) })
+export const collaborationResponseSchema = z.object({
+  adaptedRecommendation: z.object({
+    title: z.string().min(1).max(200),
+    explanation: z.string().min(1).max(1_200),
+    changedBecause: z.string().min(1).max(800),
+    sourceUrls: z.array(z.string().url()).min(1).max(6),
+    confidence: z.enum(['low', 'medium', 'high']),
+  }),
+  nextClarifyingQuestion: z.string().min(1).max(500),
+})
+export const feedbackEntrySchema = collaborationResponseSchema.extend({ id: z.string().uuid(), receivedAt: z.string().datetime(), feedback: feedbackRequestSchema.shape.feedback })
+export type FeedbackRequest = z.infer<typeof feedbackRequestSchema>
+export type CollaborationResponse = z.infer<typeof collaborationResponseSchema>
+
 export const scanStatuses = ['queued', 'retrieving', 'extracting', 'validating', 'synthesizing', 'completed', 'partial', 'failed', 'cancelled', 'needs_input'] as const
 export type ScanStatus = typeof scanStatuses[number]
 
-export interface ScanEvent {
-  id: string
-  at: string
-  stage: ScanStatus
-  message: string
-  kind: 'activity' | 'warning' | 'error'
-}
+export const scanEventSchema = z.object({
+  id: z.string().uuid(),
+  at: z.string().datetime(),
+  stage: z.enum(scanStatuses),
+  message: z.string().min(1).max(2_000),
+  kind: z.enum(['activity', 'warning', 'error']),
+})
 
-export interface ScanJob {
-  id: string
-  request: ScanRequest
-  status: ScanStatus
-  createdAt: string
-  updatedAt: string
-  events: ScanEvent[]
-  sources: SourceRecord[]
-  analysis?: FieldAnalysis
-  error?: { code: string; message: string }
-}
+export const scanJobSchema = z.object({
+  id: z.string().uuid(),
+  request: scanRequestSchema,
+  status: z.enum(scanStatuses),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime(),
+  events: z.array(scanEventSchema).max(500),
+  sources: z.array(sourceRecordSchema).max(6),
+  analysis: fieldAnalysisSchema.optional(),
+  error: z.object({ code: z.string().min(1).max(100), message: z.string().min(1).max(4_000) }).optional(),
+  feedback: z.array(feedbackEntrySchema).max(20).optional(),
+})
+
+export type ScanEvent = z.infer<typeof scanEventSchema>
+export type ScanJob = z.infer<typeof scanJobSchema>

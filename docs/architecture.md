@@ -1,29 +1,36 @@
 # Architecture
 
-> **Current status:** the local mock UI remains intact. A Node/TypeScript API, safe retrieval boundary, job runner, Google GenAI SDK adapter, structured-output validation, optional Firestore store, and container build are implemented and tested with injected fakes. Real Gemini, Firestore, and Cloud Run execution remain unverified.
+> **Current status:** the live workflow is deployed and verified on Cloud Run. It uses the Google GenAI SDK with Gemini 3.5 Flash, Firestore Native persistence, bounded public retrieval, structured and semantic validation, and a server-side Secret Manager reference. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
 
-## Implemented local architecture
+## Implemented architecture
 
 ```text
 React/Vite UI
-  -> in-process MockAgent
-  -> in-memory application store
-  -> deterministic synthetic fixtures
-  -> Activity, Memory, and Field Report views
+  -> live Node/TypeScript API on Cloud Run
+     -> bounded public-source retriever
+     -> Google GenAI SDK -> Gemini 3.5 Flash
+     -> schema and semantic validation
+     -> Firestore Native scan/activity/report state
+     -> one bounded feedback adaptation
+
+React/Vite mock mode
+  -> in-process MockAgent -> deterministic synthetic fixtures
 ```
 
-Verified current components:
+Verified components:
 
 - React, Vite, and TypeScript browser application
 - shared TypeScript types and lightweight runtime validation
 - deterministic mock route service
-- session-only in-memory store
-- synthetic event/project fixtures
-- local Activity, Memory review, and Field Report surfaces
+- public Cloud Run service with min 0 / max 2 instances
+- dedicated runtime service identity with Firestore access
+- Gemini key mounted from a single least-privilege Secret Manager secret
+- real official-source retrieval, Gemini analysis, Firestore persistence, Activity, Field Report, and feedback adaptation
+- session-only mock store and synthetic fixtures kept outside the live evidence path
 
-The API and retrieval/model boundaries now exist. There is no verified credentialed model call, durable Firestore run, production queue, or cloud deployment yet. Background execution is currently process-local through `setImmediate`, so it is not durable across server restarts.
+Background execution remains process-local through `setImmediate`, so an in-flight job is not recovered across a container restart. Completed and partial records are durable in Firestore. This is an explicit prototype limitation, not a production-readiness claim.
 
-## Immediate target architecture
+## Deployed runtime path
 
 ```text
 React UI
@@ -34,9 +41,9 @@ React UI
      -> Firestore for scan/activity/report state
 ```
 
-The target must keep credentials server-side; treat retrieved content as untrusted; enforce URL, size, and timeout limits; validate model output; preserve provenance and collection timestamps; and expose completed, partial, failed, cancelled, and needs-input terminal states.
+The runtime keeps credentials server-side; treats retrieved content as untrusted; enforces URL, size, redirect, and timeout limits; validates model output; preserves provenance and collection timestamps; and exposes completed, partial, failed, cancelled, and needs-input terminal states.
 
-TypeScript is a project choice, not a hackathon requirement. Cloud Run and Firestore are the current intended infrastructure choices, subject to verification during implementation.
+TypeScript is a project choice, not a hackathon requirement. Cloud Run and Firestore are verified infrastructure choices.
 
 ## Mock boundary
 

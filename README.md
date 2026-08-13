@@ -1,10 +1,10 @@
 # Signal Scout
 
-> **Current status (updated 13 August 2026):** Signal Scout has a tested local React/TypeScript mock UI plus a new Node/TypeScript API spine with bounded public retrieval, job/activity state, schema validation, Google GenAI SDK integration code, an optional Firestore adapter, and container packaging. A credentialed Gemini 3.5 Flash run, Firestore integration run, UI-to-live-API path, Cloud Run deployment, and cloud evidence are not yet verified.
+> **Current status (updated 13 August 2026):** Signal Scout is publicly deployed on Cloud Run with a live React/TypeScript UI, bounded Node/TypeScript scan API, Gemini 3.5 Flash analysis through the Google GenAI SDK, Firestore persistence, sourced Activity evidence, and one bounded Collaborative Partner feedback turn. Deterministic mock mode remains available and visibly separated for offline demonstration and testing.
 
-Signal Scout's target hackathon capability is to autonomously turn a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
+Signal Scout turns a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
 
-That proposition remains a **target**, not a claim about the current prototype. The submission must prove this bounded loop with real public input:
+The deployed workflow demonstrates this bounded loop with real public input:
 
 ```text
 official hackathon URL + builder context + optional project URLs
@@ -18,7 +18,8 @@ official hackathon URL + builder context + optional project URLs
 - Selected category: **The Collaborative Partner**
 - Mandatory runtime: Gemini 3.5 or newer, at least one qualifying Google agent framework, and at least one Google Cloud infrastructure service
 - Project choice: TypeScript; TypeScript is not a hackathon requirement
-- Current UI mode: local deterministic mock; the new live API path remains unverified until a credentialed run succeeds
+- Current UI modes: public live scan plus a visibly labelled deterministic mock demo
+- Public deployment: https://signal-scout-212660130578.australia-southeast1.run.app
 
 The Collaborative Partner fits because Signal Scout guides a builder through sourced findings, asks for missing context, captures feedback, and carries that context into later project, learning, and collaboration decisions. The target remains a working research workflow rather than a text-only chatbot.
 
@@ -50,3 +51,5 @@ npm run build
 ```
 
 The mock service and synthetic fixtures support deterministic tests and offline UI development. They are not the intended submission workflow or judging proof.
+
+Deployment configuration and reproducible verification evidence are recorded in [Gate 2 runtime guide](docs/gate-2-runtime.md).

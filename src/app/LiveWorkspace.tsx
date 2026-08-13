@@ -1,0 +1,82 @@
+import { useEffect, useRef, useState } from 'react'
+import type { ScanJob } from '../../server/contracts'
+import { LiveScanApi } from '../services/liveScanApi'
+
+type LiveView = 'overview' | 'field' | 'patterns' | 'opportunities' | 'memory' | 'activity' | 'report'
+const api = new LiveScanApi()
+
+export function LiveWorkspace({ view }: { view: LiveView }) {
+  const [hackathonUrl, setHackathonUrl] = useState('https://allthingsagentichackathon.devpost.com/')
+  const [builderContext, setBuilderContext] = useState('I am building Signal Scout as a Collaborative Partner that guides hackathon builders through sourced findings, targeted clarification, feedback, and actionable project and learning decisions.')
+  const [projectUrls, setProjectUrls] = useState('')
+  const [job, setJob] = useState<ScanJob>()
+  const [error, setError] = useState('')
+  const controller = useRef<AbortController | undefined>(undefined)
+
+  useEffect(() => () => controller.current?.abort(), [])
+
+  const start = async () => {
+    controller.current?.abort()
+    controller.current = new AbortController()
+    setError('')
+    setJob(undefined)
+    try {
+      const created = await api.createScan({ hackathonUrl, builderContext, projectUrls: projectUrls.split('\n').map((url) => url.trim()).filter(Boolean) })
+      setJob(created)
+      await api.waitForTerminal(created.id, setJob, controller.current.signal)
+    } catch (caught) {
+      if (caught instanceof DOMException && caught.name === 'AbortError') return
+      setError(caught instanceof Error ? caught.message : 'The live scan failed.')
+    }
+  }
+
+  const cancel = async () => {
+    if (!job) return
+    try { const cancelled = await api.cancelScan(job.id); controller.current?.abort(); setJob(cancelled) }
+    catch (caught) { setError(caught instanceof Error ? caught.message : 'Cancellation failed.') }
+  }
+
+  const applyFeedback = async (feedback: string) => {
+    if (!job) return
+    setError('')
+    try { setJob(await api.submitFeedback(job.id, feedback)) }
+    catch (caught) { setError(caught instanceof Error ? caught.message : 'Feedback could not be applied.') }
+  }
+
+  if (view === 'overview') return <LiveOverview url={hackathonUrl} setUrl={setHackathonUrl} context={builderContext} setContext={setBuilderContext} projectUrls={projectUrls} setProjectUrls={setProjectUrls} job={job} error={error} start={start} cancel={cancel} />
+  if (!job) return <LiveEmpty start={start} />
+  if (view === 'field') return <LiveField job={job} />
+  if (view === 'patterns') return <LivePatterns job={job} />
+  if (view === 'opportunities') return <LivePlan job={job} />
+  if (view === 'memory') return <LiveContext job={job} error={error} applyFeedback={applyFeedback} />
+  if (view === 'activity') return <LiveActivity job={job} error={error} cancel={cancel} />
+  return <LiveReport job={job} />
+}
+
+const running = (job?: ScanJob) => !!job && !['completed', 'partial', 'failed', 'cancelled', 'needs_input'].includes(job.status)
+
+function LiveOverview(props: { url: string; setUrl(value: string): void; context: string; setContext(value: string): void; projectUrls: string; setProjectUrls(value: string): void; job?: ScanJob; error: string; start(): void; cancel(): void }) {
+  return <><div className="live-banner"><strong>LIVE SCAN</strong><span>Real public sources · Gemini 3.5 Flash · server-side credentials</span></div><div className="grid two"><article className="panel"><p className="eyebrow">REAL INPUT</p><h3>Start a sourced scan</h3><label className="field-label">Official hackathon URL<input value={props.url} onChange={(event) => props.setUrl(event.target.value)} /></label><label className="field-label">Builder context<textarea value={props.context} onChange={(event) => props.setContext(event.target.value)} /></label><label className="field-label">Optional public project URLs, one per line<textarea value={props.projectUrls} onChange={(event) => props.setProjectUrls(event.target.value)} placeholder="https://github.com/…" /></label><div className="button-row"><button className="primary" onClick={props.start} disabled={running(props.job)}>{running(props.job) ? 'Scan running…' : 'Run live scan →'}</button>{running(props.job) && <button className="save-button" onClick={props.cancel}>Cancel</button>}</div>{props.error && <p className="error-notice">{props.error}</p>}</article><article className="panel"><p className="eyebrow">LIVE STATUS</p><h3>{props.job ? props.job.status.replace('_', ' ') : 'Ready for real input'}</h3><p className="section-lead">{props.job ? `${props.job.events.length} real activity events · ${props.job.sources.length} retrieved sources` : 'Nothing on this screen comes from the synthetic fixture store.'}</p>{props.job?.sources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.title}</a><br /><small>Collected {new Date(source.collectedAt).toLocaleString()} · {source.byteLength} bytes</small></p>)}</article></div></>
+}
+
+function LiveEmpty({ start }: { start(): void }) { return <article className="panel"><span className="pill">LIVE MODE</span><h3>No live scan in this browser session</h3><p className="section-lead">Return to Domain brief to enter real inputs, or start the default official-source scan.</p><button className="primary" onClick={start}>Start live scan →</button></article> }
+
+function LiveField({ job }: { job: ScanJob }) { return <div className="stack-layout"><div className="live-banner"><strong>REAL EVIDENCE</strong><span>{job.sources.length} public sources preserved</span></div>{job.sources.map((source) => <article className="panel" key={source.url}><a href={source.url} target="_blank" rel="noreferrer"><h3>{source.title}</h3></a><p>{source.excerpt.slice(0, 700)}{source.excerpt.length > 700 ? '…' : ''}</p><small>Collected {source.collectedAt} · {source.contentType} · {source.byteLength} bytes</small></article>)}{job.analysis && <article className="panel"><h3>Verified extraction</h3><h4>Requirements</h4><ul>{job.analysis.requirements.map((item) => <li key={item}>{item}</li>)}</ul><h4>Judging criteria</h4><ul>{job.analysis.judgingCriteria.map((item) => <li key={item}>{item}</li>)}</ul></article>}</div> }
+
+function LivePatterns({ job }: { job: ScanJob }) { return <div className="stack-layout"><div className="live-banner"><strong>MODEL-DERIVED GAPS</strong><span>Each item must cite retrieved evidence</span></div>{job.analysis?.strategicGaps.map((gap, index) => <article className="pattern-row" key={gap.title}><span className="pattern-number">0{index + 1}</span><div><span className="tag">{gap.confidence} confidence</span><h2>{gap.title}</h2><p>{gap.rationale}</p>{gap.sourceUrls.map((url) => <a key={url} href={url} target="_blank" rel="noreferrer">Source ↗</a>)}</div></article>) ?? <NoAnalysis job={job} />}</div> }
+
+function LivePlan({ job }: { job: ScanJob }) { return <div className="grid two"><article className="panel"><p className="eyebrow">LEARNING SHORTLIST</p>{job.analysis?.learningShortlist.map((item, index) => <p key={item}><strong>{index + 1}.</strong> {item}</p>) ?? <NoAnalysis job={job} />}</article><article className="panel"><p className="eyebrow">ACTIONABLE BUILD PLAN</p>{job.analysis?.buildPlan.map((item, index) => <p key={item}><strong>{index + 1}.</strong> {item}</p>) ?? <NoAnalysis job={job} />}</article></div> }
+
+function LiveContext({ job, error, applyFeedback }: { job: ScanJob; error: string; applyFeedback(feedback: string): Promise<void> }) {
+  const [feedback, setFeedback] = useState('I have limited time, so prioritize the smallest demo-critical implementation that proves guided adaptation.')
+  const [submitting, setSubmitting] = useState(false)
+  const submit = async () => { setSubmitting(true); try { await applyFeedback(feedback) } finally { setSubmitting(false) } }
+  const latest = job.feedback?.[job.feedback.length - 1]
+  return <div className="stack-layout"><article className="panel"><div className="live-banner"><strong>GUIDED FEEDBACK</strong><span>Explicit feedback is persisted with this scan</span></div><h3>Builder context</h3><p>{job.request.builderContext}</p><label className="field-label">What should Signal Scout adapt?<textarea value={feedback} onChange={(event) => setFeedback(event.target.value)} disabled={Boolean(latest)} /></label><button className="primary" disabled={submitting || Boolean(latest) || feedback.trim().length < 10} onClick={submit}>{submitting ? 'Adapting…' : latest ? 'Feedback turn complete' : 'Apply feedback to one recommendation →'}</button>{error && <p className="error-notice">{error}</p>}<p className="section-lead">This bounded interaction adapts one recommendation and asks one targeted follow-up. It is not a general chat system or an automatic durable-memory grant.</p></article>{latest && <article className="panel"><p className="eyebrow">ADAPTED RECOMMENDATION</p><h3>{latest.adaptedRecommendation.title}</h3><p>{latest.adaptedRecommendation.explanation}</p><p><strong>Changed because:</strong> {latest.adaptedRecommendation.changedBecause}</p><span className="tag">{latest.adaptedRecommendation.confidence} confidence</span><h4>One targeted clarification</h4><p>{latest.nextClarifyingQuestion}</p>{latest.adaptedRecommendation.sourceUrls.map((url) => <a key={url} href={url} target="_blank" rel="noreferrer">Supporting source ↗</a>)}</article>}</div>
+}
+
+function LiveActivity({ job, error, cancel }: { job: ScanJob; error: string; cancel(): void }) { return <div className="activity-list"><div className="activity-header"><div><span className="pill">LIVE / {job.status}</span><p className="section-lead">These events were emitted by actual backend work.</p></div>{running(job) && <button className="save-button" onClick={cancel}>Cancel scan</button>}</div>{job.events.map((event) => <article className="activity-event" key={event.id}><span className="timeline-dot" /><div><div className="card-top"><strong>{event.stage}</strong><span className="muted">{event.kind} · {new Date(event.at).toLocaleTimeString()}</span></div><p>{event.message}</p></div></article>)}{(job.error || error) && <p className="error-notice">{job.error?.message ?? error}</p>}</div> }
+
+function LiveReport({ job }: { job: ScanJob }) { if (!job.analysis) return <NoAnalysis job={job} />; return <article className="report"><div className="report-cover"><p className="eyebrow">SIGNAL SCOUT / LIVE FIELD REPORT</p><h2>{job.analysis.eventName}</h2><p>{job.analysis.summary}</p></div><div className="report-section"><h3>Sourced strategic gaps</h3>{job.analysis.strategicGaps.map((gap) => <p key={gap.title}><strong>{gap.title}</strong><br />{gap.rationale}</p>)}</div><div className="report-columns"><div><h3>Learning shortlist</h3>{job.analysis.learningShortlist.map((item) => <p key={item}>{item}</p>)}</div><div><h3>Build plan</h3>{job.analysis.buildPlan.map((item) => <p key={item}>{item}</p>)}</div></div><div className="report-section"><h3>Uncertainties</h3>{job.analysis.uncertainties.map((item) => <p key={item}>{item}</p>)}</div><div className="report-footer">{job.sources.length} real sources · {job.events.length} activity events · {job.status} · live mode</div></article> }
+
+function NoAnalysis({ job }: { job: ScanJob }) { return <article className="panel"><h3>No validated analysis available</h3><p>The job ended as <strong>{job.status}</strong>. Retrieved sources and Activity remain available.</p>{job.error && <p className="error-notice">{job.error.message}</p>}</article> }

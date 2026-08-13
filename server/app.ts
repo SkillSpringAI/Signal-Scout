@@ -1,7 +1,7 @@
 import express from 'express'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
-import { scanRequestSchema } from './contracts.js'
+import { feedbackRequestSchema, scanRequestSchema } from './contracts.js'
 import type { ScanRunner } from './runner.js'
 import type { ScanStore } from './store.js'
 
@@ -24,6 +24,14 @@ export function createServerApp(deps: { runner: ScanRunner; store: ScanStore; st
   app.post('/api/scans/:id/cancel', async (request, response) => {
     const job = await deps.runner.cancel(request.params.id)
     return job ? response.json(job) : response.status(404).json({ error: 'NOT_FOUND' })
+  })
+  app.post('/api/scans/:id/feedback', async (request, response) => {
+    const parsed = feedbackRequestSchema.safeParse(request.body)
+    if (!parsed.success) return response.status(400).json({ error: 'INVALID_FEEDBACK', issues: parsed.error.issues })
+    try {
+      const job = await deps.runner.applyFeedback(request.params.id, parsed.data)
+      return job ? response.json(job) : response.status(404).json({ error: 'NOT_FOUND' })
+    } catch (error) { return response.status(409).json({ error: 'FEEDBACK_NOT_APPLICABLE', message: error instanceof Error ? error.message : 'Feedback could not be applied.' }) }
   })
   if (deps.staticDir && existsSync(deps.staticDir)) {
     app.use(express.static(deps.staticDir))

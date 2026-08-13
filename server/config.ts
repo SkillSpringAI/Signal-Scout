@@ -8,6 +8,8 @@ const envSchema = z.object({
   RETRIEVAL_MAX_BYTES: z.coerce.number().int().min(10_000).max(2_000_000).default(500_000),
   SCAN_STORE: z.enum(['memory', 'firestore']).default('memory'),
   FIRESTORE_COLLECTION: z.string().regex(/^[A-Za-z0-9_-]+$/).default('signalScoutScans'),
+  MODEL_MAX_ATTEMPTS: z.coerce.number().int().min(1).max(3).default(2),
+  MODEL_RETRY_BASE_MS: z.coerce.number().int().min(100).max(5_000).default(500),
 })
 
 export type ServerConfig = z.infer<typeof envSchema>

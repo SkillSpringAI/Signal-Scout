@@ -1,12 +1,12 @@
 # Product Blueprint
 
-> **Current status:** tested local mock UI plus a Node/TypeScript API spine with bounded retrieval, job states, schema validation, Google GenAI SDK integration code, optional Firestore persistence, and container packaging. Credentialed Gemini execution, live UI integration, Firestore runtime evidence, and Google Cloud deployment remain unverified.
+> **Current status:** the bounded live workflow is implemented and publicly deployed through Cloud Run, Gemini 3.5 Flash, the Google GenAI SDK, and Firestore Native. A visibly separated deterministic mock mode remains for testing and offline demonstration.
 
-## Target proposition
+## Implemented proposition
 
 Signal Scout autonomously turns a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
 
-This is the target submission capability until the real end-to-end workflow exists.
+This capability has been verified end to end with a real official source, persisted analysis, visible Activity evidence, and one bounded feedback adaptation. Submission media must still demonstrate it clearly and honestly.
 
 ## User and friction
 

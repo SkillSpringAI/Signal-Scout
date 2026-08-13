@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "tsx watch server/index.ts",
+    "verify:firestore": "tsx server/firestoreProbe.ts",
     "start": "node dist-server/server/index.js",
     "typecheck": "tsc -b && tsc -p tsconfig.server.json --noEmit",
     "test": "vitest run",

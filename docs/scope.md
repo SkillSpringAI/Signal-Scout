@@ -1,8 +1,8 @@
 # Scope
 
-> **Current status:** the repository contains a deterministic mock UI and a tested local API spine. Credentialed Gemini/Firestore execution, live UI integration, and Cloud Run proof remain incomplete.
+> **Current status:** the bounded hackathon workflow is implemented and publicly deployed. Live Gemini analysis, Firestore persistence, Cloud Run, sourced Activity evidence, and one Collaborative Partner feedback turn are verified; deterministic mock mode remains visibly separated.
 
-## Hackathon MVP target
+## Hackathon MVP
 
 - one official hackathon URL plus builder context and optional public project URLs
 - bounded retrieval, extraction, validation, clustering, ranking, and Field Report generation
@@ -20,9 +20,10 @@
 - synthetic fixtures for tests and offline UI development
 - presentational Activity, Memory, and report views
 - Node/TypeScript scan API with bounded retrieval and explicit lifecycle states
-- Google GenAI SDK adapter targeting `gemini-3.5-flash`, tested through an injected model boundary but not yet called with credentials
-- optional Firestore adapter using Application Default Credentials, not yet integration-tested
-- multi-stage container definition
+- Google GenAI SDK adapter using credentialed `gemini-3.5-flash` calls with structured and semantic validation
+- Firestore Native adapter verified through ADC locally and a dedicated Cloud Run runtime identity
+- multi-stage Node 22 container deployed publicly to Cloud Run with min 0 / max 2 instances
+- one persisted, bounded feedback adaptation with one targeted clarifying question
 
 ## Deferred until the required loop works
 

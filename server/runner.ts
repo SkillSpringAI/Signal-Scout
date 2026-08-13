@@ -1,13 +1,22 @@
 import { randomUUID } from 'node:crypto'
-import type { AnalysisModel } from './model.js'
+import type { AnalysisModel, FeedbackModel } from './model.js'
 import type { Retriever } from './retrieval.js'
-import type { ScanEvent, ScanJob, ScanRequest, ScanStatus } from './contracts.js'
-import type { ScanStore } from './store.js'
+import { collaborationResponseSchema, type FeedbackRequest, type ScanEvent, type ScanJob, type ScanRequest, type ScanStatus } from './contracts.js'
+import { ScanStoreConflictError, type ScanStore } from './store.js'
 
 const now = () => new Date().toISOString()
+const nextTimestamp = (previous: string) => {
+  const current = Date.now()
+  const prior = Date.parse(previous)
+  return new Date(Number.isFinite(prior) && current <= prior ? prior + 1 : current).toISOString()
+}
 
 export class ScanRunner {
-  constructor(private readonly store: ScanStore, private readonly retriever: Retriever, private readonly model: AnalysisModel) {}
+  private readonly options: { modelMaxAttempts: number; modelRetryBaseMs: number; sleep: (milliseconds: number) => Promise<void> }
+
+  constructor(private readonly store: ScanStore, private readonly retriever: Retriever, private readonly model: AnalysisModel & Partial<FeedbackModel>, options: Partial<{ modelMaxAttempts: number; modelRetryBaseMs: number; sleep: (milliseconds: number) => Promise<void> }> = {}) {
+    this.options = { modelMaxAttempts: options.modelMaxAttempts ?? 2, modelRetryBaseMs: options.modelRetryBaseMs ?? 500, sleep: options.sleep ?? ((milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds))) }
+  }
 
   async create(request: ScanRequest) {
     const createdAt = now()
@@ -34,13 +43,25 @@ export class ScanRunner {
       if (await this.isCancelled(job)) return
       if (job.sources.length === 0) return this.fail(job, 'RETRIEVAL_FAILED', 'No public source could be retrieved.')
       await this.transition(job, 'extracting', 'Running Gemini structured analysis through Google GenAI SDK.')
-      try { job.analysis = await this.model.analyze(job.request, job.sources) }
-      catch (error) { return this.fail(job, 'MODEL_FAILED', message(error), job.sources.length > 0 ? 'partial' : 'failed') }
+      try {
+        const analysis = await this.analyzeWithRetry(job)
+        if (!analysis) return
+        job.analysis = analysis
+      }
+      catch (error) {
+        if (await this.isCancelled(job)) return
+        await this.fail(job, 'MODEL_FAILED', message(error), job.sources.length > 0 ? 'partial' : 'failed')
+        return
+      }
+      if (await this.isCancelled(job)) return
       await this.transition(job, 'validating', 'Validated structured output against the server schema.')
       await this.transition(job, 'synthesizing', 'Connecting the analysis to preserved source provenance.')
       const status: ScanStatus = job.sources.length < urls.length ? 'partial' : 'completed'
       await this.transition(job, status, status === 'completed' ? 'Scan completed with all requested sources.' : 'Scan completed with partial source coverage.', status === 'partial' ? 'warning' : 'activity')
-    } catch (error) { await this.fail(job, 'UNEXPECTED_FAILURE', message(error)) }
+    } catch (error) {
+      if (error instanceof ScanStoreConflictError) return
+      await this.fail(job, 'UNEXPECTED_FAILURE', message(error))
+    }
   }
 
   async cancel(id: string) {
@@ -50,10 +71,43 @@ export class ScanRunner {
     return job
   }
 
+  async applyFeedback(id: string, request: FeedbackRequest) {
+    const job = await this.store.get(id)
+    if (!job) return undefined
+    if (!job.analysis || !['completed', 'partial'].includes(job.status)) throw new Error('Feedback requires a completed or partial scan with validated analysis.')
+    if (job.feedback?.length) throw new Error('This scan has already used its one bounded feedback turn.')
+    if (!this.model.adapt) throw new Error('Feedback adaptation is not configured.')
+    const adapted = collaborationResponseSchema.parse(await this.model.adapt(job, request))
+    const expectedUpdatedAt = job.updatedAt
+    const receivedAt = nextTimestamp(expectedUpdatedAt)
+    job.updatedAt = receivedAt
+    job.feedback = [...(job.feedback ?? []), { id: randomUUID(), receivedAt, feedback: request.feedback, ...adapted }]
+    job.events.push({ id: randomUUID(), at: receivedAt, stage: 'synthesizing', kind: 'activity', message: 'Applied explicit user feedback to one sourced recommendation and prepared one targeted clarification.' })
+    await this.store.save(job, expectedUpdatedAt)
+    return job
+  }
+
   private async transition(job: ScanJob, status: ScanStatus, messageText: string, kind: ScanEvent['kind'] = 'activity') { job.status = status; await this.save(job, status, messageText, kind) }
-  private async save(job: ScanJob, stage: ScanStatus, messageText: string, kind: ScanEvent['kind'] = 'activity') { const at = now(); job.updatedAt = at; job.events.push({ id: randomUUID(), at, stage, message: messageText, kind }); await this.store.save(job) }
+  private async save(job: ScanJob, stage: ScanStatus, messageText: string, kind: ScanEvent['kind'] = 'activity') { const expectedUpdatedAt = job.updatedAt; const at = nextTimestamp(expectedUpdatedAt); job.updatedAt = at; job.events.push({ id: randomUUID(), at, stage, message: messageText, kind }); await this.store.save(job, expectedUpdatedAt) }
   private async fail(job: ScanJob, code: string, errorMessage: string, status: 'failed' | 'partial' = 'failed') { job.error = { code, message: errorMessage }; await this.transition(job, status, errorMessage, 'error') }
   private async isCancelled(job: ScanJob) { const latest = await this.store.get(job.id); if (latest?.status !== 'cancelled') return false; Object.assign(job, latest); return true }
+  private async analyzeWithRetry(job: ScanJob) {
+    for (let attempt = 1; attempt <= this.options.modelMaxAttempts; attempt += 1) {
+      try { return await this.model.analyze(job.request, job.sources) }
+      catch (error) {
+        if (!isTransientModelError(error) || attempt === this.options.modelMaxAttempts) throw error
+        await this.save(job, 'extracting', `Transient model failure; retrying attempt ${attempt + 1} of ${this.options.modelMaxAttempts}.`, 'warning')
+        await this.options.sleep(this.options.modelRetryBaseMs * attempt)
+        if (await this.isCancelled(job)) return undefined
+      }
+    }
+    return undefined
+  }
 }
 
 const message = (error: unknown) => error instanceof Error ? error.message : 'Unknown failure.'
+export const isTransientModelError = (error: unknown) => {
+  const candidate = error as { code?: unknown; status?: unknown; message?: unknown }
+  const searchable = `${candidate?.code ?? ''} ${candidate?.status ?? ''} ${candidate?.message ?? ''}`
+  return /(^|\D)(429|500|502|503|504)(\D|$)|RESOURCE_EXHAUSTED|UNAVAILABLE|DEADLINE_EXCEEDED/i.test(searchable)
+}

@@ -24,4 +24,13 @@ describe('API', () => {
     expect(response.headers.location).toMatch(/^\/api\/scans\//)
     expect(JSON.stringify(response.body)).not.toContain('API_KEY')
   })
+
+  it('rejects invalid feedback before model execution', async () => {
+    const store = new InMemoryScanStore()
+    const runner = new ScanRunner(store, { retrieve: async () => { throw new Error('unused') } }, { analyze: async () => { throw new Error('unused') } })
+    const app = createServerApp({ runner, store })
+    const response = await request(app).post('/api/scans/92e12351-c171-4a22-a390-d8a20002ef01/feedback').send({ feedback: 'short' })
+    expect(response.status).toBe(400)
+    expect(response.body.error).toBe('INVALID_FEEDBACK')
+  })
 })
