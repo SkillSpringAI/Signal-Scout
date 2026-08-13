@@ -1,6 +1,6 @@
 # Product Blueprint
 
-> **Current status:** tested local React and TypeScript prototype using deterministic synthetic fixtures and a mock agent service. No Gemini, qualifying Google agent framework, backend execution, live ingestion, asynchronous jobs, Firestore, or Google Cloud deployment is implemented yet.
+> **Current status:** tested local mock UI plus a Node/TypeScript API spine with bounded retrieval, job states, schema validation, Google GenAI SDK integration code, optional Firestore persistence, and container packaging. Credentialed Gemini execution, live UI integration, Firestore runtime evidence, and Google Cloud deployment remain unverified.
 
 ## Target proposition
 

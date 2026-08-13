@@ -15,7 +15,7 @@
 - Mandatory model: Gemini 3.5 or newer through Gemini API or Vertex AI
 - Mandatory agent framework: at least one of Google ADK, Google GenAI SDK, Antigravity SDK, or Genkit
 - Mandatory infrastructure: at least one Google Cloud infrastructure service such as Cloud Run, Cloud SQL, Firestore, GKE, or Pub/Sub
-- Select one category; provisional choice: **The Taskmaster**
+- Select one category; selected choice: **The Collaborative Partner**
 - Submission requires repository access, reproducible spin-up instructions, an accurate architecture diagram, and an approximately four-minute demo video
 - The demo must show the app in action and visible proof that the backend ran on Google Cloud
 - Judging rubric: Innovation & Operational Utility 40%; Architectural Discipline & Tech Stack 30%; Demo & Production Readiness 30%
@@ -24,7 +24,7 @@ The corrective directive additionally requires the final public video to be no l
 
 ## Category fit
 
-The Taskmaster is the provisional category because the user's friction is manually turning a large hackathon ecosystem into useful project, learning, and networking decisions. The intended agent completes a bounded, multi-step research and synthesis workflow and progresses from intake to a sourced Field Report with minimal hand-holding.
+The Collaborative Partner is the selected category because Signal Scout should guide the builder through sourced findings, ask targeted clarifying questions, capture feedback, and use prior scan context to adapt later project, learning, and collaboration recommendations. It must still perform a bounded multi-step workflow and cannot qualify through conversational copy alone.
 
 Signal Scout must not be described as multi-agent unless independently scoped agents with real routing and recovery are implemented.
 

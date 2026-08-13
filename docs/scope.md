@@ -1,6 +1,6 @@
 # Scope
 
-> **Current status:** the repository contains a local deterministic mock prototype only. Items below labelled target are not yet implemented.
+> **Current status:** the repository contains a deterministic mock UI and a tested local API spine. Credentialed Gemini/Firestore execution, live UI integration, and Cloud Run proof remain incomplete.
 
 ## Hackathon MVP target
 
@@ -19,6 +19,10 @@
 - in-memory session state
 - synthetic fixtures for tests and offline UI development
 - presentational Activity, Memory, and report views
+- Node/TypeScript scan API with bounded retrieval and explicit lifecycle states
+- Google GenAI SDK adapter targeting `gemini-3.5-flash`, tested through an injected model boundary but not yet called with credentials
+- optional Firestore adapter using Application Default Credentials, not yet integration-tested
+- multi-stage container definition
 
 ## Deferred until the required loop works
 

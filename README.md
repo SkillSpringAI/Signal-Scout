@@ -1,6 +1,6 @@
 # Signal Scout
 
-> **Current status (verified 13 August 2026):** Signal Scout is a tested local React and TypeScript prototype using deterministic synthetic fixtures and a mock agent service. Gemini, a qualifying Google agent framework, backend execution, live source ingestion, asynchronous jobs, Firestore, and Google Cloud deployment are planned but not yet implemented.
+> **Current status (updated 13 August 2026):** Signal Scout has a tested local React/TypeScript mock UI plus a new Node/TypeScript API spine with bounded public retrieval, job/activity state, schema validation, Google GenAI SDK integration code, an optional Firestore adapter, and container packaging. A credentialed Gemini 3.5 Flash run, Firestore integration run, UI-to-live-API path, Cloud Run deployment, and cloud evidence are not yet verified.
 
 Signal Scout's target hackathon capability is to autonomously turn a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
 
@@ -15,12 +15,12 @@ official hackathon URL + builder context + optional project URLs
 ## Hackathon alignment
 
 - Event: [All Things Agentic Hackathon](https://allthingsagentichackathon.devpost.com/)
-- Provisional category: **The Taskmaster**
+- Selected category: **The Collaborative Partner**
 - Mandatory runtime: Gemini 3.5 or newer, at least one qualifying Google agent framework, and at least one Google Cloud infrastructure service
 - Project choice: TypeScript; TypeScript is not a hackathon requirement
-- Current mode: local deterministic mock only; synthetic data is visibly labelled and must not be presented as field research
+- Current UI mode: local deterministic mock; the new live API path remains unverified until a credentialed run succeeds
 
-The Taskmaster fits because Signal Scout targets a bounded multi-step research and synthesis chore: turning a large hackathon ecosystem into useful project, learning, and networking decisions with minimal hand-holding.
+The Collaborative Partner fits because Signal Scout guides a builder through sourced findings, asks for missing context, captures feedback, and carries that context into later project, learning, and collaboration decisions. The target remains a working research workflow rather than a text-only chatbot.
 
 ## Authoritative project documents
 

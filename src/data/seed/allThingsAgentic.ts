@@ -8,7 +8,7 @@ export const allThingsAgentic: Domain = {
   sourceUrl: 'https://allthingsagentichackathon.devpost.com/',
   sourceIds: ['source-event-official', 'source-event-rules', 'source-event-resources', 'source-event-faq'],
   researchStatus: 'verified',
-  researchNotes: ['Official Devpost materials were re-checked on 2026-08-13.', 'The Taskmaster is provisional. Reconfirm dates and video details immediately before submission.'],
+  researchNotes: ['Official Devpost materials were re-checked on 2026-08-13.', 'The Collaborative Partner was selected on 2026-08-13 after reviewing the official track descriptions. Reconfirm dates and video details immediately before submission.'],
   constraints: ['Select one official category', 'Use Gemini 3.5 or newer via Gemini API or Vertex AI', 'Use at least one qualifying Google agent framework', 'Use at least one Google Cloud infrastructure service', 'Provide repository access, reproducible setup, architecture diagram, demo video, and visible Google Cloud proof'],
   judgingCriteria: ['Innovation & Operational Utility — 40%', 'Architectural Discipline & Tech Stack — 30%', 'Demo & Production Readiness — 30%'],
   requiredTechnologies: ['Gemini 3.5+ via Gemini API or Vertex AI', 'Google ADK, Google GenAI SDK, Antigravity SDK, or Genkit', 'Google Cloud infrastructure service such as Cloud Run, Firestore, Cloud SQL, GKE, or Pub/Sub'],

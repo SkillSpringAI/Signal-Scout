@@ -1,6 +1,6 @@
 # Architecture
 
-> **Current status:** tested local React and TypeScript prototype using deterministic synthetic fixtures and a mock agent service. The target backend and Google integrations below are planned, not implemented.
+> **Current status:** the local mock UI remains intact. A Node/TypeScript API, safe retrieval boundary, job runner, Google GenAI SDK adapter, structured-output validation, optional Firestore store, and container build are implemented and tested with injected fakes. Real Gemini, Firestore, and Cloud Run execution remain unverified.
 
 ## Implemented local architecture
 
@@ -21,7 +21,7 @@ Verified current components:
 - synthetic event/project fixtures
 - local Activity, Memory review, and Field Report surfaces
 
-There is no Node backend, network retrieval, model call, durable persistence, asynchronous worker, or cloud deployment in the current code.
+The API and retrieval/model boundaries now exist. There is no verified credentialed model call, durable Firestore run, production queue, or cloud deployment yet. Background execution is currently process-local through `setImmediate`, so it is not durable across server restarts.
 
 ## Immediate target architecture
 

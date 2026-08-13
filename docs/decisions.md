@@ -2,11 +2,17 @@
 
 This is an append-only record. Superseded decisions remain labelled so they cannot be mistaken for current instructions.
 
-## 13 August 2026 — Submission category
+## 13 August 2026 — Submission category (superseded)
 
-**Status:** active.
+**Status:** superseded later on 13 August 2026.
 **Decision:** use **The Taskmaster** provisionally.
 **Reason:** Signal Scout targets a bounded, multi-step research and synthesis chore and should progress from intake to a sourced Field Report with minimal hand-holding.
+
+## 13 August 2026 — Final category direction
+
+**Status:** active.
+**Decision:** use **The Collaborative Partner**.
+**Reason:** closer inspection of the official tracks showed a better fit with guided discovery, targeted clarification, feedback capture, and continuity across a builder's project, learning, and collaboration decisions. The implementation must demonstrate those behaviors rather than rely on a chatbot-style description.
 
 ## 13 August 2026 — Canonical product claim
 
