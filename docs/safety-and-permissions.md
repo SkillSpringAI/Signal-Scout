@@ -1,148 +1,23 @@
-# Safety And Permissions
+# Safety and Permissions
 
-## Principle
+> **Current status:** permission modes are partly presentational. The local route policy enforces approval for mock memory review, but it does not provide a general tool-execution security boundary.
 
-Signal Scout should practice bounded autonomy.
+## Enforceable MVP policy
 
-```txt
-observe -> suggest -> approve -> log
-```
+- Public-source retrieval, extraction, synthesis, and report generation may run inside a user-started scan once the backend exists.
+- Durable memory changes require explicit approval. The current prototype implements this only for its session-local mock memory review.
+- External messaging is draft-only and out of scope.
+- Publishing, spending, infrastructure mutation from the application, and automatic outreach are out of scope.
+- Private or logged-in data retrieval, impersonation, and mass messaging are prohibited.
 
-The agent can explore public or user-provided information and produce recommendations. Anything with external impact needs explicit approval.
+## Current UI modes
 
-## Permission Modes
+The `observe`, `suggest`, and `act_with_approval` selector communicates intent but does not comprehensively gate route execution. The UI and documentation must not imply otherwise. Before the live route exists, enforcement must happen server-side before any affected operation runs.
 
-### Observe
+## Target retrieval safeguards
 
-Allowed:
+The planned live path must restrict accepted URLs and response sizes, apply explicit timeouts and retry limits, treat retrieved text as untrusted data rather than instructions, validate model output, and preserve partial results and visible failure states.
 
-- read public pages
-- analyze pasted text
-- summarize hackathon rules
-- summarize user-provided project links
-- extract signals and patterns
-- create temporary session notes
+## Deferred governance
 
-Not allowed:
-
-- contact people
-- submit forms
-- join events
-- scrape private or logged-in data
-- impersonate the user
-- write long-term memory without review
-
-### Suggest
-
-Allowed:
-
-- recommend projects to study
-- recommend people or teams to follow up with
-- draft outreach messages
-- suggest project pivots
-- suggest learning plans
-- propose memory entries
-
-Not allowed:
-
-- send messages
-- post publicly
-- modify repositories
-- deploy infrastructure
-- spend money
-- store sensitive personal data
-
-### Act With Approval
-
-Allowed only after explicit user confirmation:
-
-- save long-term memory
-- export a report
-- create a public post draft
-- deploy infrastructure
-- send or publish content if future integrations are added
-
-## External-Impact Checks
-
-Before any tool runs, check whether it:
-
-- contacts another person
-- publishes content
-- submits a form
-- modifies user data
-- modifies a repository
-- creates or changes cloud infrastructure
-- spends money or consumes notable credits
-- reads private data
-- stores long-term memory
-
-If yes, require approval or block the action.
-
-## Blocked Actions
-
-The agent should refuse or redirect requests to:
-
-- scrape account-only data without authorization
-- mass-message participants
-- impersonate the user
-- collect unrelated personal information
-- rank people using sensitive traits
-- submit hackathon entries automatically
-- spend credits without confirmation
-- access private repos or docs without permission
-- produce spammy outreach
-
-## Memory Rules
-
-Memory must be:
-
-- inspectable
-- editable
-- deletable
-- tied to evidence when practical
-- saved only after review or clear user consent
-
-Memory should avoid:
-
-- sensitive personal data
-- unnecessary third-party personal details
-- private information from logged-in pages
-- hidden inferences the user cannot inspect
-
-## Activity Log Rules
-
-Every meaningful agent task should create an Activity entry.
-
-Activity entries should include:
-
-- task title
-- route
-- status
-- permission mode
-- sources used
-- outputs produced
-- memory changes proposed or saved
-- approvals requested
-- fallback events
-- errors
-
-## Outreach Rules
-
-For MVP, outreach is draft-only.
-
-Drafts should:
-
-- be specific
-- be humane
-- explain genuine interest
-- avoid exaggeration
-- avoid pressure
-- avoid mass-send language
-
-Sending messages is out of scope unless a future integration is added and the user explicitly approves the action.
-
-## Demo Framing
-
-The safety story is part of the product:
-
-> Signal Scout can explore and synthesize independently, but it leaves a visible trail and asks permission before affecting people, accounts, infrastructure, spending, publishing, or memory.
+General external-action approval, repository mutation, cloud deployment from the app, generalized long-term memory, and broader governance architectures are post-hackathon work unless directly required and demonstrably enforced.

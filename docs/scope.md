@@ -1,95 +1,39 @@
-# Scope Guardrails
+# Scope
 
-## MVP Goal
+> **Current status:** the repository contains a local deterministic mock prototype only. Items below labelled target are not yet implemented.
 
-Prove that a builder can enter a hackathon context, inspect the surrounding project field, and leave with a clearer project strategy, learning plan, and networking shortlist.
+## Hackathon MVP target
 
-## In Scope
+- one official hackathon URL plus builder context and optional public project URLs
+- bounded retrieval, extraction, validation, clustering, ranking, and Field Report generation
+- Gemini 3.5+ used materially through one qualifying Google agent framework
+- Node/TypeScript backend with server-side credentials
+- Cloud Run deployment and one justified Google Cloud persistence service
+- source references, collection timestamps, actual Activity events, and honest partial-failure handling
+- deterministic mock mode retained and visibly labelled
 
-- local web app prototype
-- hackathon domain pack
-- manual hackathon URL or pasted-text intake
-- manual project links or seed demo dataset
-- event brief
-- project/item cards
-- signal extraction
-- pattern clustering
-- opportunity ranking
-- learning and networking plan
-- outreach drafts that are not sent automatically
-- Activity review area
-- inspectable memory panel
-- permission states
-- fallback states
-- final Field Report view
-- mock agent responses before Gemini setup is ready
+## Current implementation
 
-## Out of Scope for MVP
+- local React/Vite/TypeScript UI
+- in-process deterministic mock service
+- in-memory session state
+- synthetic fixtures for tests and offline UI development
+- presentational Activity, Memory, and report views
 
-- automated messaging
-- automatic Devpost submission
-- account creation
-- private or logged-in scraping
-- general-purpose web crawling
-- full CRM functionality
-- browser extension
-- payment flows
-- multi-user teams
-- live collaboration
-- production-grade auth
-- large-scale background indexing
-- fully automated cloud deployment from the app
-- arbitrary third-party integrations
+## Deferred until the required loop works
 
-## Later, If Useful
+- multiple domain packs, broad web crawling, Devpost-wide indexing, and social graphs
+- automated outreach, CRM behavior, publishing, or messaging
+- multiple cooperating agents
+- generalized permission or capability-token systems
+- Google authentication, large UI redesigns, and speculative enterprise features
+- additional Google models beyond the required Gemini integration
+- import/export systems and production-grade authentication
 
-- Google account auth
-- direct Gemini-backed extraction
-- Cloud Run deployment
-- Firestore persistence
-- Cloud Tasks or Pub/Sub scans
-- Devpost-specific ingestor
-- GitHub ingestor
-- conference domain pack
-- research domain pack
-- open-source domain pack
-- export to Markdown or PDF
-- richer evaluation dashboard
+## Prohibited for the submission workflow
 
-## Non-Negotiables
-
-- The app must preserve a visible Activity trail.
-- Memory must be inspectable and editable.
-- External-impact actions require explicit approval.
-- Recommendations must include reasons.
-- Failed extraction should preserve partial value.
-- The system should work with seed data even if live pages fail.
-- The internal model should remain domain-neutral where practical.
-
-## Scope Creep Tests
-
-Before adding a feature, ask:
-
-1. Does this help the first hackathon demo?
-2. Does this strengthen the reusable discovery framework?
-3. Can it be shown clearly in under four minutes?
-4. Does it fit the observe/suggest/approve/log trust model?
-5. Can it be built without delaying the core Field Report?
-
-If the answer is mostly no, defer it.
-
-## MVP Success Criteria
-
-The MVP succeeds if a demo can show:
-
-- a hackathon context loaded
-- user interests captured
-- projects or seed items analyzed
-- signals extracted
-- patterns clustered
-- opportunities ranked
-- memory updated with review
-- Activity log populated
-- Field Report generated
-
-The MVP does not need perfect live scraping to succeed.
+- exposing model or cloud credentials to the browser
+- presenting synthetic people, projects, scores, trends, gaps, or recommendations as real evidence
+- private/logged-in scraping or arbitrary URL crawling
+- automatic messaging, publishing, spending, or infrastructure mutation from the application
+- claims of production readiness without evidence

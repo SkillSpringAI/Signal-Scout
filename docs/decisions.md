@@ -1,103 +1,44 @@
-# Decisions
+# Decision Record
 
-This file records project decisions so we do not keep reopening the same questions while building.
+This is an append-only record. Superseded decisions remain labelled so they cannot be mistaken for current instructions.
 
-## Product Positioning
+## 13 August 2026 — Submission category
 
-Decision:
+**Status:** active.
+**Decision:** use **The Taskmaster** provisionally.
+**Reason:** Signal Scout targets a bounded, multi-step research and synthesis chore and should progress from intake to a sourced Field Report with minimal hand-holding.
 
-Signal Scout is a reusable agentic discovery framework, first demonstrated as a hackathon scouting assistant.
+## 13 August 2026 — Canonical product claim
 
-Reason:
+**Status:** active.
+**Decision:** describe the autonomous sourced workflow as the target submission capability until it works end to end. Describe the current product as a deterministic local mock prototype.
 
-The hackathon use case gives the demo focus, while the domain-neutral model makes the repo easier to fork for conferences, research, open-source scouting, career exploration, and other discovery workflows.
+## 13 August 2026 — Implementation order
 
-## First Preset
+**Status:** active.
+**Decision:** follow [hackathon-execution-plan.md](hackathon-execution-plan.md). Establish the backend, qualifying Google agent framework, Gemini 3.5+, provenance, Cloud Run, and persistence spine before optional expansion.
 
-Decision:
+## 13 August 2026 — Technology choices
 
-The first domain pack is `hackathon`.
+**Status:** active.
+**Decision:** TypeScript remains a project choice. The intended required stack is Gemini 3.5+ through a qualifying Google agent framework, with Cloud Run and Firestore as the planned Google Cloud services. Runtime evidence is still required.
 
-Reason:
+## 13 August 2026 — Synthetic data
 
-It fits the All Things Agentic Hackathon, supports a strong demo story, and connects to the user's actual goal: learning from other projects and finding meaningful networking opportunities.
+**Status:** active.
+**Decision:** retain unmistakably labelled synthetic fixtures for deterministic tests and offline UI work. They are not field evidence and cannot support real trends, gaps, outreach, or measured relevance claims.
 
-## Primary Language
+## Earlier — Reusable discovery framework
 
-Decision:
+**Status:** superseded for hackathon execution.
+The generalized framework and multiple-domain direction is deferred until the submission loop works.
 
-Use TypeScript across the app.
+## Earlier — Mock-first integration order
 
-Reason:
+**Status:** superseded.
+The former plan to complete broad mock workflow, permissions, memory, and UI foundations before Gemini and Cloud is no longer valid.
 
-The project needs a polished web interface, structured route outputs, schemas, task logs, permissions, and shared types. TypeScript keeps frontend and backend aligned.
+## Earlier — Broad permission modes
 
-## App Framework
-
-Decision:
-
-Use Vite + React for the frontend and a Node TypeScript API service for the backend.
-
-Reason:
-
-This keeps the prototype fast, explicit, and easy to reason about. It also gives a clear path to serving the app and API from Cloud Run.
-
-## Agent Integration Order
-
-Decision:
-
-Start with mocked structured agent outputs, then add Gemini later.
-
-Reason:
-
-The product value depends on workflow, review, memory, and reporting. Mock mode lets us build those foundations before credits and cloud setup are finished.
-
-## Cloud Target
-
-Decision:
-
-Use Google Cloud Run and Firestore for the cloud version.
-
-Reason:
-
-This aligns with hackathon requirements while keeping deployment and persistence understandable.
-
-## Activity Review
-
-Decision:
-
-Activity is a first-class user-facing area, not a debug log.
-
-Reason:
-
-The user needs to review what the agent has done. This also supports trust, permission boundaries, fallback visibility, and judging criteria around production readiness.
-
-## Permission Model
-
-Decision:
-
-Use `observe`, `suggest`, and `act_with_approval` modes.
-
-Reason:
-
-The agent should be useful without being reckless. It can inspect and synthesize, but external impact requires approval.
-
-## MVP Boundary
-
-Decision:
-
-The MVP does not require perfect live scraping.
-
-Reason:
-
-Manual links, pasted text, and seed data are enough to prove the workflow. This protects the demo from brittle websites and keeps the build focused.
-
-## Final Artifact
-
-Decision:
-
-The main generated artifact is a `Field Report`.
-
-Reason:
-
-It gives the product a clear output and makes the demo feel complete.
+**Status:** narrowed.
+Only mock memory review has a concrete approval check. Broader permission architecture is deferred until it can be enforced server-side.

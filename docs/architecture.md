@@ -1,224 +1,43 @@
-# Architecture Notes
+# Architecture
 
-## Primary Language
+> **Current status:** tested local React and TypeScript prototype using deterministic synthetic fixtures and a mock agent service. The target backend and Google integrations below are planned, not implemented.
 
-Use TypeScript across the app.
+## Implemented local architecture
 
-Reasons:
-
-- shared types between frontend, backend, routes, memory, and tasks
-- strong fit for React and Node
-- clean schema validation with libraries like Zod
-- practical integration path for Google GenAI and Google Cloud libraries
-- fast hackathon development without splitting the project across languages
-
-## Recommended Stack
-
-Frontend:
-
-- React
-- TypeScript
-- Vite
-
-Backend:
-
-- Node
-- TypeScript API routes or service
-- Express-style structured route handlers
-
-Agent:
-
-- Gemini through Google GenAI SDK or ADK
-- mocked agent service first
-- real model calls later
-
-Storage:
-
-- local JSON or in-memory store for first prototype
-- Firestore for cloud version
-
-Cloud:
-
-- Cloud Run for a single web/API service
-- Firestore for durable data
-- Cloud Tasks or Pub/Sub for async scans
-- Cloud Storage for optional cached snapshots or report exports
-
-## Framework Decision
-
-Use Vite + React for the frontend and a Node API service for the backend.
-
-Reasons:
-
-- faster local prototype setup
-- less framework magic during a hackathon
-- clear separation between UI, agent routes, and task ledger
-- easy mock-agent development before cloud setup
-- straightforward Cloud Run path by serving the built frontend and API from one Node service later
-
-Next.js is a reasonable alternative, but the first build should optimize for explicit architecture and quick iteration rather than framework conventions.
-
-## Core Data Flow
-
-```txt
-User input
-  -> route selection
-  -> permission check
-  -> task ledger entry
-  -> source ingestion
-  -> structured extraction
-  -> signal generation
-  -> pattern clustering
-  -> opportunity ranking
-  -> memory review
-  -> field report
-  -> activity log
+```text
+React/Vite UI
+  -> in-process MockAgent
+  -> in-memory application store
+  -> deterministic synthetic fixtures
+  -> Activity, Memory, and Field Report views
 ```
 
-## Core Collections
+Verified current components:
 
-`domains`
-Hackathons or other ecosystems.
+- React, Vite, and TypeScript browser application
+- shared TypeScript types and lightweight runtime validation
+- deterministic mock route service
+- session-only in-memory store
+- synthetic event/project fixtures
+- local Activity, Memory review, and Field Report surfaces
 
-`items`
-Projects, talks, papers, repos, grants, or other analyzed objects.
+There is no Node backend, network retrieval, model call, durable persistence, asynchronous worker, or cloud deployment in the current code.
 
-`actors`
-People, teams, organizations, sponsors, maintainers, or authors.
+## Immediate target architecture
 
-`signals`
-Extracted observations.
+```text
+React UI
+  -> Node/TypeScript API on Cloud Run
+     -> qualifying Google agent framework
+     -> Gemini 3.5+ with schema-validated output
+     -> allowlisted public-source retrieval
+     -> Firestore for scan/activity/report state
+```
 
-`patterns`
-Clusters of signals.
+The target must keep credentials server-side; treat retrieved content as untrusted; enforce URL, size, and timeout limits; validate model output; preserve provenance and collection timestamps; and expose completed, partial, failed, cancelled, and needs-input terminal states.
 
-`opportunities`
-Ranked possible actions.
+TypeScript is a project choice, not a hackathon requirement. Cloud Run and Firestore are the current intended infrastructure choices, subject to verification during implementation.
 
-`plans`
-Generated learning, networking, or build plans.
+## Mock boundary
 
-`memoryEntries`
-Inspectable user-owned memories.
-
-`tasks`
-Agent tasks and workflow status.
-
-`taskEvents`
-Step-by-step task activity.
-
-`approvals`
-User approval requests and decisions.
-
-## Domain Packs
-
-Keep domain-specific behavior separate from the reusable core.
-
-A domain pack can define:
-
-- accepted source types
-- item labels
-- actor labels
-- extraction fields
-- ranking criteria
-- prompt templates
-- enabled routes
-- output templates
-
-Initial domain pack:
-
-- `hackathon`
-
-Future domain packs:
-
-- `conference`
-- `research`
-- `open_source`
-- `career`
-- `accelerator`
-
-## Route Design
-
-Routes should be named generically in code:
-
-- `intake`
-- `domainAnalyze`
-- `itemScout`
-- `patternMap`
-- `relationshipScout`
-- `opportunityRefine`
-- `learningPlan`
-- `fieldReport`
-
-The UI may show hackathon-specific language when the active domain pack is `hackathon`.
-
-## Agent Service Strategy
-
-Start with a mock agent service that returns deterministic structured outputs.
-
-This lets us build:
-
-- UI
-- data model
-- task ledger
-- Activity review
-- memory review
-- fallback behavior
-- report output
-
-When credits/API setup is ready, replace mock calls with Gemini-backed calls behind the same interface.
-
-## Agent Output Requirements
-
-Agent outputs should be structured, validated, and reviewable.
-
-Each recommendation should include:
-
-- title
-- explanation
-- evidence
-- confidence
-- related sources
-- related memory, if any
-
-## Fallback Strategy
-
-Use fallback logic at three levels.
-
-Tool-level:
-
-- retry simple extraction once
-- store raw summary if structured extraction fails
-- mark missing fields clearly
-
-Route-level:
-
-- produce partial output when one step fails
-- ask the user for the smallest missing input
-- mark low-confidence sections
-
-Product-level:
-
-- support manual links and pasted text
-- support seed demo data
-- allow the user to continue without live scraping
-
-## Review Surface
-
-The `Activity` area is a first-class part of the app, not a debug page.
-
-It should show:
-
-- what the agent did
-- what sources it used
-- what tools/routes ran
-- what outputs were produced
-- what memory changes were proposed
-- what fallbacks occurred
-- what approvals are pending
-
-## Field Report
-
-The Field Report is the main polished output.
-
-It should be generated from stored domain, item, signal, pattern, opportunity, plan, memory, and activity data rather than from a single freeform prompt.
+The mock service remains for deterministic tests, failure fixtures, and offline UI development. It must be visibly distinguishable from live mode and cannot serve as submission proof.

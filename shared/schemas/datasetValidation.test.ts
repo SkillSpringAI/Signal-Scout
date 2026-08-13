@@ -19,9 +19,9 @@ describe('demo dataset', () => {
     expect(fallbackFixtures.every((fixture) => fixture.preservedValue.length > 0)).toBe(true)
   })
 
-  it('requires source references for the researched domain and illustrative projects', () => {
+  it('requires verified official sources for the domain and source references for synthetic projects', () => {
     expect(demoDataset.sources.length).toBeGreaterThan(0)
-    expect(demoDataset.domains[0]?.researchStatus).toBe('partially_verified')
+    expect(demoDataset.domains[0]?.researchStatus).toBe('verified')
     expect(demoDataset.items.every((item) => item.sourceIds.length > 0)).toBe(true)
     expect(demoDataset.signals.every((signal) => signal.evidence.every((evidence) => evidence.sourceIds.length > 0))).toBe(true)
   })

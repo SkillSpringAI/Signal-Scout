@@ -1,101 +1,52 @@
 # Signal Scout
 
-Signal Scout is a reusable agentic discovery framework, first demonstrated as a hackathon scouting assistant.
+> **Current status (verified 13 August 2026):** Signal Scout is a tested local React and TypeScript prototype using deterministic synthetic fixtures and a mock agent service. Gemini, a qualifying Google agent framework, backend execution, live source ingestion, asynchronous jobs, Firestore, and Google Cloud deployment are planned but not yet implemented.
 
-The product helps builders turn a public ecosystem into clearer learning, networking, and project decisions. For the first preset, that ecosystem is a hackathon: the app analyzes event rules, project examples, themes, builders, and opportunities, then produces a field report and practical next steps.
+Signal Scout's target hackathon capability is to autonomously turn a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
 
-## Product Thesis
+That proposition remains a **target**, not a claim about the current prototype. The submission must prove this bounded loop with real public input:
 
-Hackathons are not only useful because of the submitted project. They are also useful because they expose builders to other ideas, tools, people, and ways of thinking.
-
-Signal Scout turns that passive exposure into an active loop:
-
-```txt
-explore -> extract -> cluster -> rank -> plan -> review
+```text
+official hackathon URL + builder context + optional project URLs
+  -> retrieve -> extract -> validate -> cluster -> rank
+  -> generate Field Report -> expose activity and evidence
 ```
 
-The agent should feel like a thinking partner, not a black-box scraper.
+## Hackathon alignment
 
-## First Use Case
+- Event: [All Things Agentic Hackathon](https://allthingsagentichackathon.devpost.com/)
+- Provisional category: **The Taskmaster**
+- Mandatory runtime: Gemini 3.5 or newer, at least one qualifying Google agent framework, and at least one Google Cloud infrastructure service
+- Project choice: TypeScript; TypeScript is not a hackathon requirement
+- Current mode: local deterministic mock only; synthetic data is visibly labelled and must not be presented as field research
 
-The first preset is `Hackathon Scout`.
+The Taskmaster fits because Signal Scout targets a bounded multi-step research and synthesis chore: turning a large hackathon ecosystem into useful project, learning, and networking decisions with minimal hand-holding.
 
-It helps a builder:
+## Authoritative project documents
 
-- understand a hackathon's rules, judging criteria, and strategic constraints
-- analyze public projects or user-provided project links
-- extract signals from the field
-- cluster repeated patterns and underexplored gaps
-- find projects and people worth learning from
-- refine their own project idea
-- produce a learning and networking plan
+- [Hackathon execution plan](docs/hackathon-execution-plan.md) — the only active implementation sequence
+- [Submission compliance](docs/submission-compliance.md) — evidence-based checklist
+- [Architecture](docs/architecture.md) — implemented and immediate target architecture
+- [Scope](docs/scope.md) — in-scope, deferred, and prohibited work
+- [Safety and permissions](docs/safety-and-permissions.md) — policy matching current enforcement
+- [Product blueprint](docs/blueprint.md) — focused product intent
+- [Decisions](docs/decisions.md) — dated decision record
 
-## Durable Shape
+Older build and implementation roadmaps are retained only as clearly marked historical records and are not active instructions.
 
-The repo should stay forkable beyond hackathons.
+## Local prototype
 
-Core abstraction:
-
-```txt
-Domain -> Items -> Signals -> Patterns -> Opportunities -> Plan
+```bash
+npm install
+npm run dev
 ```
 
-For the initial demo:
+Verification:
 
-```txt
-Hackathon -> Projects -> Signals -> Patterns -> Build/Networking Opportunities -> Learning Plan
+```bash
+npm run typecheck
+npm test
+npm run build
 ```
 
-See [docs/blueprint.md](docs/blueprint.md) for the product blueprint.
-
-## Current Decisions
-
-- Primary language: TypeScript
-- Frontend: Vite + React + TypeScript
-- Backend: Node + TypeScript API, Express-style service
-- Agent layer: Gemini through Google GenAI SDK or ADK
-- Cloud target: Google Cloud Run
-- Storage target: Firestore
-- Async target: Cloud Tasks or Pub/Sub
-- First implementation mode: local prototype with mocked agent outputs
-
-See [docs/architecture.md](docs/architecture.md) for architecture notes.
-
-## Scope Guardrail
-
-The MVP is not a general web crawler, CRM, social platform, or automated outreach tool.
-
-The MVP should prove one thing:
-
-> A builder can enter a hackathon context, inspect the surrounding project field, and leave with a clearer project strategy, learning plan, and networking shortlist.
-
-See [docs/scope.md](docs/scope.md) for what is in and out.
-
-## Safety Model
-
-The agent operates through bounded autonomy:
-
-```txt
-observe -> suggest -> approve -> log
-```
-
-It can inspect public or user-provided information, synthesize recommendations, and draft next steps. Anything that contacts people, publishes content, spends money, modifies infrastructure, or writes long-term memory requires explicit approval.
-
-See [docs/safety-and-permissions.md](docs/safety-and-permissions.md).
-
-## Build Phases
-
-Credits and cloud setup can wait. The foundation can start locally with:
-
-- domain model and schemas
-- mock agent routes
-- Activity review area
-- memory panel
-- hackathon domain pack
-- seed demo dataset
-- field report output
-- permission and fallback states
-
-See [docs/build-plan.md](docs/build-plan.md).
-
-For the rough phase-by-phase implementation path and likely file layout, see [docs/implementation-roadmap.md](docs/implementation-roadmap.md).
+The mock service and synthetic fixtures support deterministic tests and offline UI development. They are not the intended submission workflow or judging proof.
