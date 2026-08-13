@@ -53,3 +53,7 @@ npm run build
 The mock service and synthetic fixtures support deterministic tests and offline UI development. They are not the intended submission workflow or judging proof.
 
 Deployment configuration and reproducible verification evidence are recorded in [Gate 2 runtime guide](docs/gate-2-runtime.md).
+
+## License
+
+Signal Scout is available under the [MIT License](LICENSE). Copyright (c) 2026 Isac Thompson.

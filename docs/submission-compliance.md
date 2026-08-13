@@ -2,7 +2,7 @@
 
 Checked items require runtime or submission evidence, not intent or documentation alone. Last reviewed: 13 August 2026.
 
-- [ ] Project creation date eligibility verified
+- [x] Project creation date eligibility verified: official build window began 3 August 2026; local folder, first project thread, and first Git commits are dated 9 August 2026 (evidence ledger, 13 August 2026)
 - [x] Official category selected: The Collaborative Partner
 - [ ] The Collaborative Partner selection reconfirmed in the final Devpost submission
 - [x] Gemini 3.5+ verified in local runtime (`gemini-3.5-flash`, 13 August 2026)

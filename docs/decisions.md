@@ -34,6 +34,12 @@ This is an append-only record. Superseded decisions remain labelled so they cann
 **Status:** active.
 **Decision:** retain unmistakably labelled synthetic fixtures for deterministic tests and offline UI work. They are not field evidence and cannot support real trends, gaps, outreach, or measured relevance claims.
 
+## 13 August 2026 — Repository license
+
+**Status:** active.
+**Decision:** license Signal Scout under the canonical MIT License with `Copyright (c) 2026 Isac Thompson`.
+**Reason:** Signal Scout is a hackathon and semi-personal tool for which broad reuse, modification, distribution, and commercial use are acceptable when the copyright and permission notice are retained. PathWarden’s separate custom license does not apply because no PathWarden implementation or asset was identified in Signal Scout.
+
 ## Earlier — Reusable discovery framework
 
 **Status:** superseded for hackathon execution.
