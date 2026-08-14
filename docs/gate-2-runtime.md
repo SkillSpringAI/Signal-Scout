@@ -49,6 +49,20 @@ Terminal states are `completed`, `partial`, `failed`, `cancelled`, and `needs_in
 - One feedback turn persisted an adapted sourced recommendation and one clarifying question; a second feedback request returned HTTP 409.
 - Two earlier deployed scans safely ended `partial` when semantic validation rejected model output; no credential, build, Firestore, or container failure occurred.
 
+## Constraint-grounding revision — 14 August 2026
+
+- Public revision `signal-scout-00007-vb6` serves 100% of traffic.
+- Scaling remains minimum 0 and maximum 2; the dedicated runtime identity and Secret Manager reference are unchanged.
+- The analysis and feedback prompts no longer receive Signal Scout runtime technologies as analyzed-project constraints.
+- Project constraints are derived only from explicit builder context or collected project evidence.
+- Collected sources persist an `event` or `project` evidence role; the field remains optional so earlier Firestore records remain readable.
+- Combined requirement and current-project claims must cite both event and project evidence. Unsupported absence/current-state claims are rejected.
+- Preflight passed with 51 tests before deployment.
+- Neutral CALL-E scan `d6f4a2bb-ae51-4630-8323-98333bb35113` completed without Signal Scout runtime leakage or unsupported project-state claims.
+- Rules-plus-repository scan `192b9f41-d20a-4727-b27b-95e98bbce8bf` completed with two evidence roles and dual-source grounding for combined gaps.
+- One bounded feedback turn persisted on `192b9f41-d20a-4727-b27b-95e98bbce8bf`, preserved the verified project stack, and cited both sources.
+- No error-severity logs were observed for revision `signal-scout-00007-vb6` during deployed verification.
+
 ## Local live-mode setup
 
 1. Copy `.env.example` to `.env` without committing it.

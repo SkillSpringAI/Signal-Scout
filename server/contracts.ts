@@ -10,6 +10,7 @@ export type ScanRequest = z.infer<typeof scanRequestSchema>
 
 export const sourceRecordSchema = z.object({
   url: z.string().url(),
+  evidenceRole: z.enum(['event', 'project']).optional(),
   title: z.string().min(1).max(300),
   collectedAt: z.string().datetime(),
   contentType: z.string().max(100),

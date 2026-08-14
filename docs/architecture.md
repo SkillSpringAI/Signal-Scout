@@ -2,6 +2,8 @@
 
 > **Current status:** the live workflow is deployed and verified on Cloud Run. It uses the Google GenAI SDK with Gemini 3.5 Flash, Firestore Native persistence, bounded public retrieval, structured and semantic validation, and a server-side Secret Manager reference. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
 
+The maintained visual submission artifact is [Signal Scout Architecture Diagram](architecture-diagram.md). It was verified against Cloud Run revision `signal-scout-00007-vb6` on 14 August 2026 and should change only when implemented component boundaries or data flows change.
+
 ## Implemented architecture
 
 ```text

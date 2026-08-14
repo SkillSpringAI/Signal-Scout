@@ -9,7 +9,7 @@
 | Public service | verified | `https://signal-scout-212660130578.australia-southeast1.run.app` |
 | Google Cloud project | verified | `gen-lang-client-0047054532` |
 | Cloud Run region | verified | `australia-southeast1` |
-| Deployed revision | verified | `signal-scout-00004-9hl`, 100% traffic on 13 August 2026 |
+| Deployed revision | verified | `signal-scout-00007-vb6`, 100% traffic on 14 August 2026 |
 | Repository checkpoint | verified | `16d4df2` / `checkpoint-gate2-cloud-run-deployed` |
 | Model identifier | verified | `gemini-3.5-flash` |
 | Agent framework | verified | Google GenAI SDK |
@@ -31,6 +31,8 @@
 | `81793abb-5007-4213-9434-5bda3857e392` | Cloud Run revision 3 | partial | bounded correction still failed semantic terminology rule | failure evidence candidate |
 | `4b979d67-e80b-4e77-9127-1a65907e165b` | Cloud Run revision 3 | completed + diagnostic feedback | verified full path; later received two feedback entries before one-turn enforcement | diagnostic only; do not use as bounded-loop proof |
 | `0938e5bf-4320-4a87-8455-2b95ecd5cb15` | Cloud Run revision 4 | completed + feedback | final deployed scan, persisted analysis, one feedback turn, second request HTTP 409 | current golden-path candidate |
+| `d6f4a2bb-ae51-4630-8323-98333bb35113` | Cloud Run revision 7 | completed | neutral CALL-E regression; no Signal Scout runtime leak or unsupported absence claim | current neutral-grounding proof |
+| `192b9f41-d20a-4727-b27b-95e98bbce8bf` | Cloud Run revision 7 | completed + feedback | event/project evidence roles, dual-source gap grounding, persisted bounded adaptation | current grounded workflow candidate |
 
 ## Judge baseline — first access, 13 August 2026
 

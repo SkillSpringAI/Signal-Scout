@@ -28,6 +28,7 @@ The Collaborative Partner fits because Signal Scout guides a builder through sou
 - [Hackathon execution plan](docs/hackathon-execution-plan.md) — the only active implementation sequence
 - [Submission compliance](docs/submission-compliance.md) — evidence-based checklist
 - [Architecture](docs/architecture.md) — implemented and immediate target architecture
+- [Architecture diagram](docs/architecture-diagram.md) — maintained visual submission artifact
 - [Scope](docs/scope.md) — in-scope, deferred, and prohibited work
 - [Safety and permissions](docs/safety-and-permissions.md) — policy matching current enforcement
 - [Product blueprint](docs/blueprint.md) — focused product intent

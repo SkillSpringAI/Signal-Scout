@@ -30,12 +30,12 @@ export class ScanRunner {
     if (!job) return
     try {
       await this.transition(job, 'retrieving', 'Retrieving allowlisted public inputs.')
-      const urls = [job.request.hackathonUrl, ...job.request.projectUrls]
-      for (const url of urls) {
+      const inputs = [{ url: job.request.hackathonUrl, evidenceRole: 'event' as const }, ...job.request.projectUrls.map((url) => ({ url, evidenceRole: 'project' as const }))]
+      for (const { url, evidenceRole } of inputs) {
         try {
           const source = await this.retriever.retrieve(url)
           if (await this.isCancelled(job)) return
-          job.sources.push(source)
+          job.sources.push({ ...source, evidenceRole })
           await this.save(job, 'retrieving', `Collected source: ${url}`)
         }
         catch (error) { if (await this.isCancelled(job)) return; await this.save(job, 'retrieving', `Source failed: ${url} — ${message(error)}`, 'warning') }
@@ -56,7 +56,7 @@ export class ScanRunner {
       if (await this.isCancelled(job)) return
       await this.transition(job, 'validating', 'Validated structured output against the server schema.')
       await this.transition(job, 'synthesizing', 'Connecting the analysis to preserved source provenance.')
-      const status: ScanStatus = job.sources.length < urls.length ? 'partial' : 'completed'
+      const status: ScanStatus = job.sources.length < inputs.length ? 'partial' : 'completed'
       await this.transition(job, status, status === 'completed' ? 'Scan completed with all requested sources.' : 'Scan completed with partial source coverage.', status === 'partial' ? 'warning' : 'activity')
     } catch (error) {
       if (error instanceof ScanStoreConflictError) return

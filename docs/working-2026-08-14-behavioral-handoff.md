@@ -1,6 +1,19 @@
 # Tomorrow Handoff — Behavioral Evidence and Correction Slice
 
-> **Temporary status:** handoff for continued work on 14 August 2026. Tonight's work stops after preserving the current evidence and this handoff. This document does not authorize further testing, product-code correction, staging, or deployment tonight. Review and archive it when tomorrow's slice is complete. It does not replace the corrective implementation directive, established decisions, or verified deployment documentation.
+> **Temporary status:** active working boundary for 14 August 2026. The user approved the narrow correction order below. Nothing may be staged or committed until the full preflight suite passes and the user reviews the result. This document does not replace the corrective implementation directive, established decisions, or verified deployment documentation.
+
+## Approved order for 14 August 2026
+
+1. separate Signal Scout runtime metadata from analyzed-project constraints;
+2. add regression coverage for neutral projects, explicit constraints, justified incompatibilities, and feedback adaptation;
+3. correct claim/evidence grounding where it shares the same prompt, validation, and provenance boundary;
+4. run targeted verification and then the complete `npm run preflight` suite;
+5. deploy and reconfirm the live scan plus feedback workflow;
+6. create the architecture diagram from the verified post-correction deployment;
+7. maintain that diagram as a submission artifact and make only small corrections when implemented architecture changes;
+8. present the complete result for review before staging or committing.
+
+Broader UI wording, failure-state design, cancellation/interruption work, and remaining behavioral cases stay in the evidence backlog unless a correction above directly requires them.
 
 ## Purpose
 
@@ -71,7 +84,7 @@ Evidence already captured:
 
 ### Phase 2 — Consolidate and classify defects
 
-Status: **not started**. Begin only after enough Phase 1 evidence exists to distinguish stable product defects from generation variance.
+Status: **narrow subset approved**. Existing evidence is sufficient to act on runtime/project constraint separation and cross-source claim grounding. Other findings remain pending further prioritization.
 
 For each observed issue classify:
 
@@ -99,7 +112,7 @@ Do not assume every item above belongs in the implementation slice until it has 
 
 ### Phase 3 — Approve the narrow correction set
 
-Status: **blocked on Phase 2 review and user approval**.
+Status: **approved on 14 August 2026** for runtime/project constraint separation, associated regression tests, and naturally coupled claim/evidence grounding only.
 
 Before editing product code, prepare a proposed correction list containing:
 
@@ -114,7 +127,7 @@ The user reviews and approves this list before implementation begins.
 
 ### Phase 4 — Implement and verify approved corrections
 
-Status: **not authorized yet**.
+Status: **implemented and deployed for review**.
 
 Only implement approved corrections. Preserve the architectural rule:
 
@@ -179,3 +192,19 @@ This slice is complete only when:
 ## Tomorrow's starting action — 14 August 2026
 
 Begin by reading this handoff and reviewing `docs/demo-evidence-ledger.md`. Confirm the recorded cases and remaining matrix before taking any action. Then deliberately choose whether tomorrow should gather more Phase 1 evidence or whether the existing evidence is sufficient to begin Phase 2 consolidation. Do not begin product-code correction or demo polish merely because the likely defects are already visible.
+
+## 14 August implementation record
+
+- separated analyzer runtime metadata from analyzed-project constraints in both analysis and feedback prompts;
+- derived known project constraints only from builder context and project-role sources;
+- added redirect-safe `event` / `project` evidence roles while preserving compatibility with existing stored jobs;
+- required project evidence for current-state assertions and both evidence roles for combined requirement/project claims;
+- added regressions for neutral input, explicit constraints, justified incompatibility, feedback adaptation, redirects, dual-source grounding, and unsupported absence wording observed live;
+- passed full preflight with 51 tests;
+- deployed revision `signal-scout-00007-vb6` at 100% traffic with min 0 / max 2, the existing dedicated identity, and Secret Manager reference;
+- verified neutral live scan `d6f4a2bb-ae51-4630-8323-98333bb35113`;
+- verified rules-plus-project scan and feedback turn `192b9f41-d20a-4727-b27b-95e98bbce8bf`;
+- observed no error-severity logs for the verified revision;
+- created `docs/architecture-diagram.md` as the maintained visual submission artifact.
+
+No files are staged or committed. The next action is user review, followed by one final preflight run after documentation changes and before any authorized commit.
