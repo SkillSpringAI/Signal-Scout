@@ -1,6 +1,6 @@
 # Submission Compliance
 
-Checked items require runtime or submission evidence, not intent or documentation alone. Last reviewed: 13 August 2026.
+Checked items require runtime or submission evidence, not intent or documentation alone. Last reviewed: 14 August 2026.
 
 - [x] Project creation date eligibility verified: official build window began 3 August 2026; local folder, first project thread, and first Git commits are dated 9 August 2026 (evidence ledger, 13 August 2026)
 - [x] Official category selected: The Collaborative Partner
@@ -8,11 +8,12 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Gemini 3.5+ verified in local runtime (`gemini-3.5-flash`, 13 August 2026)
 - [x] Qualifying Google agent framework verified in local runtime (Google GenAI SDK, 13 August 2026)
 - [x] Google Cloud infrastructure verified locally in runtime (Firestore Native via ADC, 13 August 2026)
-- [x] Cloud deployment proof captured (`signal-scout-00004-9hl`, 13 August 2026)
+- [x] Cloud deployment proof captured (`signal-scout-00007-vb6`, 100% traffic on 14 August 2026)
 - [x] Public repository available
 - [x] Reproducible clean setup tested from a fresh remote clone
 - [x] Architecture diagram present and aligned with the deployed runtime
-- [x] Real local and cloud-deployed end-to-end scans demonstrated
+- [x] Real local and cloud-deployed end-to-end scans demonstrated, including neutral-project and event/project evidence-role cases on revision `signal-scout-00007-vb6`
+- [x] Current local judge-clarity and partial-result correction slice passed `npm run preflight` with 55 tests on 14 August 2026; deployment remains separately governed
 - [ ] Unedited live action segment recorded
 - [ ] Public YouTube or Vimeo video is no longer than four minutes
 - [ ] English audio or English subtitles verified

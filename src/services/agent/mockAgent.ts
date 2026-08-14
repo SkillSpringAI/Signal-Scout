@@ -66,10 +66,10 @@ export class MockAgent {
   runPatternMap(mode: PermissionMode = this.options.permissionMode ?? 'observe'): RouteRunResult {
     const state = this.store.getState()
     assertValidRouteInput({ route: 'patternMap', domainId: state.activeDomainId, signalIds: state.signals.map((signal) => signal.id) })
-    const task = this.startTask('Map field patterns', 'patternMap', mode, state.signals.map((signal) => signal.id))
+    const task = this.startTask('Identify field findings', 'patternMap', mode, state.signals.map((signal) => signal.id))
     const forcedFailure = this.failIfRequested(task)
     if (forcedFailure) return forcedFailure
-    this.event(task, `Linked ${state.signals.length} signals into ${state.patterns.length} pattern clusters.`, 'suggestion')
+    this.event(task, `Compared ${state.signals.length} signals and produced ${state.patterns.length} findings.`, 'suggestion')
     return this.complete(task, state.patterns.map((pattern) => pattern.id))
   }
 

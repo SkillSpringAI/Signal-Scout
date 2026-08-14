@@ -29,7 +29,7 @@ export class ScanRunner {
     const job = await this.store.get(id)
     if (!job) return
     try {
-      await this.transition(job, 'retrieving', 'Retrieving allowlisted public inputs.')
+      await this.transition(job, 'retrieving', 'Checking the public sources you provided.')
       const inputs = [{ url: job.request.hackathonUrl, evidenceRole: 'event' as const }, ...job.request.projectUrls.map((url) => ({ url, evidenceRole: 'project' as const }))]
       for (const { url, evidenceRole } of inputs) {
         try {
@@ -38,11 +38,11 @@ export class ScanRunner {
           job.sources.push({ ...source, evidenceRole })
           await this.save(job, 'retrieving', `Collected source: ${url}`)
         }
-        catch (error) { if (await this.isCancelled(job)) return; await this.save(job, 'retrieving', `Source failed: ${url} — ${message(error)}`, 'warning') }
+        catch (error) { if (await this.isCancelled(job)) return; await this.save(job, 'retrieving', `Could not collect source: ${url} — ${message(error)}`, 'warning') }
       }
       if (await this.isCancelled(job)) return
       if (job.sources.length === 0) return this.fail(job, 'RETRIEVAL_FAILED', 'No public source could be retrieved.')
-      await this.transition(job, 'extracting', 'Running Gemini structured analysis through Google GenAI SDK.')
+      await this.transition(job, 'extracting', 'Analyzing event requirements and available project evidence.')
       try {
         const analysis = await this.analyzeWithRetry(job)
         if (!analysis) return
@@ -54,8 +54,8 @@ export class ScanRunner {
         return
       }
       if (await this.isCancelled(job)) return
-      await this.transition(job, 'validating', 'Validated structured output against the server schema.')
-      await this.transition(job, 'synthesizing', 'Connecting the analysis to preserved source provenance.')
+      await this.transition(job, 'validating', 'Checked required fields, evidence links, and supported findings.')
+      await this.transition(job, 'synthesizing', 'Linking each finding to the source that supports it.')
       const status: ScanStatus = job.sources.length < inputs.length ? 'partial' : 'completed'
       await this.transition(job, status, status === 'completed' ? 'Scan completed with all requested sources.' : 'Scan completed with partial source coverage.', status === 'partial' ? 'warning' : 'activity')
     } catch (error) {
@@ -69,6 +69,35 @@ export class ScanRunner {
     if (!job || ['completed', 'partial', 'failed', 'cancelled'].includes(job.status)) return job
     await this.transition(job, 'cancelled', 'Scan cancelled by user request.', 'warning')
     return job
+  }
+
+  async requestAnalysisRetry(id: string) {
+    const job = await this.store.get(id)
+    if (!job) return undefined
+    if (job.status !== 'partial' || job.error?.code !== 'MODEL_FAILED' || job.sources.length === 0) throw new Error('Only a withheld analysis with preserved sources can be retried.')
+    if (job.events.some((event) => event.message === 'Retrying analysis once with the preserved sources.')) throw new Error('This scan has already used its one analysis retry.')
+    job.analysis = undefined
+    job.error = undefined
+    await this.transition(job, 'extracting', 'Retrying analysis once with the preserved sources.')
+    return job
+  }
+
+  async runAnalysisRetry(id: string) {
+    const job = await this.store.get(id)
+    if (!job || job.status !== 'extracting' || !job.events.some((event) => event.message === 'Retrying analysis once with the preserved sources.')) return
+    try {
+      const analysis = await this.analyzeWithRetry(job)
+      if (!analysis || await this.isCancelled(job)) return
+      job.analysis = analysis
+      await this.transition(job, 'validating', 'Checked required fields, evidence links, and supported findings.')
+      await this.transition(job, 'synthesizing', 'Linking each finding to the source that supports it.')
+      const requestedSourceCount = 1 + job.request.projectUrls.length
+      const status: ScanStatus = job.sources.length < requestedSourceCount ? 'partial' : 'completed'
+      await this.transition(job, status, status === 'completed' ? 'Analysis retry completed with the preserved sources.' : 'Analysis retry completed with partial source coverage.', status === 'partial' ? 'warning' : 'activity')
+    } catch (error) {
+      if (await this.isCancelled(job)) return
+      await this.fail(job, 'MODEL_FAILED', message(error), 'partial')
+    }
   }
 
   async applyFeedback(id: string, request: FeedbackRequest) {

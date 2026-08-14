@@ -25,6 +25,14 @@ export function createServerApp(deps: { runner: ScanRunner; store: ScanStore; st
     const job = await deps.runner.cancel(request.params.id)
     return job ? response.json(job) : response.status(404).json({ error: 'NOT_FOUND' })
   })
+  app.post('/api/scans/:id/retry-analysis', async (request, response) => {
+    try {
+      const job = await deps.runner.requestAnalysisRetry(request.params.id)
+      if (!job) return response.status(404).json({ error: 'NOT_FOUND' })
+      setImmediate(() => { void deps.runner.runAnalysisRetry(job.id) })
+      return response.status(202).json(job)
+    } catch (error) { return response.status(409).json({ error: 'RETRY_NOT_APPLICABLE', message: error instanceof Error ? error.message : 'Analysis could not be retried.' }) }
+  })
   app.post('/api/scans/:id/feedback', async (request, response) => {
     const parsed = feedbackRequestSchema.safeParse(request.body)
     if (!parsed.success) return response.status(400).json({ error: 'INVALID_FEEDBACK', issues: parsed.error.issues })

@@ -21,6 +21,12 @@ describe('ScanRunner', () => {
     expect(result?.status).toBe('completed')
     expect(result?.analysis).toEqual(analysis)
     expect(result?.events.map((event) => event.stage)).toEqual(expect.arrayContaining(['retrieving', 'extracting', 'validating', 'synthesizing', 'completed']))
+    expect(result?.events.map((event) => event.message)).toEqual(expect.arrayContaining([
+      'Checking the public sources you provided.',
+      'Analyzing event requirements and available project evidence.',
+      'Checked required fields, evidence links, and supported findings.',
+      'Linking each finding to the source that supports it.',
+    ]))
   })
 
   it('preserves retrieved sources when the model fails', async () => {
@@ -97,6 +103,39 @@ describe('ScanRunner', () => {
     await runner.run(job.id)
     expect(attempts).toBe(1)
     expect((await store.get(job.id))?.status).toBe('partial')
+  })
+
+  it('allows one deliberate analysis retry with preserved sources', async () => {
+    const store = new InMemoryScanStore()
+    let retrievals = 0
+    let analyses = 0
+    const runner = new ScanRunner(store, { retrieve: async () => { retrievals += 1; return source } }, { analyze: async () => { analyses += 1; if (analyses === 1) throw new Error('Unsupported claim'); return analysis } })
+    const job = await runner.create(request)
+    await runner.run(job.id)
+    const requested = await runner.requestAnalysisRetry(job.id)
+    expect(requested?.status).toBe('extracting')
+    await runner.runAnalysisRetry(job.id)
+    const result = await store.get(job.id)
+    expect(result?.status).toBe('completed')
+    expect(result?.analysis).toEqual(analysis)
+    expect(result?.error).toBeUndefined()
+    expect(retrievals).toBe(1)
+    expect(analyses).toBe(2)
+    await expect(runner.requestAnalysisRetry(job.id)).rejects.toThrow('Only a withheld analysis')
+  })
+
+  it('keeps the second rejected analysis partial and prevents another deliberate retry', async () => {
+    const store = new InMemoryScanStore()
+    const runner = new ScanRunner(store, { retrieve: async () => source }, { analyze: async () => { throw new Error('Unsupported claim') } })
+    const job = await runner.create(request)
+    await runner.run(job.id)
+    await runner.requestAnalysisRetry(job.id)
+    await runner.runAnalysisRetry(job.id)
+    const result = await store.get(job.id)
+    expect(result?.status).toBe('partial')
+    expect(result?.sources).toHaveLength(1)
+    expect(result?.error?.code).toBe('MODEL_FAILED')
+    await expect(runner.requestAnalysisRetry(job.id)).rejects.toThrow('already used its one analysis retry')
   })
 
   it('persists explicit feedback, one adapted recommendation, and one clarification', async () => {

@@ -32,4 +32,11 @@ describe('LiveScanApi', () => {
     await api.submitFeedback(job('completed').id, 'Prioritize the shortest credible demo path.')
     expect(JSON.parse(body)).toEqual({ feedback: 'Prioritize the shortest credible demo path.' })
   })
+
+  it('requests a deliberate analysis retry for the same scan', async () => {
+    let path = ''
+    const api = new LiveScanApi({ fetchImpl: async (input) => { path = String(input); return jsonResponse(job('extracting'), 202) } })
+    await api.retryAnalysis(job('partial').id)
+    expect(path).toBe(`/api/scans/${job('partial').id}/retry-analysis`)
+  })
 })

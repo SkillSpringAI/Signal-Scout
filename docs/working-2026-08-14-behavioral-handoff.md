@@ -1,6 +1,6 @@
 # Tomorrow Handoff — Behavioral Evidence and Correction Slice
 
-> **Temporary status:** active working boundary for 14 August 2026. The user approved the narrow correction order below. Nothing may be staged or committed until the full preflight suite passes and the user reviews the result. This document does not replace the corrective implementation directive, established decisions, or verified deployment documentation.
+> **Temporary status:** superseded on 14 August 2026. Its constraint-grounding work was completed and verified on Cloud Run revision `signal-scout-00007-vb6`; the later afternoon correction session was governed by the archived afternoon working directive. Retained as historical handoff evidence only.
 
 ## Approved order for 14 August 2026
 

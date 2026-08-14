@@ -19,6 +19,20 @@
 | Scaling | verified | minimum 0, maximum 2 |
 | Final-revision error logs at deployment verification | verified | no error-severity entries observed |
 
+## Afternoon correction verification — local, 14 August 2026
+
+| Evidence | Status | Result |
+|---|---|---|
+| Full preflight | verified locally | 55 tests passed; typecheck and production build passed |
+| Neutral-project boundary | verified by regression | Signal Scout runtime technologies are not imported into an unrelated project |
+| Event/project evidence separation | verified by regression | current-state claims require project evidence; combined claims require both roles |
+| Explicit project constraints | verified by regression | supplied technologies remain constraints; alternatives require concrete incompatibility |
+| Feedback boundary | verified by regression | one sourced adaptation succeeds; a second feedback request is rejected |
+| Partial semantic rejection | verified locally | validation remains fail-closed; sources remain preserved and visible; technical detail is secondary |
+| Deliberate analysis retry | verified locally | one retry reuses persisted sources without recollection; another retry is rejected |
+| Revised live-input presentation | verified locally | production UI rendered the guidance and findings terminology with no browser console warnings or errors |
+| Public deployment of this correction slice | not performed | `signal-scout-00007-vb6` remains the verified deployed baseline |
+
 ## Existing proof jobs
 
 | Scan ID | Environment | Result | Evidence value | Demo status |

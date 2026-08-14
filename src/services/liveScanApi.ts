@@ -13,6 +13,7 @@ export class LiveScanApi {
   async createScan(input: ScanRequest) { return this.request<ScanJob>('/api/scans', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) }) }
   async getScan(id: string) { return this.request<ScanJob>(`/api/scans/${encodeURIComponent(id)}`) }
   async cancelScan(id: string) { return this.request<ScanJob>(`/api/scans/${encodeURIComponent(id)}/cancel`, { method: 'POST' }) }
+  async retryAnalysis(id: string) { return this.request<ScanJob>(`/api/scans/${encodeURIComponent(id)}/retry-analysis`, { method: 'POST' }) }
   async submitFeedback(id: string, feedback: string) { return this.request<ScanJob>(`/api/scans/${encodeURIComponent(id)}/feedback`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ feedback }) }) }
 
   async waitForTerminal(id: string, onUpdate: (job: ScanJob) => void, signal?: AbortSignal) {

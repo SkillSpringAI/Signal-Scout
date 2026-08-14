@@ -1,6 +1,6 @@
 # Gate 2 Runtime Guide
 
-> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run on 13 August 2026.
+> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00007-vb6`, verified on 14 August 2026.
 
 ## Verified local live scan — 13 August 2026
 
@@ -32,7 +32,7 @@ No credential value was returned to the browser, logs, or evidence output.
 
 ## Runtime path
 
-`POST /api/scans` creates a job and accepts one hackathon URL, builder context, and up to five optional public project URLs. The server retrieves bounded public text, records provenance and timestamps, invokes Gemini through the Google GenAI SDK, validates structured output, and records visible lifecycle events. `GET /api/scans/:id` returns state and `POST /api/scans/:id/cancel` requests cancellation.
+`POST /api/scans` creates a job and accepts one hackathon URL, builder context, and up to five optional public project URLs. The server retrieves bounded public text, records provenance and timestamps, invokes Gemini through the Google GenAI SDK, validates structured output, and records visible lifecycle events. `GET /api/scans/:id` returns state and `POST /api/scans/:id/cancel` requests cancellation. In the current local correction slice, `POST /api/scans/:id/retry-analysis` permits one deliberate analysis retry after a model-validation rejection and reuses the preserved sources without retrieving them again.
 
 Terminal states are `completed`, `partial`, `failed`, `cancelled`, and `needs_input`. A model failure after successful retrieval is `partial` so source evidence is preserved.
 
@@ -62,6 +62,18 @@ Terminal states are `completed`, `partial`, `failed`, `cancelled`, and `needs_in
 - Rules-plus-repository scan `192b9f41-d20a-4727-b27b-95e98bbce8bf` completed with two evidence roles and dual-source grounding for combined gaps.
 - One bounded feedback turn persisted on `192b9f41-d20a-4727-b27b-95e98bbce8bf`, preserved the verified project stack, and cited both sources.
 - No error-severity logs were observed for revision `signal-scout-00007-vb6` during deployed verification.
+
+## Judge-clarity and partial-result correction — local verification, 14 August 2026
+
+- Live inputs now explain useful builder context and the public-only project URL boundary.
+- User-facing `Patterns / Clusters and gaps` terminology is presented as `Findings / Requirements and strategic gaps`.
+- Activity copy explains source checking, evidence analysis, validation, and source linking in outcome language while persisted lifecycle status values remain unchanged.
+- A model-validation rejection still fails closed and preserves collected sources.
+- The partial state leads with `Sources collected; recommendations withheld`, keeps exact validator text in secondary technical details, and links the preserved sources.
+- One user-triggered analysis retry reuses the stored sources. A second deliberate retry is rejected, including when the first retry also fails validation.
+- `npm run preflight` passed with 55 tests: typecheck, complete regression suite, and production build.
+- The production UI loaded locally with the revised live-input presentation and no browser console warnings or errors.
+- This correction slice has not been deployed. Revision `signal-scout-00007-vb6` remains the verified public baseline until a separately authorized deployment is completed and verified.
 
 ## Local live-mode setup
 

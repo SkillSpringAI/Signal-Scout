@@ -1,6 +1,6 @@
 # Signal Scout
 
-> **Current status (updated 13 August 2026):** Signal Scout is publicly deployed on Cloud Run with a live React/TypeScript UI, bounded Node/TypeScript scan API, Gemini 3.5 Flash analysis through the Google GenAI SDK, Firestore persistence, sourced Activity evidence, and one bounded Collaborative Partner feedback turn. Deterministic mock mode remains available and visibly separated for offline demonstration and testing.
+> **Current status (updated 14 August 2026):** Signal Scout is publicly deployed on Cloud Run revision `signal-scout-00007-vb6` with a live React/TypeScript UI, bounded Node/TypeScript scan API, Gemini 3.5 Flash analysis through the Google GenAI SDK, Firestore persistence, sourced Activity evidence, and one bounded Collaborative Partner feedback turn. The current local correction slice adds clearer live inputs and findings language plus one deliberate analysis retry using preserved sources; it passed the 55-test preflight suite but has not yet been deployed. Deterministic mock mode remains available and visibly separated for offline demonstration and testing.
 
 Signal Scout turns a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
 

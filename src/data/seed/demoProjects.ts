@@ -21,8 +21,8 @@ export const signals: Signal[] = [
 ]
 
 export const patterns: Pattern[] = [
-  { id: 'pattern-trust', domainId: 'domain-all-things-agentic', name: 'SYNTHETIC PATTERN — Inspectable autonomy', summary: 'Deterministic fixture cluster used to test evidence, trace, and checkpoint presentation.', signalIds: ['signal-evidence', 'signal-approval'], gap: 'Demo-only gap statement; not a conclusion about real hackathon projects.', confidence: 'medium' },
-  { id: 'pattern-guided', domainId: 'domain-all-things-agentic', name: 'SYNTHETIC PATTERN — Guided navigation', summary: 'Deterministic fixture cluster used to test guided-journey presentation.', signalIds: ['signal-guidance', 'signal-eval'], gap: 'Demo-only gap statement; not a conclusion about the real field.', confidence: 'medium' },
+  { id: 'pattern-trust', domainId: 'domain-all-things-agentic', name: 'SYNTHETIC FINDING — Inspectable autonomy', summary: 'Deterministic fixture finding used to test evidence, trace, and checkpoint presentation.', signalIds: ['signal-evidence', 'signal-approval'], gap: 'Demo-only gap statement; not a conclusion about real hackathon projects.', confidence: 'medium' },
+  { id: 'pattern-guided', domainId: 'domain-all-things-agentic', name: 'SYNTHETIC FINDING — Guided navigation', summary: 'Deterministic fixture finding used to test guided-journey presentation.', signalIds: ['signal-guidance', 'signal-eval'], gap: 'Demo-only gap statement; not a conclusion about the real field.', confidence: 'medium' },
 ]
 
 export const opportunities: Opportunity[] = [
