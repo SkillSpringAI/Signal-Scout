@@ -1,7 +1,10 @@
 import { isIP } from 'node:net'
+import { lookup as dnsLookup } from 'node:dns/promises'
 import type { SourceRecord } from './contracts.js'
 
-export interface Retriever { retrieve(url: string): Promise<SourceRecord> }
+export type EvidenceRole = 'event' | 'project'
+export interface Retriever { retrieve(url: string, evidenceRole?: EvidenceRole): Promise<SourceRecord> }
+type LookupAll = (hostname: string) => Promise<Array<{ address: string; family: number }>>
 
 const blockedHostnames = new Set(['localhost', 'localhost.localdomain'])
 
@@ -10,16 +13,29 @@ function assertPublicUrl(value: string): URL {
   if (url.protocol !== 'https:' && url.protocol !== 'http:') throw new Error('Only HTTP and HTTPS sources are supported.')
   const host = url.hostname.toLowerCase().replace(/\.$/, '')
   if (blockedHostnames.has(host) || host.endsWith('.local') || host.endsWith('.internal')) throw new Error('Private or local source hosts are not allowed.')
-  const ipVersion = isIP(host)
-  if (ipVersion === 4) {
-    const octets = host.split('.').map(Number)
-    if (octets[0] === 10 || octets[0] === 127 || octets[0] === 0 || (octets[0] === 169 && octets[1] === 254) || (octets[0] === 172 && octets[1] >= 16 && octets[1] <= 31) || (octets[0] === 192 && octets[1] === 168)) throw new Error('Private or local source addresses are not allowed.')
-  }
-  if (ipVersion === 6 && (host === '::1' || host.startsWith('fc') || host.startsWith('fd') || host.startsWith('fe80:'))) throw new Error('Private or local source addresses are not allowed.')
+  if (isPrivateAddress(host)) throw new Error('Private or local source addresses are not allowed.')
   url.username = ''
   url.password = ''
   url.hash = ''
   return url
+}
+
+function isPrivateAddress(host: string) {
+  const normalizedHost = host.toLowerCase().replace(/^\[|\]$/g, '')
+  const ipVersion = isIP(normalizedHost)
+  if (ipVersion === 4) {
+    const octets = normalizedHost.split('.').map(Number)
+    return octets[0] === 10 || octets[0] === 127 || octets[0] === 0 || (octets[0] === 100 && octets[1] >= 64 && octets[1] <= 127) || (octets[0] === 169 && octets[1] === 254) || (octets[0] === 172 && octets[1] >= 16 && octets[1] <= 31) || (octets[0] === 192 && (octets[1] === 0 || octets[1] === 168)) || (octets[0] === 198 && (octets[1] === 18 || octets[1] === 19 || octets[1] === 51)) || (octets[0] === 203 && octets[1] === 0 && octets[2] === 113) || octets[0] >= 224
+  }
+  if (ipVersion === 6) {
+    if (normalizedHost.startsWith('::ffff:')) return isPrivateAddress(normalizedHost.slice(7))
+    return normalizedHost === '::' || normalizedHost === '::1' || normalizedHost.startsWith('fc') || normalizedHost.startsWith('fd') || normalizedHost.startsWith('fe80:') || normalizedHost.startsWith('ff')
+  }
+  return false
+}
+
+function hostAllowed(host: string, allowed: string[]) {
+  return allowed.some((candidate) => host === candidate || host.endsWith(`.${candidate}`))
 }
 
 function titleFromHtml(html: string, fallback: string) {
@@ -32,12 +48,21 @@ function textFromHtml(html: string) {
 }
 
 export class SafeHttpRetriever implements Retriever {
-  constructor(private readonly options: { timeoutMs: number; maxBytes: number; fetchImpl?: typeof fetch }) {}
+  constructor(private readonly options: {
+    timeoutMs: number
+    maxBytes: number
+    fetchImpl?: typeof fetch
+    lookupImpl?: LookupAll
+    allowedEventHosts?: string[]
+    allowedProjectHosts?: string[]
+  }) {}
 
-  async retrieve(input: string): Promise<SourceRecord> {
+  async retrieve(input: string, evidenceRole?: EvidenceRole): Promise<SourceRecord> {
     let url = assertPublicUrl(input)
     const fetchImpl = this.options.fetchImpl ?? fetch
     for (let redirects = 0; redirects <= 3; redirects += 1) {
+      this.assertAllowedHost(url, evidenceRole)
+      await this.assertPublicResolution(url)
       const response = await fetchImpl(url, { redirect: 'manual', signal: AbortSignal.timeout(this.options.timeoutMs), headers: { 'user-agent': 'Signal-Scout/0.2 (+public-source-research)' } })
       if (response.status >= 300 && response.status < 400) {
         const location = response.headers.get('location')
@@ -58,5 +83,19 @@ export class SafeHttpRetriever implements Retriever {
       return { url: url.toString(), title: contentType === 'text/html' ? titleFromHtml(raw, url.hostname) : url.hostname, collectedAt: new Date().toISOString(), contentType, byteLength: bytes.byteLength, excerpt }
     }
     throw new Error('Source retrieval failed.')
+  }
+
+  private assertAllowedHost(url: URL, evidenceRole?: EvidenceRole) {
+    const allowed = evidenceRole === 'event' ? this.options.allowedEventHosts : evidenceRole === 'project' ? this.options.allowedProjectHosts : undefined
+    if (allowed?.length && !hostAllowed(url.hostname.toLowerCase().replace(/\.$/, ''), allowed)) throw new Error(`${evidenceRole === 'event' ? 'Event' : 'Project'} source host is not available in the public demo.`)
+  }
+
+  private async assertPublicResolution(url: URL) {
+    if (isIP(url.hostname.replace(/^\[|\]$/g, ''))) return
+    let addresses: Array<{ address: string; family: number }>
+    try { addresses = await (this.options.lookupImpl ?? ((hostname) => dnsLookup(hostname, { all: true })))(url.hostname) }
+    catch { throw new Error('Source hostname could not be resolved.') }
+    if (!Array.isArray(addresses) || addresses.length === 0) throw new Error('Source hostname did not resolve to a public address.')
+    if (addresses.some(({ address }) => isPrivateAddress(address))) throw new Error('Source hostname resolved to a private or local address.')
   }
 }

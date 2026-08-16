@@ -1,8 +1,8 @@
 # Architecture
 
-> **Current status:** the live workflow is deployed and verified on Cloud Run. It uses the Google GenAI SDK with Gemini 3.5 Flash, Firestore Native persistence, bounded public retrieval, structured and semantic validation, and a server-side Secret Manager reference. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
+> **Current status:** the complete bounded live workflow is deployed and verified on Cloud Run revision `signal-scout-00010-rkb`. It includes a durable public-demo capacity guard, role-specific host restrictions, DNS checks, responsive corrections, dynamic live-event identity, descriptive evidence labels, Gemini 3.5 Flash through the Google GenAI SDK, and Firestore persistence. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
 
-The maintained visual submission artifact is [Signal Scout Architecture Diagram](architecture-diagram.md). It was verified against Cloud Run revision `signal-scout-00007-vb6` on 14 August 2026 and should change only when implemented component boundaries or data flows change.
+The maintained visual submission artifact is [Signal Scout Architecture Diagram](architecture-diagram.md). It was verified against Cloud Run revision `signal-scout-00010-rkb` on 16 August 2026 and should change only when implemented component boundaries or data flows change.
 
 ## Implemented architecture
 
@@ -10,6 +10,7 @@ The maintained visual submission artifact is [Signal Scout Architecture Diagram]
 React/Vite UI
   -> live Node/TypeScript API on Cloud Run
      -> bounded public-source retriever
+     -> public-demo usage guard (atomic daily capacity + process-local burst window)
      -> Google GenAI SDK -> Gemini 3.5 Flash
      -> schema and semantic validation
      -> Firestore Native scan/activity/report state
@@ -28,6 +29,7 @@ Verified components:
 - dedicated runtime service identity with Firestore access
 - Gemini key mounted from a single least-privilege Secret Manager secret
 - real official-source retrieval, Gemini analysis, Firestore persistence, Activity, Field Report, and feedback adaptation
+- atomic Firestore daily usage counter, process-local burst limit, Devpost/GitHub role hosts, and DNS resolution checks
 - session-only mock store and synthetic fixtures kept outside the live evidence path
 
 Background execution remains process-local through `setImmediate`, so an in-flight job is not recovered across a container restart. Completed and partial records are durable in Firestore. This is an explicit prototype limitation, not a production-readiness claim.

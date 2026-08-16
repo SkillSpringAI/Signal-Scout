@@ -21,6 +21,11 @@ describe('LiveScanApi', () => {
     await expect(api.health()).rejects.toEqual(new LiveScanApiError('The live Signal Scout API is unavailable.'))
   })
 
+  it('uses the judge-facing capacity message while preserving the stable code', async () => {
+    const api = new LiveScanApi({ fetchImpl: async () => jsonResponse({ error: 'DEMO_CAPACITY_REACHED', message: 'Today\'s live demo capacity has been reached. Use the mock demo.' }, 429) })
+    await expect(api.createScan(job('queued').request)).rejects.toEqual(new LiveScanApiError('Today\'s live demo capacity has been reached. Use the mock demo.', 429, 'DEMO_CAPACITY_REACHED'))
+  })
+
   it('stops at the polling limit', async () => {
     const api = new LiveScanApi({ maxPolls: 2, pollIntervalMs: 0, fetchImpl: async () => jsonResponse(job('retrieving')) })
     await expect(api.waitForTerminal(job('queued').id, () => undefined)).rejects.toThrow('configured limit')

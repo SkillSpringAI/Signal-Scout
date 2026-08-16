@@ -1,6 +1,6 @@
 # Gate 2 Runtime Guide
 
-> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00007-vb6`, verified on 14 August 2026.
+> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00010-rkb`, verified on 16 August 2026.
 
 ## Verified local live scan — 13 August 2026
 
@@ -73,7 +73,38 @@ Terminal states are `completed`, `partial`, `failed`, `cancelled`, and `needs_in
 - One user-triggered analysis retry reuses the stored sources. A second deliberate retry is rejected, including when the first retry also fails validation.
 - `npm run preflight` passed with 55 tests: typecheck, complete regression suite, and production build.
 - The production UI loaded locally with the revised live-input presentation and no browser console warnings or errors.
-- This correction slice has not been deployed. Revision `signal-scout-00007-vb6` remains the verified public baseline until a separately authorized deployment is completed and verified.
+- This correction slice was subsequently deployed as part of revision `signal-scout-00009-wrp` and verified on 15 August 2026.
+
+## Submission-readiness guard and responsive slice — deployed 15 August 2026
+
+- scan creation, deliberate analysis retry, and feedback now pass through an injected usage guard;
+- Firestore mode uses an atomic UTC-day counter; the deployed default is 50 costly actions per day;
+- a process-local per-client window allows three costly actions over ten minutes before returning HTTP `429`, `Retry-After`, `DEMO_CAPACITY_REACHED`, and judge-facing mock guidance;
+- event sources are restricted to configured Devpost hosts and project sources to configured GitHub hosts in the deployed configuration;
+- the role-specific host policy is reapplied on redirects and hostnames resolving to private/local addresses are rejected before fetch;
+- the 390 px intrinsic-width defect is corrected by constraining the responsive grid/sidebar and allowing only the navigation strip to scroll;
+- Node 22 is aligned across package metadata, CI, Docker, and setup instructions;
+- `npm run preflight` passed with 63 tests plus typecheck and both production builds;
+- an isolated dependency-free candidate copy completed `npm ci` and reproduced the same 63 tests and production bundle hashes;
+- the production bundle passed 1440×900, 1280×720, 768×1024, and 390×844 browser checks with no page-level overflow or console warnings/errors;
+- revision `signal-scout-00009-wrp` serves 100% traffic with min 0, max 2, the dedicated runtime identity, and the existing Secret Manager reference;
+- golden scan `b66b7629-26ce-41e6-b9b9-4b6477f56b07` completed with event/project evidence roles and dual-source grounding for both strategic gaps;
+- one feedback turn persisted an adapted recommendation with two sources and one clarification; the second turn returned `409`;
+- the fourth costly request returned `429 DEMO_CAPACITY_REACHED`, while the Firestore usage document recorded the three admitted actions;
+- the deployed four-viewport matrix passed with no page overflow or console warnings/errors;
+- no error-severity logs were observed for `signal-scout-00009-wrp` after verification.
+
+Budget evidence note: the project owner verified an alerts-only USD $25 monthly project budget with actual-spend thresholds at 50%, 80%, and 100%. Redacted configuration screenshots are preserved under `docs/evidence/cloud-budget/`.
+
+## Walkthrough correction slice — deployed 16 August 2026
+
+- the live sidebar uses a neutral identity before analysis, adopts the validated event name after analysis, and clears stale identity as soon as the event input changes;
+- finding and feedback citations identify Devpost event evidence separately from the relevant GitHub repository evidence;
+- prompt and semantic validation treat explicitly completed public Cloud Run deployment work as complete while still allowing proof-capture recommendations;
+- the default golden-run builder context accurately states the current deployed implementation and asks for only genuinely outstanding work;
+- `npm run preflight` passed with 67 tests, typecheck, and both production builds;
+- revision `signal-scout-00010-rkb` serves 100% traffic with max 2, default min 0, the dedicated runtime identity, the existing Secret Manager reference, and a passing health route;
+- local and deployed live-entry screens showed the neutral `Public hackathon scan` identity with no console warnings or errors; the local 390 px check had no page-level overflow.
 
 ## Local live-mode setup
 

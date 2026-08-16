@@ -52,6 +52,12 @@ describe('Gemini analysis constraints', () => {
     expect(() => validateAnalysisSemantics({ ...analysis, strategicGaps: [{ ...projectGap, sourceUrls: [projectSource.url] }] }, constrainedRequest, [source, projectSource])).toThrow('without citing both event and project evidence')
   })
 
+  it('rejects deployment work when public Cloud Run deployment is explicitly complete', () => {
+    const deployedRequest = { ...constrainedRequest, builderContext: `${constrainedRequest.builderContext} The current implementation is publicly deployed on Cloud Run and verified.` }
+    expect(() => validateAnalysisSemantics({ ...analysis, buildPlan: ['Deploy the current correction slice to Cloud Run.'] }, deployedRequest, [source, projectSource])).toThrow('marks it complete')
+    expect(validateAnalysisSemantics({ ...analysis, buildPlan: ['Capture the verified Cloud Run revision and logs in the demo video.'] }, deployedRequest, [source, projectSource])).toBeTruthy()
+  })
+
   it('rejects unsupported absence claims observed in a neutral live scan', () => {
     const unsupported = { title: 'Runtime setup', rationale: 'No baseline code or project exists, so an integration must be built from scratch. No repository integration exists at this stage.', sourceUrls: [source.url], confidence: 'high' as const }
     expect(() => validateAnalysisSemantics({ ...neutralAnalysis, strategicGaps: [unsupported] }, neutralRequest, [source])).toThrow('without citing collected project evidence')

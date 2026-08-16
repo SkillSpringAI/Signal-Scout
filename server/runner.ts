@@ -33,7 +33,7 @@ export class ScanRunner {
       const inputs = [{ url: job.request.hackathonUrl, evidenceRole: 'event' as const }, ...job.request.projectUrls.map((url) => ({ url, evidenceRole: 'project' as const }))]
       for (const { url, evidenceRole } of inputs) {
         try {
-          const source = await this.retriever.retrieve(url)
+          const source = await this.retriever.retrieve(url, evidenceRole)
           if (await this.isCancelled(job)) return
           job.sources.push({ ...source, evidenceRole })
           await this.save(job, 'retrieving', `Collected source: ${url}`)

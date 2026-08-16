@@ -4,6 +4,7 @@ import { createServerApp } from './app.js'
 import { ScanRunner } from './runner.js'
 import { InMemoryScanStore } from './store.js'
 import type { FieldAnalysis, SourceRecord } from './contracts.js'
+import { DemoCapacityError } from './usageGuard.js'
 
 const source: SourceRecord = { url: 'https://example.com/event', evidenceRole: 'event', title: 'Event', collectedAt: '2026-08-14T00:00:00.000Z', contentType: 'text/html', byteLength: 20, excerpt: 'Official event requirements' }
 const analysis: FieldAnalysis = { eventName: 'Event', summary: 'Summary', requirements: ['Requirement'], judgingCriteria: ['Criterion'], strategicGaps: [{ title: 'Gap', rationale: 'Reason', sourceUrls: [source.url], confidence: 'medium' }], learningShortlist: ['Learn'], buildPlan: ['Build'], uncertainties: [] }
@@ -27,6 +28,16 @@ describe('API', () => {
     expect(response.status).toBe(202)
     expect(response.headers.location).toMatch(/^\/api\/scans\//)
     expect(JSON.stringify(response.body)).not.toContain('API_KEY')
+  })
+
+  it('returns a stable guarded-capacity response', async () => {
+    const store = new InMemoryScanStore()
+    const runner = new ScanRunner(store, { retrieve: async () => source }, { analyze: async () => analysis })
+    const app = createServerApp({ runner, store, usageGuard: { consume: async () => { throw new DemoCapacityError('Public demo capacity reached.', 90) } } })
+    const response = await request(app).post('/api/scans').send({ hackathonUrl: source.url, builderContext: 'I want a trustworthy builder research report.' })
+    expect(response.status).toBe(429)
+    expect(response.headers['retry-after']).toBe('90')
+    expect(response.body).toEqual({ error: 'DEMO_CAPACITY_REACHED', message: 'Public demo capacity reached.' })
   })
 
   it('rejects invalid feedback before model execution', async () => {

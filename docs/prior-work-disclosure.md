@@ -1,6 +1,6 @@
 # Prior-Work Disclosure Review
 
-> **Status:** draft for user review. This document records the relationship between Signal Scout and the pre-existing PathWarden project. It is not legal advice and must not be marked submission-complete until the user confirms the factual statements below.
+> **Status:** factual relationship confirmed by the project owner on 15 August 2026. This document records the relationship between Signal Scout and the pre-existing PathWarden project. It is not legal advice.
 
 ## Creator background — not submission material
 
@@ -77,9 +77,13 @@ This comparison supports classifying the known relationship as product-design in
 
 > Signal Scout was newly conceived and implemented during the hackathon Submission Period. It draws on product-design lessons from my earlier PathWarden project, particularly bounded agent behavior, visible activity/evidence, approval-aware state changes, and honest capability boundaries. Signal Scout is a separate implementation and product created to explore unfamiliar skills under the hackathon’s constraints: it uses a new React/Node codebase, Gemini through the Google GenAI SDK, Firestore, Cloud Run, public-source retrieval, structured analysis, and a bounded feedback workflow. No PathWarden source files, schemas, governance runtime, desktop components, or branded assets were incorporated based on the repository comparison performed on 13 August 2026.
 
-## Confirmation required
+## Owner confirmation — 15 August 2026
 
-Before marking the disclosure complete, confirm whether any of the following were copied or adapted from PathWarden outside the detected repository comparison:
+The project owner confirmed that no PathWarden code, schemas, UI components or assets, prose, prompts, test fixtures, datasets, or templates were copied or adapted into Signal Scout. The proposed disclosure below may therefore be used as the submission baseline. Reopen the review if any pre-existing material is added later.
+
+## Reopen conditions
+
+Reopen the disclosure if any of the following are later copied or adapted from PathWarden outside the detected repository comparison:
 
 - source-code snippets or schemas;
 - CSS, UI components, layouts, icons, logos, or other visual assets;

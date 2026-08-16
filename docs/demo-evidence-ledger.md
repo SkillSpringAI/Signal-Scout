@@ -9,7 +9,7 @@
 | Public service | verified | `https://signal-scout-212660130578.australia-southeast1.run.app` |
 | Google Cloud project | verified | `gen-lang-client-0047054532` |
 | Cloud Run region | verified | `australia-southeast1` |
-| Deployed revision | verified | `signal-scout-00007-vb6`, 100% traffic on 14 August 2026 |
+| Deployed revision | verified | `signal-scout-00010-rkb`, 100% traffic on 16 August 2026 |
 | Repository checkpoint | verified | `16d4df2` / `checkpoint-gate2-cloud-run-deployed` |
 | Model identifier | verified | `gemini-3.5-flash` |
 | Agent framework | verified | Google GenAI SDK |
@@ -31,7 +31,42 @@
 | Partial semantic rejection | verified locally | validation remains fail-closed; sources remain preserved and visible; technical detail is secondary |
 | Deliberate analysis retry | verified locally | one retry reuses persisted sources without recollection; another retry is rejected |
 | Revised live-input presentation | verified locally | production UI rendered the guidance and findings terminology with no browser console warnings or errors |
-| Public deployment of this correction slice | not performed | `signal-scout-00007-vb6` remains the verified deployed baseline |
+| Public deployment of this correction slice | verified later | included in `signal-scout-00009-wrp` on 15 August 2026 |
+
+## Submission-readiness correction — deployed 15 August 2026
+
+Verified deployment: `signal-scout-00009-wrp`, 100% traffic.
+
+| Evidence | Status | Result / required proof |
+|---|---|---|
+| Organizer email guidance | preserved | original JPEG bytes copied under `docs/evidence/organizer-email`; index records checksums and non-authoritative status |
+| Public demo capacity | implemented locally | atomic Firestore UTC-day counter target: 50 costly actions; in-process per-client target: 3 actions / 10 minutes; HTTP `429` contract tested |
+| Source host policy | implemented locally | deployed event hosts limited to Devpost; project hosts limited to GitHub; policy reapplied after redirects |
+| DNS boundary | implemented locally | private/local literal and resolved addresses rejected before fetch |
+| Responsive correction | verified locally | rebuilt production bundle passed 1440×900, 1280×720, 768×1024, and 390×844 with no page overflow or console warnings/errors; evidence under `docs/evidence/ui-readiness/2026-08-15-local-candidate` |
+| Reproducible setup | verified locally | isolated dependency-free candidate copy completed `npm ci` and the 63-test preflight with matching production bundle hashes on 15 August 2026 |
+| Prior-work owner confirmation | verified | no PathWarden code, schemas, UI/assets, prose, prompts, fixtures, datasets, or templates incorporated |
+| Rights inventory | prepared | final rendered media inspection remains user-owned before upload |
+| Budget alerts | verified by project owner | Alerts-only monthly budget `Signal Scout hackathon guards`, scoped to project `gen-lang-client-0047054532`, with a specified USD $25 amount and actual-spend alerts at 50%, 80%, and 100%; screenshots captured on 15 August 2026 under `docs/evidence/cloud-budget/` |
+| Cloud Run revision | verified | `signal-scout-00009-wrp`, 100% traffic, min 0, max 2, dedicated runtime identity, Secret Manager reference, health pass |
+| Golden event + repository scan | verified | `b66b7629-26ce-41e6-b9b9-4b6477f56b07`; completed in about 46 seconds with 2 sources, event/project roles, 6 requirements, 3 criteria, 2 gaps, both gaps dual-source grounded |
+| Golden feedback turn | verified | one adapted recommendation with changed-because explanation, 2 supporting sources, and clarification; direct second turn returned `409 FEEDBACK_NOT_APPLICABLE` |
+| Capacity proof | verified | fourth costly action returned `429 DEMO_CAPACITY_REACHED` with `Retry-After`; Firestore UTC-day usage document recorded count 3 |
+| Deployed responsive matrix | verified | four target viewports passed with no page overflow or console warnings/errors; evidence under `docs/evidence/ui-readiness/signal-scout-00009-wrp` |
+| Revision error logs | verified | zero error-severity entries observed after golden-path verification |
+
+Deployment diagnostic: revision `signal-scout-00008-t7b` failed before receiving traffic because the deployment command combined six environment settings into one malformed collection value. The image build succeeded; Cloud Run retained the previous serving revision. The environment delimiter was corrected, and revision `signal-scout-00009-wrp` then started and passed all verification. Treat `00008-t7b` as diagnostic history only.
+
+## Walkthrough correction — deployed 16 August 2026
+
+| Evidence | Status | Result / required proof |
+|---|---|---|
+| Dynamic event identity | verified locally and deployed | live entry shows neutral identity; pure regression verifies validated event name and immediate stale-name reset when the event URL changes |
+| Evidence-link clarity | verified by regression | event citations render as Devpost evidence and project citations identify the GitHub owner/repository |
+| Completed-work grounding | verified by regression | Cloud Run deployment recommendations are rejected when builder/project evidence marks public deployment complete; proof-capture recommendations remain valid |
+| Local verification | verified | 67 tests, typecheck, production build, 390 px no-overflow check, and zero browser warnings/errors |
+| Cloud Run revision | verified | `signal-scout-00010-rkb`, 100% traffic, default min 0, max 2, dedicated runtime identity, Secret Manager reference, health pass, and zero live-entry browser warnings/errors |
+| Corrected golden scan and feedback | pending | run after the public repository reflects this verified checkpoint |
 
 ## Existing proof jobs
 

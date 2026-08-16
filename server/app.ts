@@ -4,15 +4,27 @@ import path from 'node:path'
 import { feedbackRequestSchema, scanRequestSchema } from './contracts.js'
 import type { ScanRunner } from './runner.js'
 import type { ScanStore } from './store.js'
+import { DemoCapacityError, noUsageGuard, type CostlyAction, type UsageGuard } from './usageGuard.js'
 
-export function createServerApp(deps: { runner: ScanRunner; store: ScanStore; staticDir?: string }) {
+export function createServerApp(deps: { runner: ScanRunner; store: ScanStore; usageGuard?: UsageGuard; staticDir?: string }) {
   const app = express()
   app.disable('x-powered-by')
+  app.set('trust proxy', 1)
   app.use(express.json({ limit: '32kb' }))
+  const usageGuard = deps.usageGuard ?? noUsageGuard
+  const consume = async (request: express.Request, response: express.Response, action: CostlyAction) => {
+    try { await usageGuard.consume(request.ip || 'unknown', action); return true }
+    catch (error) {
+      if (!(error instanceof DemoCapacityError)) throw error
+      response.set('Retry-After', String(error.retryAfterSeconds)).status(429).json({ error: 'DEMO_CAPACITY_REACHED', message: error.message })
+      return false
+    }
+  }
   app.get('/api/health', (_request, response) => response.json({ ok: true, service: 'signal-scout-api' }))
   app.post('/api/scans', async (request, response) => {
     const parsed = scanRequestSchema.safeParse(request.body)
     if (!parsed.success) return response.status(400).json({ error: 'INVALID_REQUEST', issues: parsed.error.issues })
+    if (!await consume(request, response, 'scan')) return
     const job = await deps.runner.create(parsed.data)
     setImmediate(() => { void deps.runner.run(job.id) })
     return response.status(202).location(`/api/scans/${job.id}`).json(job)
@@ -27,6 +39,7 @@ export function createServerApp(deps: { runner: ScanRunner; store: ScanStore; st
   })
   app.post('/api/scans/:id/retry-analysis', async (request, response) => {
     try {
+      if (!await consume(request, response, 'analysis_retry')) return
       const job = await deps.runner.requestAnalysisRetry(request.params.id)
       if (!job) return response.status(404).json({ error: 'NOT_FOUND' })
       setImmediate(() => { void deps.runner.runAnalysisRetry(job.id) })
@@ -37,6 +50,7 @@ export function createServerApp(deps: { runner: ScanRunner; store: ScanStore; st
     const parsed = feedbackRequestSchema.safeParse(request.body)
     if (!parsed.success) return response.status(400).json({ error: 'INVALID_FEEDBACK', issues: parsed.error.issues })
     try {
+      if (!await consume(request, response, 'feedback')) return
       const job = await deps.runner.applyFeedback(request.params.id, parsed.data)
       return job ? response.json(job) : response.status(404).json({ error: 'NOT_FOUND' })
     } catch (error) { return response.status(409).json({ error: 'FEEDBACK_NOT_APPLICABLE', message: error instanceof Error ? error.message : 'Feedback could not be applied.' }) }

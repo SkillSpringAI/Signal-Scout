@@ -75,6 +75,8 @@ ${formatProjectConstraints(projectConstraints)}
 
 Treat verified project choices as constraints. Do not recommend replacement technologies merely because they are plausible alternatives. A replacement may only be proposed when you identify a concrete incompatibility or unmet requirement, explain the incompatibility, and state why the verified choice cannot satisfy it. You may always identify legitimate technical risks or limitations without proposing a replacement.
 
+Treat explicitly completed work as complete. Do not recommend implementing, deploying, or adding work that builder context or project evidence states is already complete. You may recommend capturing, verifying, or presenting proof of completed work when the event requires that evidence.
+
 Evidence roles are strict. EVENT EVIDENCE can establish event requirements and judging criteria. PROJECT EVIDENCE can establish current project state. A strategic gap that combines a requirement with a claim about the project's current implementation must cite both the relevant event URL and project URL. If project state is not evidenced, describe what must be verified in uncertainties instead of asserting a confirmed project gap.
 
 Return only the requested structured data. Never include Markdown code fences, JSON serialization commentary, schema commentary, truncation commentary, or text about parsing the response inside any field.
@@ -95,6 +97,8 @@ PROJECT CONSTRAINTS VERIFIED FROM BUILDER INPUT OR PROJECT SOURCES:
 ${formatProjectConstraints(projectConstraints)}
 
 Treat verified project choices as constraints. A replacement may only be proposed for a concrete, explained incompatibility or unmet requirement. Use "prompt injection" only for the security attack or its mitigation.
+
+Treat explicitly completed work as complete. Do not adapt a recommendation into implementing or deploying work that builder context or project evidence states is already complete. You may adapt how completed work is verified or presented.
 
 BUILDER CONTEXT:
 ${job.request.builderContext}
@@ -137,6 +141,7 @@ export function validateAnalysisSemantics(analysis: FieldAnalysis, request: Scan
   for (const recommendation of recommendations) {
     if (projectConstraints.includes(signalScoutRuntimeManifest.agentFramework) && replacementPattern.test(recommendation) && !justificationPattern.test(recommendation)) throw new Error('Model recommended an alternative stack without a concrete incompatibility or unmet requirement.')
     if (/prompt injection/i.test(recommendation) && !/\b(?:attack|threat|defen[cs]e|detect|mitigat|prevent|protect|untrusted|security|resistan|guardrail)\b/i.test(recommendation)) throw new Error('Model used prompt injection as non-security implementation terminology.')
+    assertCompletedWorkIsNotRecommended(recommendation, request, sources)
   }
   return analysis
 }
@@ -147,6 +152,7 @@ export function validateCollaborationSemantics(response: CollaborationResponse, 
   const projectConstraints = deriveProjectConstraints(request, sources)
   assertRecommendationStack(response.adaptedRecommendation.explanation, projectConstraints)
   assertRecommendationStack(response.adaptedRecommendation.changedBecause, projectConstraints)
+  assertCompletedWorkIsNotRecommended(`${response.adaptedRecommendation.title} ${response.adaptedRecommendation.explanation}`, request, sources)
   const sourceUrls = new Set(sources.map((source) => normalizeUrl(source.url)))
   for (const url of response.adaptedRecommendation.sourceUrls) if (!sourceUrls.has(normalizeUrl(url))) throw new Error(`Model cited an uncollected source URL: ${url}`)
   return response
@@ -159,6 +165,13 @@ function assertCleanModelText(text: string) {
 function assertRecommendationStack(recommendation: string, projectConstraints: string[]) {
   if (projectConstraints.includes(signalScoutRuntimeManifest.agentFramework) && /\b(?:Google ADK|Agent Development Kit|Genkit|Antigravity(?: SDK)?|Vertex AI)\b/i.test(recommendation) && !/\b(?:incompatib|unmet requirement|cannot satisfy|does not support|unsupported|blocking limitation|required capability is missing)\b/i.test(recommendation)) throw new Error('Model recommended an alternative stack without a concrete incompatibility or unmet requirement.')
   if (/prompt injection/i.test(recommendation) && !/\b(?:attack|threat|defen[cs]e|detect|mitigat|prevent|protect|untrusted|security|resistan|guardrail)\b/i.test(recommendation)) throw new Error('Model used prompt injection as non-security implementation terminology.')
+}
+
+function assertCompletedWorkIsNotRecommended(recommendation: string, request: ScanRequest, sources: SourceRecord[]) {
+  const projectEvidence = [request.builderContext, ...sources.filter((source) => evidenceRole(source, request) === 'project').map((source) => source.excerpt)].join('\n')
+  const publicDeploymentComplete = /\b(?:publicly deployed|public verified deployment|deployed (?:on|to) Cloud Run|Cloud Run (?:deployment|service).{0,80}\b(?:complete|completed|live|verified))\b/i.test(projectEvidence)
+  const recommendsDeployment = /\b(?:deploy|redeploy)\b.{0,160}\bCloud Run\b|\bCloud Run\b.{0,160}\b(?:deploy|redeploy)\b/i.test(recommendation)
+  if (publicDeploymentComplete && recommendsDeployment) throw new Error('Model recommended Cloud Run deployment even though project evidence marks it complete.')
 }
 
 export function deriveProjectConstraints(request: ScanRequest, sources: SourceRecord[]) {

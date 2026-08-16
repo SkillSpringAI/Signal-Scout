@@ -3,7 +3,7 @@ import type { ScanJob, ScanRequest } from '../../server/contracts'
 const terminalStatuses = new Set(['completed', 'partial', 'failed', 'cancelled', 'needs_input'])
 
 export class LiveScanApiError extends Error {
-  constructor(message: string, readonly status?: number) { super(message); this.name = 'LiveScanApiError' }
+  constructor(message: string, readonly status?: number, readonly code?: string) { super(message); this.name = 'LiveScanApiError' }
 }
 
 export class LiveScanApi {
@@ -34,8 +34,8 @@ export class LiveScanApi {
     try { response = await fetchImpl(`${this.options.baseUrl ?? ''}${path}`, init) }
     catch { throw new LiveScanApiError('The live Signal Scout API is unavailable.') }
     if (!response.ok) {
-      const body = await response.json().catch(() => undefined) as { error?: string } | undefined
-      throw new LiveScanApiError(body?.error ?? `Live API returned HTTP ${response.status}.`, response.status)
+      const body = await response.json().catch(() => undefined) as { error?: string; message?: string } | undefined
+      throw new LiveScanApiError(body?.message ?? body?.error ?? `Live API returned HTTP ${response.status}.`, response.status, body?.error)
     }
     return response.json() as Promise<T>
   }
