@@ -349,11 +349,11 @@ The fallback must be disclosed as prior captured evidence, not presented as the 
 |---|---|---|---|
 | Project creation-date eligibility | official rules plus folder, first-thread, and Git timestamps | user + repository | verified 13 Aug 2026; artifacts below |
 | Hackathon registration/participant eligibility | registration/account evidence if not public | user | needed |
-| Pre-existing work disclosure | PathWarden conceptual lineage, file comparison, and user confirmation | user + repository review | draft: `docs/prior-work-disclosure.md`; confirmation needed |
-| Hackathon-period work | Git history, tags, deployment and scan evidence | repository/runtime | partially captured |
-| Source and third-party rights | inventory of logos, fonts, screenshots, media, and datasets | user + repository audit | needed |
+| Pre-existing work disclosure | PathWarden conceptual lineage, file comparison, and user confirmation | user + repository review | verified: `docs/prior-work-disclosure.md` |
+| Hackathon-period work | Git history, tags, deployment and scan evidence | repository/runtime | verified and captured |
+| Source and third-party rights | inventory of logos, fonts, screenshots, media, and datasets | user + repository audit | inventory prepared in `docs/third-party-rights.md`; final rendered-media check pending |
 | Repository license | root license, README reference, and decision record | user + repository | verified: MIT, Copyright (c) 2026 Isac Thompson (`LICENSE`, `docs/license-decision.md`) |
-| Final category | Devpost selection screenshot/confirmation | user | needed |
+| Final category | Devpost selection screenshot/confirmation | user | Collaborative Partner selected in project records; final Devpost form capture pending |
 
 ### Local project creation evidence — captured 13 August 2026
 
@@ -364,23 +364,23 @@ The fallback must be disclosed as prior captured evidence, not presented as the 
 - What it supports: the current local project folder existed by the displayed time.
 - First-thread artifact: `docs/evidence/eligibility/first-project-thread-message-2026-08-09.png`.
 - First-thread content: the user shared the official hackathon URL and asked whether the project was worth pursuing; the visible timestamp is `Sunday 12:56`.
-- Retrospective context: `docs/thread-handoff-summary-2026-08-13.md` identifies that message as Sunday, 9 August 2026 at 12:56 pm Pacific/Auckland and records the project’s initial reasoning, product choice, and subsequent Git history.
+- Retrospective context: `docs/archive/thread-handoff-summary-2026-08-13.md` identifies that message as Sunday, 9 August 2026 at 12:56 pm Pacific/Auckland and records the project’s initial reasoning, product choice, and subsequent Git history.
 - Official rule: the [Devpost Official Eligibility and Rules](https://allthingsagentichackathon.devpost.com/rules) state that the Submission Period runs from 3 August 2026 at 9:00 am PT through 31 August 2026 at 5:00 pm PT and that projects must be newly created during that period.
 - Eligibility conclusion: the 9 August folder, first-thread, planning-commit, and implementation-commit timestamps all fall inside the official Submission Period. Project creation-date eligibility is verified for the current evidence ledger.
 - Evidence limitation: filesystem and local thread timestamps are not individually tamper-proof. Their agreement with the remote repository chronology provides a consistent multi-artifact chain; retain the original screenshots and public Git history for submission support.
 
-### Prior-work disclosure — draft pending user confirmation
+### Prior-work disclosure — confirmed 15 August 2026
 
 The available thread and Git history indicate that Signal Scout was conceived, named, planned, and first implemented on 9 August 2026 during the Submission Period. The initial work used standard development tools, libraries, and AI coding assistance permitted by the rules. No pre-Submission-Period Signal Scout code is identified in the evidence reviewed so far.
 
-Do not mark the disclosure complete until the user confirms whether any code, UI designs, branding, copy, datasets, images, templates, or other non-standard assets created before 3 August 2026 were incorporated. Any such work must be listed accurately even if its use is permitted.
+The project owner confirmed that no PathWarden code, schemas, UI/assets, prose, prompts, fixtures, datasets, or templates were incorporated into Signal Scout. The disclosure is complete for the repository state reviewed on 15 August 2026; reopen it only if new pre-existing material is added before submission.
 
 Quantum Pacing is part of the user’s broader intellectual background but was not intended as Signal Scout submission material; no distinctive text, formula, diagram, terminology, branding, or document asset from it appears in Signal Scout. It is therefore retained as internal provenance context rather than proposed Devpost disclosure content. PathWarden remains the relevant prior project influence. Its repository comparison found no identical files or matching nontrivial authored source/document lines. The detailed review and proposed submission wording are in `docs/prior-work-disclosure.md`.
 
 ## Known risks and open decisions
 
 - Six moderate transitive `uuid` findings are accepted as non-blocking; do not apply the breaking Firebase Admin downgrade without a separate decision.
-- Container interruption behavior has not yet been demonstrated.
-- The golden-path input and recording feedback are not yet frozen.
-- Project creation-date eligibility and repository licensing are complete. Registration status, prior-work factual confirmation, and media rights still require user input.
-- MIT is implemented for Signal Scout; third-party rights inventory remains open.
+- Container interruption is not deliberately demonstrated and remains a documented prototype limitation; do not interrupt the public service merely to capture evidence.
+- The golden-path input and feedback text are frozen and verified by corrected scan `e543fe32-96fa-458c-af5e-a9ea61706a58` on revision `signal-scout-00011-zx8`.
+- Project creation-date eligibility, repository licensing, prior-work factual confirmation, budget evidence, deployment evidence, and golden runtime evidence are complete. Participant registration/account evidence and the final rendered-media rights check remain user-owned.
+- MIT is implemented for Signal Scout; the third-party-rights inventory is prepared and must be rechecked against the final video, narration, screenshots, and any music before upload.

@@ -1,5 +1,7 @@
 # Thread Handoff Summary — Signal Scout
 
+> **Archive status:** historical provenance summary archived on 16 August 2026. It remains supporting context for the eligibility evidence ledger, not current implementation or submission instructions.
+
 Last updated: 13 August 2026, Pacific/Auckland.
 
 ## Hackathon Decision Timestamp
@@ -278,7 +280,7 @@ Use these as current working truth:
 - `docs/gate-2-runtime.md`
 - `docs/submission-compliance.md`
 - `docs/decisions.md`
-- `docs/working-judge-readiness-slice.md`
+- `docs/archive/working-judge-readiness-slice.md`
 - `docs/demo-evidence-ledger.md`
 
 Earlier docs remain useful background, but some are superseded or narrowed:
@@ -294,7 +296,7 @@ The current active slice is judge-readiness and demo evidence.
 
 Temporary working document:
 
-- `docs/working-judge-readiness-slice.md`
+- `docs/archive/working-judge-readiness-slice.md`
 
 Core objective:
 
@@ -356,13 +358,13 @@ At the time this handoff was created, `git status --short` showed untracked judg
 
 - `docs/demo-evidence-ledger.md`
 - `docs/evidence/`
-- `docs/working-judge-readiness-slice.md`
+- `docs/archive/working-judge-readiness-slice.md`
 
 These appear to be active working-slice artifacts and should not be overwritten or discarded without review.
 
 ## Recommended Next Steps
 
-1. Review `docs/working-judge-readiness-slice.md`.
+1. Review the historical `docs/archive/working-judge-readiness-slice.md` only when reconstructing the completed judge-readiness work.
 2. Complete the judge baseline and scan-quality matrix.
 3. Confirm the best golden-path live scan for the demo.
 4. Capture remaining eligibility, prior-work, source-rights, and license decisions.

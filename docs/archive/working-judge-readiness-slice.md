@@ -1,5 +1,7 @@
 # Temporary Working Document — Judge Readiness and Demo Evidence
 
+> **Archive status:** completed and superseded on 16 August 2026. The permanent outcomes are recorded in `docs/demo-evidence-ledger.md`, `docs/gate-2-runtime.md`, `docs/manual-demo-walkthrough.md`, and `docs/submission-compliance.md`. Retained only as historical execution context.
+>
 > **Purpose:** operational plan for the post-deployment judge-readiness slice. This is not an authoritative roadmap and should be archived when the slice closes.
 >
 > **Starting checkpoint:** `16d4df2` / `checkpoint-gate2-cloud-run-deployed`
