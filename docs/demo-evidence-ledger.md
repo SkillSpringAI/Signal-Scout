@@ -9,7 +9,7 @@
 | Public service | verified | `https://signal-scout-212660130578.australia-southeast1.run.app` |
 | Google Cloud project | verified | `gen-lang-client-0047054532` |
 | Cloud Run region | verified | `australia-southeast1` |
-| Deployed revision | verified | `signal-scout-00010-rkb`, 100% traffic on 16 August 2026 |
+| Deployed revision | verified | `signal-scout-00011-zx8`, 100% traffic on 16 August 2026 |
 | Repository checkpoint | verified | `16d4df2` / `checkpoint-gate2-cloud-run-deployed` |
 | Model identifier | verified | `gemini-3.5-flash` |
 | Agent framework | verified | Google GenAI SDK |
@@ -64,9 +64,12 @@ Deployment diagnostic: revision `signal-scout-00008-t7b` failed before receiving
 | Dynamic event identity | verified locally and deployed | live entry shows neutral identity; pure regression verifies validated event name and immediate stale-name reset when the event URL changes |
 | Evidence-link clarity | verified by regression | event citations render as Devpost evidence and project citations identify the GitHub owner/repository |
 | Completed-work grounding | verified by regression | Cloud Run deployment recommendations are rejected when builder/project evidence marks public deployment complete; proof-capture recommendations remain valid |
-| Local verification | verified | 67 tests, typecheck, production build, 390 px no-overflow check, and zero browser warnings/errors |
-| Cloud Run revision | verified | `signal-scout-00010-rkb`, 100% traffic, default min 0, max 2, dedicated runtime identity, Secret Manager reference, health pass, and zero live-entry browser warnings/errors |
+| Event-source fail-closed boundary | verified by regression | if Devpost is unavailable while project evidence succeeds, project evidence is preserved, event analysis is withheld, and no analysis retry is offered |
+| Local verification | verified | 68 tests, typecheck, production build, 390 px no-overflow check, and zero browser warnings/errors |
+| Cloud Run revision | verified | `signal-scout-00011-zx8`, 100% traffic, default min 0, max 2, dedicated runtime identity, Secret Manager reference, and health pass |
 | Corrected golden scan and feedback | pending | run after the public repository reflects this verified checkpoint |
+
+Walkthrough diagnostic scan `523b2198-6a57-4151-a1b6-f1b8b8d94bba` on revision `signal-scout-00010-rkb` preserved GitHub project evidence after the Devpost request timed out, but incorrectly exposed event-oriented analysis. The result is diagnostic only and must not be used in the demo. It directly produced the fail-closed correction deployed in `signal-scout-00011-zx8`.
 
 ## Existing proof jobs
 

@@ -180,7 +180,7 @@ export function deriveProjectConstraints(request: ScanRequest, sources: SourceRe
 }
 
 const formatProjectConstraints = (constraints: string[]) => constraints.length > 0 ? constraints.map((constraint) => `- ${constraint}`).join('\n') : '- None established. Preserve uncertainty and do not infer a stack from Signal Scout itself.'
-const assertsCurrentProjectState = (text: string) => /\b(?:currently|already|still|lacks?|missing|no (?:baseline )?(?:code|project|implementation|integration|repository|artifact|asset)s?\b|(?:code|project|implementation|integration|repository|artifact|asset)s? (?:does not|doesn't) exist|not (?:yet )?(?:implemented|present|included|documented|deployed)|repository (?:has|does not|doesn't|lacks)|existing (?:implementation|project|repository|readme)|must be (?:expanded|added|implemented)|from scratch|at this stage)\b/i.test(text)
+const assertsCurrentProjectState = (text: string) => /\b(?:current(?:ly)?|already|still|lacks?|missing|no (?:baseline )?(?:code|project|implementation|integration|repository|artifact|asset)s?\b|(?:code|project|implementation|integration|repository|artifact|asset)s? (?:does not|doesn't) exist|not (?:yet )?(?:implemented|present|included|documented|deployed)|repository (?:has|does not|doesn't|lacks)|existing (?:implementation|project|repository|readme)|must be (?:expanded|added|implemented)|from scratch|at this stage)\b/i.test(text)
 const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 const evidenceRole = (source: SourceRecord, request: ScanRequest) => source.evidenceRole ?? (request.projectUrls.map(normalizeUrl).includes(normalizeUrl(source.url)) ? 'project' : 'event')
 

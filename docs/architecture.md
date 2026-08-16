@@ -1,8 +1,8 @@
 # Architecture
 
-> **Current status:** the complete bounded live workflow is deployed and verified on Cloud Run revision `signal-scout-00010-rkb`. It includes a durable public-demo capacity guard, role-specific host restrictions, DNS checks, responsive corrections, dynamic live-event identity, descriptive evidence labels, Gemini 3.5 Flash through the Google GenAI SDK, and Firestore persistence. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
+> **Current status:** the complete bounded live workflow is deployed and verified on Cloud Run revision `signal-scout-00011-zx8`. It includes a durable public-demo capacity guard, role-specific host restrictions, DNS checks, responsive corrections, dynamic live-event identity, descriptive evidence labels, fail-closed handling when official event evidence is unavailable, Gemini 3.5 Flash through the Google GenAI SDK, and Firestore persistence. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
 
-The maintained visual submission artifact is [Signal Scout Architecture Diagram](architecture-diagram.md). It was verified against Cloud Run revision `signal-scout-00010-rkb` on 16 August 2026 and should change only when implemented component boundaries or data flows change.
+The maintained visual submission artifact is [Signal Scout Architecture Diagram](architecture-diagram.md). It was verified against Cloud Run revision `signal-scout-00011-zx8` on 16 August 2026 and should change only when implemented component boundaries or data flows change.
 
 ## Implemented architecture
 

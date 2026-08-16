@@ -1,6 +1,6 @@
 # Signal Scout Architecture Diagram
 
-> **Submission artifact:** verified against Cloud Run revision `signal-scout-00010-rkb` on 16 August 2026, including the public-demo guard, retrieval-policy slice, and walkthrough presentation correction.
+> **Submission artifact:** verified against Cloud Run revision `signal-scout-00011-zx8` on 16 August 2026, including the public-demo guard, retrieval-policy slice, walkthrough presentation correction, and event-source fail-closed boundary.
 
 Portable submission image: [architecture-diagram.png](architecture-diagram.png). Regenerate it from the Mermaid block whenever component boundaries or data flows change.
 

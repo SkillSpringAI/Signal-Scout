@@ -50,6 +50,25 @@ describe('ScanRunner', () => {
     expect(result?.error?.code).toBe('RETRIEVAL_FAILED')
   })
 
+  it('preserves project evidence but withholds analysis when the event source is unavailable', async () => {
+    const store = new InMemoryScanStore()
+    const projectUrl = 'https://github.com/example/project'
+    const projectSource: SourceRecord = { ...source, url: projectUrl, evidenceRole: 'project', title: 'Project' }
+    let modelCalled = false
+    const runner = new ScanRunner(store, { retrieve: async (_url, evidenceRole) => {
+      if (evidenceRole === 'event') throw new Error('timeout')
+      return projectSource
+    } }, { analyze: async () => { modelCalled = true; return analysis } })
+    const job = await runner.create({ ...request, projectUrls: [projectUrl] })
+    await runner.run(job.id)
+    const result = await store.get(job.id)
+    expect(result?.status).toBe('partial')
+    expect(result?.sources).toEqual([projectSource])
+    expect(result?.analysis).toBeUndefined()
+    expect(result?.error?.code).toBe('EVENT_SOURCE_UNAVAILABLE')
+    expect(modelCalled).toBe(false)
+  })
+
   it('records cancellation before model execution', async () => {
     const store = new InMemoryScanStore()
     let releaseRetrieval: (() => void) | undefined

@@ -42,6 +42,7 @@ export class ScanRunner {
       }
       if (await this.isCancelled(job)) return
       if (job.sources.length === 0) return this.fail(job, 'RETRIEVAL_FAILED', 'No public source could be retrieved.')
+      if (!job.sources.some((source) => source.evidenceRole === 'event')) return this.fail(job, 'EVENT_SOURCE_UNAVAILABLE', 'The official hackathon source could not be collected. Project evidence was preserved, but event analysis was withheld.', 'partial')
       await this.transition(job, 'extracting', 'Analyzing event requirements and available project evidence.')
       try {
         const analysis = await this.analyzeWithRetry(job)

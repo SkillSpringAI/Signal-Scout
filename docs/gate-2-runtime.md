@@ -1,6 +1,6 @@
 # Gate 2 Runtime Guide
 
-> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00010-rkb`, verified on 16 August 2026.
+> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00011-zx8`, verified on 16 August 2026.
 
 ## Verified local live scan — 13 August 2026
 
@@ -102,8 +102,9 @@ Budget evidence note: the project owner verified an alerts-only USD $25 monthly 
 - finding and feedback citations identify Devpost event evidence separately from the relevant GitHub repository evidence;
 - prompt and semantic validation treat explicitly completed public Cloud Run deployment work as complete while still allowing proof-capture recommendations;
 - the default golden-run builder context accurately states the current deployed implementation and asks for only genuinely outstanding work;
-- `npm run preflight` passed with 67 tests, typecheck, and both production builds;
-- revision `signal-scout-00010-rkb` serves 100% traffic with max 2, default min 0, the dedicated runtime identity, the existing Secret Manager reference, and a passing health route;
+- a live event-timeout walkthrough exposed that project-only evidence could still reach event analysis; the runner now preserves project evidence but withholds all event requirements and recommendations when no official event source is collected;
+- `npm run preflight` passed with 68 tests, typecheck, and both production builds;
+- revision `signal-scout-00011-zx8` serves 100% traffic with max 2, default min 0, the dedicated runtime identity, the existing Secret Manager reference, and a passing health route;
 - local and deployed live-entry screens showed the neutral `Public hackathon scan` identity with no console warnings or errors; the local 390 px check had no page-level overflow.
 
 ## Local live-mode setup
