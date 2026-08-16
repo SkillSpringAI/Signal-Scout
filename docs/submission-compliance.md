@@ -22,6 +22,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Responsive walkthrough passed locally and on revision `signal-scout-00009-wrp` at 1440×900, 1280×720, 768×1024, and 390×844
 - [x] Guarded revision `signal-scout-00009-wrp`, golden scan, feedback turn, burst-capacity response, Firestore persistence, and zero error-severity log evidence captured
 - [x] Walkthrough correction slice passed 68-test preflight and was deployed as `signal-scout-00011-zx8` with dynamic event identity, descriptive evidence labels, completed-work grounding, event-source fail-closed handling, and a health pass
+- [x] Corrected golden scan `e543fe32-96fa-458c-af5e-a9ea61706a58` and one dual-source feedback adaptation completed on revision `signal-scout-00011-zx8` without recommending already-completed deployment work
 - [ ] Unedited live action segment recorded
 - [ ] Public YouTube or Vimeo video is no longer than four minutes
 - [ ] English audio or English subtitles verified

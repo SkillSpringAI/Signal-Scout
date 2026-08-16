@@ -67,7 +67,8 @@ Deployment diagnostic: revision `signal-scout-00008-t7b` failed before receiving
 | Event-source fail-closed boundary | verified by regression | if Devpost is unavailable while project evidence succeeds, project evidence is preserved, event analysis is withheld, and no analysis retry is offered |
 | Local verification | verified | 68 tests, typecheck, production build, 390 px no-overflow check, and zero browser warnings/errors |
 | Cloud Run revision | verified | `signal-scout-00011-zx8`, 100% traffic, default min 0, max 2, dedicated runtime identity, Secret Manager reference, and health pass |
-| Corrected golden scan and feedback | pending | run after the public repository reflects this verified checkpoint |
+| Corrected golden scan | verified | `e543fe32-96fa-458c-af5e-a9ea61706a58`; completed on `signal-scout-00011-zx8` with event/project roles, 5 requirements, 3 criteria, and 2 dual-source gaps limited to final video/architecture submission work |
+| Corrected golden feedback | verified | one adaptation focused the demo on a minimal end-to-end feedback loop, included `Changed because`, cited both sources, and asked one targeted clarification |
 
 Walkthrough diagnostic scan `523b2198-6a57-4151-a1b6-f1b8b8d94bba` on revision `signal-scout-00010-rkb` preserved GitHub project evidence after the Devpost request timed out, but incorrectly exposed event-oriented analysis. The result is diagnostic only and must not be used in the demo. It directly produced the fail-closed correction deployed in `signal-scout-00011-zx8`.
 
