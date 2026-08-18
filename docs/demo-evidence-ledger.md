@@ -69,6 +69,7 @@ Deployment diagnostic: revision `signal-scout-00008-t7b` failed before receiving
 | Cloud Run revision | verified | `signal-scout-00014-rhj`, 100% traffic, default min 0, max 2, dedicated runtime identity, Secret Manager reference, and health pass |
 | Current gap-closure scan | verified | `689924a1-2fdd-456f-9479-0a5b5b5899f0`; safe `503` partial state, Firestore analysis retry, completion with event/project roles, bounded feedback retry, dual-source adaptation, and one persisted clarification response on `signal-scout-00014-rhj` |
 | Corrected golden feedback | verified | one adaptation focused the demo on a minimal end-to-end feedback loop, included `Changed because`, cited both sources, and asked one targeted clarification |
+| Secondary CALL-E project scan | verified supporting evidence | `17372c88-3d09-4e8e-84e7-d30d37c92dc3`; completed on `signal-scout-00014-rhj` with 2 evidence roles, 5 CALL-E requirements, 4 criteria, 3 dual-source gaps, 7 build steps, one dual-source adaptation, one persisted clarification response, and no `All Things Agentic` string in persisted JSON; screenshots in `docs/evidence/scan-quality/2026-08-18-secondary-call-e/` |
 
 Walkthrough diagnostic scan `523b2198-6a57-4151-a1b6-f1b8b8d94bba` on revision `signal-scout-00010-rkb` preserved GitHub project evidence after the Devpost request timed out, but incorrectly exposed event-oriented analysis. The result is diagnostic only and must not be used in the demo. It directly produced the fail-closed correction deployed in `signal-scout-00011-zx8`.
 

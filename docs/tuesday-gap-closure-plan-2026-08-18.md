@@ -287,7 +287,7 @@ Verify:
 
 ### Walkthrough status — 18 August 2026
 
-The user-provided deployed screenshots demonstrate a completed two-source All Things Agentic scan with requirements, criteria, findings, opportunities, uncertainties, Field Report, Activity, one adapted recommendation, `Changed because`, two evidence links, and one generated clarification. The walkthrough did **not** pass the complete acceptance gate because the generated clarification could not be answered. The local correction is complete, but Gate Four remains open until the correction is deployed and the same workflow—including the persisted clarification response—is rerun against that revision.
+The initial user-provided deployed screenshots demonstrated a completed two-source All Things Agentic scan with requirements, criteria, findings, opportunities, uncertainties, Field Report, Activity, one adapted recommendation, `Changed because`, two evidence links, and one generated clarification. That walkthrough did **not** pass the complete acceptance gate because the generated clarification could not be answered. The correction was subsequently deployed and verified as recorded below.
 
 Deployment verification on revision `signal-scout-00012-qh4` produced a safe `partial` scan after Gemini exhausted its bounded `503 UNAVAILABLE` retry path. Both sources were preserved and analysis was withheld. The deliberate retry then exposed a Firestore-only defect: optional `analysis`/`error` fields were assigned `undefined`, which Firestore rejected. The scan remained unchanged and partial. The local fix deletes those optional fields before the conditional write; regression and full preflight verification pass. A replacement revision and repeated deployed retry are required before Gate Four closes.
 
@@ -312,6 +312,12 @@ Verify:
 - No All Things Agentic hard-coding leaks into the result.
 
 This test is particularly important for demonstrating that Signal-Scout is a system rather than a scripted hackathon demo.
+
+### Supporting secondary-project verification — 18 August 2026
+
+Deployed scan `17372c88-3d09-4e8e-84e7-d30d37c92dc3` on revision `signal-scout-00014-rhj` completed against the CALL-E Devpost event and the public `SkillSpringAI/CALL-E-Devpost-Project` repository. It changed the event identity, requirements, criteria, findings, learning shortlist, build plan, Field Report, and uncertainties; persisted one dual-source feedback adaptation and one clarification answer; and contained no `All Things Agentic` string in the complete persisted JSON. The 15 screenshots are preserved under `docs/evidence/scan-quality/2026-08-18-secondary-call-e/`.
+
+This is verified evidence that the system generalizes to a second real event/project pair. **Gate Five remains open** because its controlled acceptance test requires the different hackathon to be run with the same Signal Scout repository, isolating the event change rather than changing both inputs.
 
 ---
 
