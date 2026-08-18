@@ -1,6 +1,6 @@
 # Signal Scout
 
-> **Current verified status (16 August 2026):** Signal Scout is publicly deployed on Cloud Run revision `signal-scout-00011-zx8` with a live React/TypeScript UI, bounded Node/TypeScript API, Gemini 3.5 Flash through the Google GenAI SDK, Firestore persistence, sourced Activity evidence, one feedback/adaptation turn, public-demo usage limits, role-specific source hosts, DNS checks, responsive corrections, dynamic live-event identity, distinct event/project evidence labels, and fail-closed handling when the official event source is unavailable. Corrected golden proof scan: `e543fe32-96fa-458c-af5e-a9ea61706a58`.
+> **Current verified status (18 August 2026):** Signal Scout is publicly deployed on Cloud Run revision `signal-scout-00014-rhj` from commit `bfbec5b` with a live React/TypeScript UI, bounded Node/TypeScript API, Gemini 3.5 Flash through the Google GenAI SDK, Firestore persistence, sourced Activity evidence, one feedback/adaptation turn, one persisted clarification response without a second model call, bounded transient retries for analysis and feedback, public-demo usage limits, role-specific source hosts, DNS checks, and fail-closed handling. Current golden proof scan: `689924a1-2fdd-456f-9479-0a5b5b5899f0`.
 
 Signal Scout turns a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
 
@@ -98,6 +98,7 @@ The exact verified commands, revisions, identities, and proof jobs are recorded 
 - `POST /api/scans/:id/cancel` — request cancellation
 - `POST /api/scans/:id/retry-analysis` — use the one preserved-source analysis retry when applicable
 - `POST /api/scans/:id/feedback` — apply the one bounded feedback turn
+- `POST /api/scans/:id/clarification` — persist one answer to the generated clarification without another model call
 
 The client receives structured jobs and source evidence, never Gemini or Google Cloud credentials. Capacity guards return HTTP `429`, `Retry-After`, and `{ "error": "DEMO_CAPACITY_REACHED", "message": "..." }`.
 

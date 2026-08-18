@@ -1,8 +1,8 @@
 # Architecture
 
-> **Current status:** the complete bounded live workflow is deployed and verified on Cloud Run revision `signal-scout-00011-zx8`. It includes a durable public-demo capacity guard, role-specific host restrictions, DNS checks, responsive corrections, dynamic live-event identity, descriptive evidence labels, fail-closed handling when official event evidence is unavailable, Gemini 3.5 Flash through the Google GenAI SDK, and Firestore persistence. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
+> **Current status:** the complete bounded live workflow is deployed and verified on Cloud Run revision `signal-scout-00014-rhj` from commit `bfbec5b`. It includes a durable public-demo capacity guard, role-specific host restrictions, DNS checks, bounded transient analysis/feedback retries, one feedback adaptation plus one persisted clarification response, fail-closed handling when official event evidence is unavailable, Gemini 3.5 Flash through the Google GenAI SDK, and Firestore persistence. The visibly separated mock UI remains intact for deterministic tests and offline demonstration.
 
-The maintained visual submission artifact is [Signal Scout Architecture Diagram](architecture-diagram.md). It was verified against Cloud Run revision `signal-scout-00011-zx8` on 16 August 2026 and should change only when implemented component boundaries or data flows change.
+The maintained visual submission artifact is [Signal Scout Architecture Diagram](architecture-diagram.md). It was verified against Cloud Run revision `signal-scout-00014-rhj` on 18 August 2026 and should change only when implemented component boundaries or data flows change.
 
 ## Implemented architecture
 
@@ -14,7 +14,7 @@ React/Vite UI
      -> Google GenAI SDK -> Gemini 3.5 Flash
      -> schema and semantic validation
      -> Firestore Native scan/activity/report state
-     -> one bounded feedback adaptation
+     -> one bounded feedback adaptation + one persisted clarification response
 
 React/Vite mock mode
   -> in-process MockAgent -> deterministic synthetic fixtures
@@ -28,7 +28,7 @@ Verified components:
 - public Cloud Run service with min 0 / max 2 instances
 - dedicated runtime service identity with Firestore access
 - Gemini key mounted from a single least-privilege Secret Manager secret
-- real official-source retrieval, Gemini analysis, Firestore persistence, Activity, Field Report, and feedback adaptation
+- real official-source retrieval, Gemini analysis, Firestore persistence, Activity, Field Report, feedback adaptation, and one non-model clarification response
 - atomic Firestore daily usage counter, process-local burst limit, Devpost/GitHub role hosts, and DNS resolution checks
 - session-only mock store and synthetic fixtures kept outside the live evidence path
 

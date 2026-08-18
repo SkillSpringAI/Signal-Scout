@@ -1,6 +1,6 @@
 # Submission Compliance
 
-Checked items require runtime or submission evidence, not intent or documentation alone. Last reviewed: 16 August 2026.
+Checked items require runtime or submission evidence, not intent or documentation alone. Last reviewed: 18 August 2026.
 
 - [x] Project creation date eligibility verified: official build window began 3 August 2026; local folder, first project thread, and first Git commits are dated 9 August 2026 (evidence ledger, 13 August 2026)
 - [x] Official category selected: The Collaborative Partner
@@ -8,11 +8,11 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Gemini 3.5+ verified in local runtime (`gemini-3.5-flash`, 13 August 2026)
 - [x] Qualifying Google agent framework verified in local runtime (Google GenAI SDK, 13 August 2026)
 - [x] Google Cloud infrastructure verified locally in runtime (Firestore Native via ADC, 13 August 2026)
-- [x] Cloud deployment proof captured (`signal-scout-00011-zx8`, 100% traffic on 16 August 2026)
+- [x] Cloud deployment proof captured (`signal-scout-00014-rhj`, 100% traffic on 18 August 2026; commit `bfbec5b`)
 - [x] Public repository available
 - [x] Reproducible clean setup tested from a fresh remote clone
 - [x] Current 15 August candidate reproduced from an isolated dependency-free copy with `npm ci` and matching 63-test preflight output
-- [x] Architecture diagram and portable PNG present and aligned with revision `signal-scout-00011-zx8`
+- [x] Architecture diagram and portable PNG present and aligned with revision `signal-scout-00014-rhj`
 - [x] Real local and cloud-deployed end-to-end scans demonstrated, including neutral-project and event/project evidence-role cases on revision `signal-scout-00007-vb6`
 - [x] Judge-clarity and partial-result correction slice passed 55-test local preflight on 14 August and was subsequently included in verified revision `signal-scout-00009-wrp`
 - [x] Current local public-demo protection, source-policy, DNS, and responsive correction slice passed 63-test preflight and local production verification on 15 August 2026
@@ -23,6 +23,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Guarded revision `signal-scout-00009-wrp`, golden scan, feedback turn, burst-capacity response, Firestore persistence, and zero error-severity log evidence captured
 - [x] Walkthrough correction slice passed 68-test preflight and was deployed as `signal-scout-00011-zx8` with dynamic event identity, descriptive evidence labels, completed-work grounding, event-source fail-closed handling, and a health pass
 - [x] Corrected golden scan `e543fe32-96fa-458c-af5e-a9ea61706a58` and one dual-source feedback adaptation completed on revision `signal-scout-00011-zx8` without recommending already-completed deployment work
+- [x] Gap-closure scan `689924a1-2fdd-456f-9479-0a5b5b5899f0` verified safe `503` partial handling, Firestore analysis retry, bounded feedback retry, dual-source adaptation, persisted clarification response, and the one-response limit on revision `signal-scout-00014-rhj`
 - [ ] Unedited live action segment recorded
 - [ ] Public YouTube or Vimeo video is no longer than four minutes
 - [ ] English audio or English subtitles verified

@@ -9,7 +9,7 @@
 | Public service | verified | `https://signal-scout-212660130578.australia-southeast1.run.app` |
 | Google Cloud project | verified | `gen-lang-client-0047054532` |
 | Cloud Run region | verified | `australia-southeast1` |
-| Deployed revision | verified | `signal-scout-00011-zx8`, 100% traffic on 16 August 2026 |
+| Deployed revision | verified | `signal-scout-00014-rhj`, 100% traffic on 18 August 2026; commit `bfbec5b` |
 | Repository checkpoint | verified | `16d4df2` / `checkpoint-gate2-cloud-run-deployed` |
 | Model identifier | verified | `gemini-3.5-flash` |
 | Agent framework | verified | Google GenAI SDK |
@@ -66,8 +66,8 @@ Deployment diagnostic: revision `signal-scout-00008-t7b` failed before receiving
 | Completed-work grounding | verified by regression | Cloud Run deployment recommendations are rejected when builder/project evidence marks public deployment complete; proof-capture recommendations remain valid |
 | Event-source fail-closed boundary | verified by regression | if Devpost is unavailable while project evidence succeeds, project evidence is preserved, event analysis is withheld, and no analysis retry is offered |
 | Local verification | verified | 68 tests, typecheck, production build, 390 px no-overflow check, and zero browser warnings/errors |
-| Cloud Run revision | verified | `signal-scout-00011-zx8`, 100% traffic, default min 0, max 2, dedicated runtime identity, Secret Manager reference, and health pass |
-| Corrected golden scan | verified | `e543fe32-96fa-458c-af5e-a9ea61706a58`; completed on `signal-scout-00011-zx8` with event/project roles, 5 requirements, 3 criteria, and 2 dual-source gaps limited to final video/architecture submission work |
+| Cloud Run revision | verified | `signal-scout-00014-rhj`, 100% traffic, default min 0, max 2, dedicated runtime identity, Secret Manager reference, and health pass |
+| Current gap-closure scan | verified | `689924a1-2fdd-456f-9479-0a5b5b5899f0`; safe `503` partial state, Firestore analysis retry, completion with event/project roles, bounded feedback retry, dual-source adaptation, and one persisted clarification response on `signal-scout-00014-rhj` |
 | Corrected golden feedback | verified | one adaptation focused the demo on a minimal end-to-end feedback loop, included `Changed because`, cited both sources, and asked one targeted clarification |
 
 Walkthrough diagnostic scan `523b2198-6a57-4151-a1b6-f1b8b8d94bba` on revision `signal-scout-00010-rkb` preserved GitHub project evidence after the Devpost request timed out, but incorrectly exposed event-oriented analysis. The result is diagnostic only and must not be used in the demo. It directly produced the fail-closed correction deployed in `signal-scout-00011-zx8`.
@@ -381,6 +381,6 @@ Quantum Pacing is part of the user’s broader intellectual background but was n
 
 - Six moderate transitive `uuid` findings are accepted as non-blocking; do not apply the breaking Firebase Admin downgrade without a separate decision.
 - Container interruption is not deliberately demonstrated and remains a documented prototype limitation; do not interrupt the public service merely to capture evidence.
-- The golden-path input and feedback text are frozen and verified by corrected scan `e543fe32-96fa-458c-af5e-a9ea61706a58` on revision `signal-scout-00011-zx8`.
+- The current golden-path input and feedback text are verified by scan `689924a1-2fdd-456f-9479-0a5b5b5899f0` on revision `signal-scout-00014-rhj`; retain `e543fe32-96fa-458c-af5e-a9ea61706a58` as the prior corrected baseline.
 - Project creation-date eligibility, repository licensing, prior-work factual confirmation, budget evidence, deployment evidence, and golden runtime evidence are complete. Participant registration/account evidence and the final rendered-media rights check remain user-owned.
 - MIT is implemented for Signal Scout; the third-party-rights inventory is prepared and must be rechecked against the final video, narration, screenshots, and any music before upload.

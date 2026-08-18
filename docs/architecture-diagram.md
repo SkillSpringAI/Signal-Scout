@@ -1,6 +1,6 @@
 # Signal Scout Architecture Diagram
 
-> **Submission artifact:** verified against Cloud Run revision `signal-scout-00011-zx8` on 16 August 2026, including the public-demo guard, retrieval-policy slice, walkthrough presentation correction, and event-source fail-closed boundary.
+> **Submission artifact:** verified against Cloud Run revision `signal-scout-00014-rhj` on 18 August 2026, including the public-demo guard, retrieval-policy slice, bounded feedback adaptation, persisted clarification response, and event-source fail-closed boundary.
 
 Portable submission image: [architecture-diagram.png](architecture-diagram.png). Regenerate it from the Mermaid block whenever component boundaries or data flows change.
 
@@ -64,7 +64,7 @@ flowchart LR
 - Event sources are restricted to configured Devpost hosts and project sources to configured GitHub hosts in the deployed demo. Every redirect and DNS resolution is rechecked.
 - Event and project sources retain distinct evidence roles. Event pages establish requirements and judging criteria; project pages establish current implementation state.
 - Gemini output is accepted only after structured schema and semantic validation. Unsupported project-state claims and citations outside the collected source set are rejected.
-- Firestore persists scan state, source metadata, Activity events, validated analysis, and the single bounded feedback result.
+- Firestore persists scan state, source metadata, Activity events, validated analysis, the single bounded feedback result, and one builder clarification response.
 - Mock mode is deterministic, synthetic, and visibly separate from the live evidence path.
 
 ## Prototype limitation

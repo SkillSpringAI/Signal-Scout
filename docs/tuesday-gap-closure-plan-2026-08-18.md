@@ -71,7 +71,8 @@ Confirm:
 - Cloud Run: revision `signal-scout-00011-zx8` remains ready and serves **100%** of traffic with maximum scale 2.
 - Durable deployed proof: golden scan `e543fe32-96fa-458c-af5e-a9ea61706a58` remains readable through the deployed API with status `completed`, event and project evidence roles, 8 Activity events, 5 requirements, 3 judging criteria, 2 strategic gaps, and one persisted feedback turn containing `Changed because`, two supporting sources, and one clarification.
 - Retry and validation: local tests cover one retry for transient `429`/`500`/`502`/`503`/`504` and provider-equivalent errors; malformed schema/semantic output is not retried and recommendations are withheld.
-- Remaining before the full Gate One baseline can be checked complete: execute a fresh golden Live scan against the deployed runtime and exercise the current failure paths selected in Gate Six.
+- The fresh deployed golden workflow and observed transient-failure paths are now verified; broader Gate Six cases remain Wednesday work.
+- Final candidate verification: commit `bfbec5b` is deployed as `signal-scout-00014-rhj` at 100% traffic. Health, configuration preservation, Firestore persistence, transient analysis/feedback retries, one deliberate analysis retry, feedback adaptation, clarification persistence, and the one-response limit passed against scan `689924a1-2fdd-456f-9479-0a5b5b5899f0`.
 
 ### Output
 
@@ -291,6 +292,8 @@ The user-provided deployed screenshots demonstrate a completed two-source All Th
 Deployment verification on revision `signal-scout-00012-qh4` produced a safe `partial` scan after Gemini exhausted its bounded `503 UNAVAILABLE` retry path. Both sources were preserved and analysis was withheld. The deliberate retry then exposed a Firestore-only defect: optional `analysis`/`error` fields were assigned `undefined`, which Firestore rejected. The scan remained unchanged and partial. The local fix deletes those optional fields before the conditional write; regression and full preflight verification pass. A replacement revision and repeated deployed retry are required before Gate Four closes.
 
 Revision `signal-scout-00013-7z5` verified the Firestore retry correction against the preserved scan: the scan reused both sources and completed. The subsequent feedback request encountered `503 UNAVAILABLE` and exposed that feedback adaptation did not share the analysis path's bounded transient retry policy. No feedback was persisted. The local correction applies the same configured retry bound to feedback and records a warning Activity event before retrying. Replacement deployment and feedback/clarification verification remain required.
+
+Revision `signal-scout-00014-rhj` is the verified gap-closure candidate. The same scan completed, feedback survived a real transient `503` through the new bounded retry, the adapted recommendation preserved both evidence sources and `Changed because`, and one clarification answer persisted without another model call. A second clarification response returned HTTP 409. Gate Four is complete for the deployed API/runtime path; clean final UI screenshots remain evidence-capture work rather than an implementation blocker.
 
 ---
 
@@ -592,7 +595,7 @@ Mobile, subscriptions and broader agent capabilities should be evaluated **after
 
 By the end of today's session we want:
 
-- [ ] Current repo/runtime baseline verified.
+- [x] Current repo/runtime baseline verified.
 - [x] Live capabilities inventoried.
 - [x] Mock capabilities inventoried.
 - [x] Mock-vs-Live misleading promises identified.
@@ -600,8 +603,8 @@ By the end of today's session we want:
 - [x] Existing persistence boundary established.
 - [x] Authentication/project-memory complexity assessed.
 - [x] Authentication decision recorded as GO or NO-GO.
-- [ ] Golden Live workflow rerun after corrections.
+- [x] Golden Live workflow rerun after corrections.
 - [x] Remaining Wednesday work explicitly identified.
-- [ ] No unnecessary scope added.
+- [x] No unnecessary scope added.
 
 **Today's success is not measured by how much new functionality we build. It is measured by whether, by tonight, we know exactly what Signal-Scout does, can prove that it does it, and can safely begin converging on Friday's demo.**

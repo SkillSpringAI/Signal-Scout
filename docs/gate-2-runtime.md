@@ -1,6 +1,16 @@
 # Gate 2 Runtime Guide
 
-> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00011-zx8`, verified on 16 August 2026.
+> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00014-rhj` from commit `bfbec5b`, verified on 18 August 2026.
+
+## Gap-closure deployment — 18 August 2026
+
+- Revision `signal-scout-00014-rhj` serves 100% of traffic with the existing dedicated runtime identity, Secret Manager reference, Firestore configuration, host allowlists, and maximum scale 2.
+- Local preflight passed with 15 test files and 74 tests plus typecheck and both production builds.
+- Golden scan `689924a1-2fdd-456f-9479-0a5b5b5899f0` collected event and project evidence, initially failed safely after bounded Gemini `503 UNAVAILABLE` retries, preserved both sources, and later completed through the one deliberate analysis retry.
+- Deployed verification exposed and corrected a Firestore-only analysis-retry serialization defect; optional analysis/error fields are now removed rather than written as `undefined`.
+- The deployed feedback request encountered one transient `503`, recorded a warning Activity event, retried within the configured bound, and then persisted one high-confidence adapted recommendation with `Changed because`, two evidence sources, and one targeted clarification.
+- One clarification answer persisted to the same feedback entry without another Gemini call, added an Activity event, survived a fresh API read, and rejected a second response with HTTP 409.
+- Health passed and no error-severity logs were returned for the final revision during verification.
 
 ## Verified local live scan — 13 August 2026
 
