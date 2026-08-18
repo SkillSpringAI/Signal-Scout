@@ -317,7 +317,13 @@ This test is particularly important for demonstrating that Signal-Scout is a sys
 
 Deployed scan `17372c88-3d09-4e8e-84e7-d30d37c92dc3` on revision `signal-scout-00014-rhj` completed against the CALL-E Devpost event and the public `SkillSpringAI/CALL-E-Devpost-Project` repository. It changed the event identity, requirements, criteria, findings, learning shortlist, build plan, Field Report, and uncertainties; persisted one dual-source feedback adaptation and one clarification answer; and contained no `All Things Agentic` string in the complete persisted JSON. The 15 screenshots are preserved under `docs/evidence/scan-quality/2026-08-18-secondary-call-e/`.
 
-This is verified evidence that the system generalizes to a second real event/project pair. **Gate Five remains open** because its controlled acceptance test requires the different hackathon to be run with the same Signal Scout repository, isolating the event change rather than changing both inputs.
+This verified that the system generalizes to a second real event/project pair. At that checkpoint, Gate Five remained open because its controlled acceptance test required the different hackathon to be run with the same Signal Scout repository, isolating the event change rather than changing both inputs.
+
+### Exact controlled verification — 18 August 2026
+
+Deployed scan `b370d15f-5c83-4efa-84d8-2f04c374444d` on revision `signal-scout-00014-rhj` completed against the Agents for Humans Devpost event while retaining the same public `SkillSpringAI/Signal-Scout` repository. The persisted result contains event and project evidence roles, 6 event-specific requirements, 5 event-specific judging criteria, 2 strategic gaps, 3 learning items, 4 build-plan items, 2 uncertainties, and 7 Activity events. The event identity, sidebar card, requirements, criteria, findings, plan, uncertainties, and Field Report all changed. The persisted generated `analysis` contains no `All Things Agentic` phrase; the repository source excerpt still contains its truthful original-hackathon description, which is source evidence rather than generated-output leakage.
+
+The eight screenshots and verification notes are preserved under `docs/evidence/scan-quality/2026-08-18-gate-five-agents-for-humans/`. **Gate Five is complete.**
 
 ---
 

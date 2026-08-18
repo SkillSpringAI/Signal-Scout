@@ -24,6 +24,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Walkthrough correction slice passed 68-test preflight and was deployed as `signal-scout-00011-zx8` with dynamic event identity, descriptive evidence labels, completed-work grounding, event-source fail-closed handling, and a health pass
 - [x] Corrected golden scan `e543fe32-96fa-458c-af5e-a9ea61706a58` and one dual-source feedback adaptation completed on revision `signal-scout-00011-zx8` without recommending already-completed deployment work
 - [x] Gap-closure scan `689924a1-2fdd-456f-9479-0a5b5b5899f0` verified safe `503` partial handling, Firestore analysis retry, bounded feedback retry, dual-source adaptation, persisted clarification response, and the one-response limit on revision `signal-scout-00014-rhj`
+- [x] Different-hackathon/same-project control scan `b370d15f-5c83-4efa-84d8-2f04c374444d` changed the event-specific analysis without prior-event leakage on revision `signal-scout-00014-rhj`
 - [ ] Unedited live action segment recorded
 - [ ] Public YouTube or Vimeo video is no longer than four minutes
 - [ ] English audio or English subtitles verified

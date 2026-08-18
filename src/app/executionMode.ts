@@ -1,0 +1,32 @@
+export type ExecutionMode = 'mock' | 'live'
+
+export const executionModeStorageKey = 'signal-scout:execution-mode'
+
+type ReadableStorage = Pick<Storage, 'getItem'>
+type WritableStorage = Pick<Storage, 'setItem'>
+
+export function readExecutionMode(storage?: ReadableStorage): ExecutionMode {
+  if (!storage) return 'mock'
+  try {
+    return storage.getItem(executionModeStorageKey) === 'live' ? 'live' : 'mock'
+  } catch {
+    return 'mock'
+  }
+}
+
+export function persistExecutionMode(mode: ExecutionMode, storage?: WritableStorage): void {
+  if (!storage) return
+  try {
+    storage.setItem(executionModeStorageKey, mode)
+  } catch {
+    // Storage can be unavailable in hardened or quota-limited browsers.
+  }
+}
+
+export function readBrowserExecutionMode(): ExecutionMode {
+  return readExecutionMode(typeof window === 'undefined' ? undefined : window.localStorage)
+}
+
+export function persistBrowserExecutionMode(mode: ExecutionMode): void {
+  persistExecutionMode(mode, typeof window === 'undefined' ? undefined : window.localStorage)
+}
