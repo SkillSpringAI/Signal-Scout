@@ -136,7 +136,7 @@ export class MockAgent {
     this.store.dispatch({ type: 'SET_MEMORY_STATUS', memoryId, status })
     const approval = this.store.getState().approvals.find((candidate) => candidate.relatedMemoryId === memoryId)
     if (approval) this.store.dispatch({ type: 'SET_APPROVAL_STATUS', approvalId: approval.id, status: status === 'accepted' ? 'approved' : 'rejected', decidedAt: this.now() })
-    this.event(task, `${status === 'accepted' ? 'Accepted' : 'Rejected'} memory entry ${memoryId}.`, status === 'accepted' ? 'approval' : 'observation')
+    this.event(task, `${status === 'accepted' ? 'Accepted' : 'Rejected'} concept memory entry ${memoryId} in local mock state.`, status === 'accepted' ? 'approval' : 'observation')
     return this.complete(task, [memoryId])
   }
 

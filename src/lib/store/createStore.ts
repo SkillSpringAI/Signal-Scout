@@ -53,7 +53,7 @@ export function createAppStore(dataset: SeedDataset = demoDataset, options: AppS
     activeDomainId: dataset.domains[0]?.id ?? '',
     userContext: { interests: '', projectIdea: '', networkingIntent: '', timeAvailable: '' },
     tasks: [createSeedTask()],
-    approvals: [{ id: 'approval-memory-proposed', scope: 'memory', action: 'Save proposed memory', reason: 'This reflection can be saved only after your review.', status: 'pending', requestedAt: '2026-08-11', relatedMemoryId: 'memory-proposed' }],
+    approvals: [{ id: 'approval-memory-proposed', scope: 'memory', action: 'Record concept memory decision', reason: 'This synthetic reflection changes only local mock state after your review.', status: 'pending', requestedAt: '2026-08-11', relatedMemoryId: 'memory-proposed' }],
     plans: [],
   })
   let state: AppState = createInitialState()

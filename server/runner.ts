@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import type { AnalysisModel, FeedbackModel } from './model.js'
 import type { Retriever } from './retrieval.js'
-import { collaborationResponseSchema, type FeedbackRequest, type ScanEvent, type ScanJob, type ScanRequest, type ScanStatus } from './contracts.js'
+import { collaborationResponseSchema, type ClarificationRequest, type FeedbackRequest, type ScanEvent, type ScanJob, type ScanRequest, type ScanStatus } from './contracts.js'
 import { ScanStoreConflictError, type ScanStore } from './store.js'
 
 const now = () => new Date().toISOString()
@@ -113,6 +113,21 @@ export class ScanRunner {
     job.updatedAt = receivedAt
     job.feedback = [...(job.feedback ?? []), { id: randomUUID(), receivedAt, feedback: request.feedback, ...adapted }]
     job.events.push({ id: randomUUID(), at: receivedAt, stage: 'synthesizing', kind: 'activity', message: 'Applied explicit user feedback to one sourced recommendation and prepared one targeted clarification.' })
+    await this.store.save(job, expectedUpdatedAt)
+    return job
+  }
+
+  async recordClarification(id: string, request: ClarificationRequest) {
+    const job = await this.store.get(id)
+    if (!job) return undefined
+    const feedback = job.feedback?.[0]
+    if (!feedback) throw new Error('A completed feedback turn is required before clarification can be recorded.')
+    if (feedback.clarificationResponse) throw new Error('This scan has already recorded its one clarification response.')
+    const expectedUpdatedAt = job.updatedAt
+    const receivedAt = nextTimestamp(expectedUpdatedAt)
+    feedback.clarificationResponse = { answer: request.answer, receivedAt }
+    job.updatedAt = receivedAt
+    job.events.push({ id: randomUUID(), at: receivedAt, stage: 'synthesizing', kind: 'activity', message: 'Recorded the builder response to the targeted clarification without another model call.' })
     await this.store.save(job, expectedUpdatedAt)
     return job
   }

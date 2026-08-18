@@ -38,6 +38,15 @@ describe('LiveScanApi', () => {
     expect(JSON.parse(body)).toEqual({ feedback: 'Prioritize the shortest credible demo path.' })
   })
 
+  it('submits the clarification response to its non-model endpoint', async () => {
+    let path = ''
+    let body = ''
+    const api = new LiveScanApi({ fetchImpl: async (input, init) => { path = String(input); body = String(init?.body); return jsonResponse(job('completed')) } })
+    await api.submitClarification(job('completed').id, 'The Activity view matters most.')
+    expect(path).toBe(`/api/scans/${job('completed').id}/clarification`)
+    expect(JSON.parse(body)).toEqual({ answer: 'The Activity view matters most.' })
+  })
+
   it('requests a deliberate analysis retry for the same scan', async () => {
     let path = ''
     const api = new LiveScanApi({ fetchImpl: async (input) => { path = String(input); return jsonResponse(job('extracting'), 202) } })

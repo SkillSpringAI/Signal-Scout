@@ -38,6 +38,7 @@ export type FieldAnalysis = z.infer<typeof fieldAnalysisSchema>
 export type SourceRecord = z.infer<typeof sourceRecordSchema>
 
 export const feedbackRequestSchema = z.object({ feedback: z.string().trim().min(10).max(2_000) })
+export const clarificationRequestSchema = z.object({ answer: z.string().trim().min(2).max(2_000) })
 export const collaborationResponseSchema = z.object({
   adaptedRecommendation: z.object({
     title: z.string().min(1).max(200),
@@ -48,8 +49,10 @@ export const collaborationResponseSchema = z.object({
   }),
   nextClarifyingQuestion: z.string().min(1).max(500),
 })
-export const feedbackEntrySchema = collaborationResponseSchema.extend({ id: z.string().uuid(), receivedAt: z.string().datetime(), feedback: feedbackRequestSchema.shape.feedback })
+export const clarificationResponseSchema = clarificationRequestSchema.extend({ receivedAt: z.string().datetime() })
+export const feedbackEntrySchema = collaborationResponseSchema.extend({ id: z.string().uuid(), receivedAt: z.string().datetime(), feedback: feedbackRequestSchema.shape.feedback, clarificationResponse: clarificationResponseSchema.optional() })
 export type FeedbackRequest = z.infer<typeof feedbackRequestSchema>
+export type ClarificationRequest = z.infer<typeof clarificationRequestSchema>
 export type CollaborationResponse = z.infer<typeof collaborationResponseSchema>
 
 export const scanStatuses = ['queued', 'retrieving', 'extracting', 'validating', 'synthesizing', 'completed', 'partial', 'failed', 'cancelled', 'needs_input'] as const

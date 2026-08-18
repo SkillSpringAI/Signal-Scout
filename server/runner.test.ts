@@ -157,7 +157,7 @@ describe('ScanRunner', () => {
     await expect(runner.requestAnalysisRetry(job.id)).rejects.toThrow('already used its one analysis retry')
   })
 
-  it('persists explicit feedback, one adapted recommendation, and one clarification', async () => {
+  it('persists explicit feedback, one adapted recommendation, and one clarification response', async () => {
     const store = new InMemoryScanStore()
     const runner = new ScanRunner(store, { retrieve: async () => source }, { analyze: async () => analysis, adapt: async (_job, feedback) => ({ adaptedRecommendation: { title: 'Narrow the build', explanation: 'Prioritize the Activity evidence path.', changedBecause: feedback.feedback, sourceUrls: [source.url], confidence: 'high' }, nextClarifyingQuestion: 'Which evidence view matters most for your demo?' }) })
     const job = await runner.create(request)
@@ -168,5 +168,17 @@ describe('ScanRunner', () => {
     expect(updated?.feedback?.[0].adaptedRecommendation.title).toBe('Narrow the build')
     expect(updated?.feedback?.[0].nextClarifyingQuestion).toContain('evidence view')
     expect((await store.get(job.id))?.events.at(-1)?.message).toContain('explicit user feedback')
+    const clarified = await runner.recordClarification(job.id, { answer: 'The Activity view matters most for the demo.' })
+    expect(clarified?.feedback?.[0].clarificationResponse?.answer).toContain('Activity view')
+    expect(clarified?.events.at(-1)?.message).toContain('without another model call')
+    await expect(runner.recordClarification(job.id, { answer: 'Attempt a second clarification.' })).rejects.toThrow('already recorded')
+  })
+
+  it('requires feedback before recording a clarification', async () => {
+    const store = new InMemoryScanStore()
+    const runner = new ScanRunner(store, { retrieve: async () => source }, { analyze: async () => analysis })
+    const job = await runner.create(request)
+    await runner.run(job.id)
+    await expect(runner.recordClarification(job.id, { answer: 'Activity is the most important view.' })).rejects.toThrow('feedback turn is required')
   })
 })
