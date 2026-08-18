@@ -8,7 +8,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Gemini 3.5+ verified in local runtime (`gemini-3.5-flash`, 13 August 2026)
 - [x] Qualifying Google agent framework verified in local runtime (Google GenAI SDK, 13 August 2026)
 - [x] Google Cloud infrastructure verified locally in runtime (Firestore Native via ADC, 13 August 2026)
-- [x] Cloud deployment proof captured (`signal-scout-00015-g6s`, 100% traffic on 18 August 2026; commit `4f49f48`)
+- [x] Cloud deployment proof captured (`signal-scout-00016-c9x`, 100% traffic on 18 August 2026; commit `8307d80`)
 - [x] Public repository available
 - [x] Reproducible clean setup tested from a fresh remote clone
 - [x] Current 15 August candidate reproduced from an isolated dependency-free copy with `npm ci` and matching 63-test preflight output
@@ -25,7 +25,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Corrected golden scan `e543fe32-96fa-458c-af5e-a9ea61706a58` and one dual-source feedback adaptation completed on revision `signal-scout-00011-zx8` without recommending already-completed deployment work
 - [x] Gap-closure scan `689924a1-2fdd-456f-9479-0a5b5b5899f0` verified safe `503` partial handling, Firestore analysis retry, bounded feedback retry, dual-source adaptation, persisted clarification response, and the one-response limit on revision `signal-scout-00014-rhj`
 - [x] Different-hackathon/same-project control scan `b370d15f-5c83-4efa-84d8-2f04c374444d` changed the event-specific analysis without prior-event leakage on revision `signal-scout-00014-rhj`
-- [x] Execution selection continuity verified on revision `signal-scout-00015-g6s`: first-time default remains Mock; an explicit Live selection survives page refresh without rendering mock content
+- [x] Execution selection continuity verified on revision `signal-scout-00016-c9x`: first-time default remains Mock; an explicit Live selection survives page refresh without rendering mock content
 - [ ] Unedited live action segment recorded
 - [ ] Public YouTube or Vimeo video is no longer than four minutes
 - [ ] English audio or English subtitles verified
