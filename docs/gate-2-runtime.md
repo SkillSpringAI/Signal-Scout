@@ -1,6 +1,14 @@
 # Gate 2 Runtime Guide
 
-> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00014-rhj` from commit `bfbec5b`, verified on 18 August 2026.
+> Status: local and deployed runtime verified through Google GenAI SDK, Gemini 3.5 Flash, Firestore Native, and Cloud Run. The current deployed baseline is revision `signal-scout-00015-g6s` from commit `4f49f48`, verified on 18 August 2026.
+
+## Refresh-continuity deployment — 18 August 2026
+
+- Revision `signal-scout-00015-g6s` serves 100% of traffic with the existing dedicated runtime identity, Secret Manager reference, Firestore mode, and maximum scale 2.
+- `npm run preflight` passed with 16 test files and 78 tests plus typecheck and both production builds.
+- A fresh deployed browser tab defaulted to the clearly labelled Mock demo. After explicitly selecting Live scan and refreshing, the Execution selector remained on Live and only the Live workspace rendered.
+- The persistence boundary is intentionally limited to the explicit Execution choice; first-time visitors and invalid or unavailable browser storage still fail safely to Mock.
+- The health route passed, the deployed browser emitted no warnings or errors, and the new revision had no error-severity Cloud Run logs during verification.
 
 ## Gap-closure deployment — 18 August 2026
 

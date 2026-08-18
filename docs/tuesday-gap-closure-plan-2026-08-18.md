@@ -349,6 +349,10 @@ Signal-Scout should prefer:
 
 over fabricated completeness.
 
+### Refresh/revisit verification — 18 August 2026
+
+The reported refresh regression was reproduced: Execution was component-only state, so every page load returned to Mock. Commit `4f49f48` now persists only the user's explicit Mock/Live selection in browser storage, handles unavailable or invalid storage by safely defaulting to Mock, and leaves first-time visitors on the existing Mock orientation. Four focused regressions plus the full 78-test preflight passed. On deployed revision `signal-scout-00015-g6s`, a fresh tab opened in Mock, an explicit Live selection survived refresh, only the Live workspace rendered after reload, and the browser and Cloud Run error checks were clean.
+
 ---
 
 # 10. Wednesday Target

@@ -23,10 +23,19 @@ export function persistExecutionMode(mode: ExecutionMode, storage?: WritableStor
   }
 }
 
+function getBrowserStorage(): Storage | undefined {
+  if (typeof window === 'undefined') return undefined
+  try {
+    return window.localStorage
+  } catch {
+    return undefined
+  }
+}
+
 export function readBrowserExecutionMode(): ExecutionMode {
-  return readExecutionMode(typeof window === 'undefined' ? undefined : window.localStorage)
+  return readExecutionMode(getBrowserStorage())
 }
 
 export function persistBrowserExecutionMode(mode: ExecutionMode): void {
-  persistExecutionMode(mode, typeof window === 'undefined' ? undefined : window.localStorage)
+  persistExecutionMode(mode, getBrowserStorage())
 }
