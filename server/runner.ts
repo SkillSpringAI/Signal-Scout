@@ -77,8 +77,8 @@ export class ScanRunner {
     if (!job) return undefined
     if (job.status !== 'partial' || job.error?.code !== 'MODEL_FAILED' || job.sources.length === 0) throw new Error('Only a withheld analysis with preserved sources can be retried.')
     if (job.events.some((event) => event.message === 'Retrying analysis once with the preserved sources.')) throw new Error('This scan has already used its one analysis retry.')
-    job.analysis = undefined
-    job.error = undefined
+    delete job.analysis
+    delete job.error
     await this.transition(job, 'extracting', 'Retrying analysis once with the preserved sources.')
     return job
   }

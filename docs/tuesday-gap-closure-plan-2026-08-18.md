@@ -288,6 +288,8 @@ Verify:
 
 The user-provided deployed screenshots demonstrate a completed two-source All Things Agentic scan with requirements, criteria, findings, opportunities, uncertainties, Field Report, Activity, one adapted recommendation, `Changed because`, two evidence links, and one generated clarification. The walkthrough did **not** pass the complete acceptance gate because the generated clarification could not be answered. The local correction is complete, but Gate Four remains open until the correction is deployed and the same workflow—including the persisted clarification response—is rerun against that revision.
 
+Deployment verification on revision `signal-scout-00012-qh4` produced a safe `partial` scan after Gemini exhausted its bounded `503 UNAVAILABLE` retry path. Both sources were preserved and analysis was withheld. The deliberate retry then exposed a Firestore-only defect: optional `analysis`/`error` fields were assigned `undefined`, which Firestore rejected. The scan remained unchanged and partial. The local fix deletes those optional fields before the conditional write; regression and full preflight verification pass. A replacement revision and repeated deployed retry are required before Gate Four closes.
+
 ---
 
 # 8. Gate Five: Different Hackathon Test

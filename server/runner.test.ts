@@ -133,6 +133,8 @@ describe('ScanRunner', () => {
     await runner.run(job.id)
     const requested = await runner.requestAnalysisRetry(job.id)
     expect(requested?.status).toBe('extracting')
+    expect(Object.hasOwn(requested ?? {}, 'analysis')).toBe(false)
+    expect(Object.hasOwn(requested ?? {}, 'error')).toBe(false)
     await runner.runAnalysisRetry(job.id)
     const result = await store.get(job.id)
     expect(result?.status).toBe('completed')
