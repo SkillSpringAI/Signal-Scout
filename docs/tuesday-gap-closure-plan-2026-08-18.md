@@ -290,6 +290,8 @@ The user-provided deployed screenshots demonstrate a completed two-source All Th
 
 Deployment verification on revision `signal-scout-00012-qh4` produced a safe `partial` scan after Gemini exhausted its bounded `503 UNAVAILABLE` retry path. Both sources were preserved and analysis was withheld. The deliberate retry then exposed a Firestore-only defect: optional `analysis`/`error` fields were assigned `undefined`, which Firestore rejected. The scan remained unchanged and partial. The local fix deletes those optional fields before the conditional write; regression and full preflight verification pass. A replacement revision and repeated deployed retry are required before Gate Four closes.
 
+Revision `signal-scout-00013-7z5` verified the Firestore retry correction against the preserved scan: the scan reused both sources and completed. The subsequent feedback request encountered `503 UNAVAILABLE` and exposed that feedback adaptation did not share the analysis path's bounded transient retry policy. No feedback was persisted. The local correction applies the same configured retry bound to feedback and records a warning Activity event before retrying. Replacement deployment and feedback/clarification verification remain required.
+
 ---
 
 # 8. Gate Five: Different Hackathon Test

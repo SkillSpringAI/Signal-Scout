@@ -107,7 +107,7 @@ export class ScanRunner {
     if (!job.analysis || !['completed', 'partial'].includes(job.status)) throw new Error('Feedback requires a completed or partial scan with validated analysis.')
     if (job.feedback?.length) throw new Error('This scan has already used its one bounded feedback turn.')
     if (!this.model.adapt) throw new Error('Feedback adaptation is not configured.')
-    const adapted = collaborationResponseSchema.parse(await this.model.adapt(job, request))
+    const adapted = collaborationResponseSchema.parse(await this.adaptWithRetry(job, request))
     const expectedUpdatedAt = job.updatedAt
     const receivedAt = nextTimestamp(expectedUpdatedAt)
     job.updatedAt = receivedAt
@@ -147,6 +147,19 @@ export class ScanRunner {
       }
     }
     return undefined
+  }
+
+  private async adaptWithRetry(job: ScanJob, request: FeedbackRequest) {
+    if (!this.model.adapt) throw new Error('Feedback adaptation is not configured.')
+    for (let attempt = 1; attempt <= this.options.modelMaxAttempts; attempt += 1) {
+      try { return await this.model.adapt(job, request) }
+      catch (error) {
+        if (!isTransientModelError(error) || attempt === this.options.modelMaxAttempts) throw error
+        await this.save(job, 'synthesizing', `Transient feedback model failure; retrying attempt ${attempt + 1} of ${this.options.modelMaxAttempts}.`, 'warning')
+        await this.options.sleep(this.options.modelRetryBaseMs * attempt)
+      }
+    }
+    throw new Error('Feedback adaptation exhausted its configured attempts.')
   }
 }
 

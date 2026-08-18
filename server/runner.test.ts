@@ -183,4 +183,20 @@ describe('ScanRunner', () => {
     await runner.run(job.id)
     await expect(runner.recordClarification(job.id, { answer: 'Activity is the most important view.' })).rejects.toThrow('feedback turn is required')
   })
+
+  it('retries one transient feedback failure and records it in Activity', async () => {
+    const store = new InMemoryScanStore()
+    let attempts = 0
+    const runner = new ScanRunner(store, { retrieve: async () => source }, { analyze: async () => analysis, adapt: async (_job, feedback) => {
+      attempts += 1
+      if (attempts === 1) throw Object.assign(new Error('Service unavailable'), { code: 503 })
+      return { adaptedRecommendation: { title: 'Narrow the build', explanation: 'Prioritize Activity.', changedBecause: feedback.feedback, sourceUrls: [source.url], confidence: 'high' }, nextClarifyingQuestion: 'Which evidence view matters most?' }
+    } }, { sleep: async () => undefined })
+    const job = await runner.create(request)
+    await runner.run(job.id)
+    const updated = await runner.applyFeedback(job.id, { feedback: 'Prioritize the shortest credible demo path.' })
+    expect(attempts).toBe(2)
+    expect(updated?.feedback).toHaveLength(1)
+    expect(updated?.events.some((event) => event.kind === 'warning' && event.message.includes('Transient feedback model failure'))).toBe(true)
+  })
 })
