@@ -378,6 +378,43 @@ Wednesday should be the last reasonable point for accepting a meaningful archite
 - Complete the selected failure and partial-collection tests.
 - Reconcile the final evidence ledger and source-of-truth checkboxes before Thursday freeze verification.
 
+### Accelerated demo-readiness closeout — 19 August 2026
+
+The demo is now targeted for tomorrow, so Thursday freeze verification and Friday demo preparation are compressed into today. Gates One through Five are complete. Gate Six has substantial automated and deployed evidence, but its judge-facing proof and the final-revision evidence package are not yet complete. No new product feature is authorized unless a verification step exposes a demo blocker, incorrect claim, serious UX problem, security issue, or regression.
+
+#### P0 — freeze the exact deployed candidate
+
+- [ ] Run one complete golden workflow against current revision `signal-scout-00016-c9x`, including feedback, `Changed because`, supporting evidence, one clarification answer, Activity, and persisted retrieval by scan ID.
+- [ ] Confirm the final revision still has 100% traffic, passing health, the dedicated runtime identity, Firestore mode, Secret Manager reference, maximum scale 2, and no error-severity logs after the golden run.
+- [ ] Capture one nondestructive honest partial/failure state on the final judge-facing revision with retained evidence or an explicit no-report result. Existing automated cancellation, unavailable-API, polling-limit, unsupported-content, event-source fail-closed, retry, and semantic-rejection tests remain supporting evidence; do not interrupt the public container merely for proof.
+- [ ] Re-run `npm run preflight` only if code changes after `8307d80`; otherwise retain the verified 16-file, 78-test preflight as the candidate build proof.
+
+#### P0 — complete the judge-facing evidence package
+
+- [ ] Capture clean final-revision screens for Live entry, Activity in progress, collected event/project evidence, requirements/criteria, findings/opportunities, uncertainty, Field Report, feedback input, adapted recommendation, `Changed because`, supporting sources, clarification input/recorded answer, and the honest partial/failure state.
+- [ ] Capture sanitized Cloud Run revision/traffic/configuration proof and named Firestore golden-record metadata without unrelated records, credentials, billing identifiers, or secret values.
+- [ ] Capture the final public repository checkpoint, MIT license, architecture diagram, and safe Gemini model/configuration proof.
+- [ ] Reconcile and check off the screenshot/recording checklist in `docs/demo-evidence-ledger.md`; older revision screenshots remain supporting evidence, not substitutes for the final candidate package.
+
+#### P1 — lock and rehearse tomorrow's demo
+
+- [ ] Freeze the exact event URL, project URL, builder context, feedback text, clarification answer, expected result, fallback proof scan, and browser/view order.
+- [ ] Reconcile `docs/demo-video-script.md` and `docs/manual-demo-walkthrough.md` with the current clarification-answer interaction and final revision.
+- [ ] Perform at least one timed rehearsal under four minutes, preserving one unedited live-action segment and visibly proving the Cloud Run backend.
+- [ ] Complete the repository pass and the explicit requirement → implementation → repository evidence → demo evidence mapping before recording.
+
+#### User-owned checks before recording or upload
+
+- [ ] Check current Cloud billing and Gemini API billing/usage; retain only sanitized evidence.
+- [ ] Reconfirm The Collaborative Partner in the final Devpost submission.
+- [ ] Record the unedited live action segment, produce the final video at no more than four minutes, and verify English audio or subtitles.
+- [ ] Perform the final rendered-media rights/privacy/secrets review, then upload and freeze the submission assets.
+- [ ] Explicitly mark optional article, social-post, and additional-model bonuses as completed or not claimed so they cannot be mistaken for blockers.
+
+#### Exit condition for today
+
+The project is demo-ready when the exact final revision has one clean golden proof, one honest failure/partial proof, a reconciled evidence package, a timed script and rehearsal, current billing checks, and no known demo-critical defect. After that point the freeze rule applies.
+
 ---
 
 # 11. Thursday: Demo Freeze
