@@ -138,6 +138,7 @@ The client receives structured jobs and source evidence, never Gemini or Google 
 - [Submission compliance](docs/submission-compliance.md)
 - [Architecture](docs/architecture.md) and [diagram](docs/architecture-diagram.md)
 - [Demo evidence ledger](docs/demo-evidence-ledger.md)
+- [Product demo script](docs/demo-video-script.md) and [screenplay](docs/demo-screenplay.md)
 - [Gate 2 runtime guide](docs/gate-2-runtime.md)
 - [Safety and permissions](docs/safety-and-permissions.md)
 - [Prior-work disclosure](docs/prior-work-disclosure.md)

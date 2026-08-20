@@ -399,9 +399,9 @@ The demo is now targeted for tomorrow, so Thursday freeze verification and Frida
 #### P1 — lock and rehearse tomorrow's demo
 
 - [ ] Freeze the exact event URL, project URL, builder context, feedback text, clarification answer, expected result, fallback proof scan, and browser/view order.
-- [ ] Reconcile `docs/demo-video-script.md` and `docs/manual-demo-walkthrough.md` with the current clarification-answer interaction and final revision.
+- [x] Reconcile `docs/demo-video-script.md` and `docs/manual-demo-walkthrough.md` with the current clarification-answer interaction and final revision. The product-focused draft, exact inputs, clarification answer, timing contingencies, and operator screenplay are recorded in `docs/demo-video-script.md` and `docs/demo-screenplay.md`.
 - [ ] Perform at least one timed rehearsal under four minutes, preserving one unedited live-action segment and visibly proving the Cloud Run backend.
-- [ ] Complete the repository pass and the explicit requirement → implementation → repository evidence → demo evidence mapping before recording.
+- [x] Complete the repository pass and the explicit requirement → implementation → repository evidence → demo evidence mapping before recording. README submission essentials and the script’s requirement/judging coverage table map the final implementation to repository and video proof.
 
 #### User-owned checks before recording or upload
 

@@ -1,6 +1,6 @@
 # Manual Demo Walkthrough
 
-Run this checklist against the final local production build first, then repeat the golden path and guarded failures against the candidate Cloud Run revision. Record exact revision, scan ID, timestamps, status, source count, and screenshots in the evidence ledger. Never capture secrets or unrelated Firestore records.
+Run this checklist against the final local production build first, then repeat the golden path and guarded failures against Cloud Run revision `signal-scout-00016-c9x`. The final verified golden scan is `c3c0f521-0b3d-41ea-855d-83a42db22df8`; the honest partial and failed scans are `2f6c053a-5fdf-4bde-ac0b-5723a61259b8` and `c716b724-684c-46f3-92e2-f9a21d42cf80`. Record exact revision, scan ID, timestamps, status, source count, and screenshots in the evidence ledger. Never capture secrets or unrelated Firestore records.
 
 ## Viewport and accessibility matrix
 
@@ -25,7 +25,17 @@ Check `1440×900`, `1280×720`, `768×1024`, and `390×844` in both mock and liv
 8. Inspect Opportunities, uncertainties, and the Field Report without unsupported or competing recommendations.
 9. Apply: `I have limited time, so prioritize the smallest demo-critical implementation that proves guided adaptation.`
 10. Confirm one adapted recommendation, `Changed because`, supporting sources, and one targeted clarification.
-11. Confirm the feedback control is disabled after the first turn and a direct second request returns `409`.
+11. Answer the targeted clarification with: `No, the above advice is sufficient.`
+12. Confirm the answer is recorded with the scan without another Gemini call, the controls are disabled, and a direct second clarification request returns `409`.
+
+## Recording rehearsal
+
+1. Follow the product narration in `docs/demo-video-script.md` and the operator cues in `docs/demo-screenplay.md`.
+2. Rehearse navigation in Mock mode first; do not present Mock output as Live evidence.
+3. Perform at least one timed Live rehearsal, then allow the browser burst window to clear before the final take.
+4. Target 3:30–3:40 and reject any take that reaches 3:55 before the closing line.
+5. Verify the segment from **Run live scan** to terminal scan result has no cut.
+6. Confirm the `.run.app` URL, revision `signal-scout-00016-c9x`, and 100% traffic are visible without secret values or private account details.
 
 ## Guarded failure matrix
 
