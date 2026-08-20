@@ -1,59 +1,28 @@
 # Signal Scout Architecture Diagram
 
-> **Submission artifact:** verified against Cloud Run revision `signal-scout-00014-rhj` on 18 August 2026, including the public-demo guard, retrieval-policy slice, bounded feedback adaptation, persisted clarification response, and event-source fail-closed boundary.
+> **Submission artifact:** simplified for judge readability and verified against Cloud Run revision `signal-scout-00016-c9x` on 20 August 2026.
 
-Portable submission image: [architecture-diagram.png](architecture-diagram.png). Regenerate it from the Mermaid block whenever component boundaries or data flows change.
+Portable submission files: [architecture-diagram.png](architecture-diagram.png) and [architecture-diagram.svg](architecture-diagram.svg). Keep the compact Mermaid source below aligned with both files.
 
 ```mermaid
 flowchart LR
-    Judge["Builder / judge<br/>web browser"]
+    Browser["Builder / judge<br/>React + TypeScript UI"]
+    Sources["Public Devpost + GitHub<br/>event and project evidence"]
+    Gemini["Gemini 3.5 Flash<br/>structured analysis"]
+    Firestore[("Firestore Native<br/>scan, Activity, report + feedback")]
+    Secret["Secret Manager<br/>server-side Gemini key"]
 
-    subgraph CloudRun["Google Cloud Run — Signal Scout service"]
-        UI["React + TypeScript UI<br/>Vite production bundle"]
-        API["Node.js + TypeScript API<br/>Express"]
-        Guard["Public demo usage guard<br/>daily capacity + burst limit"]
-        Runner["Bounded scan runner<br/>retrieve → analyze → validate → synthesize"]
-        Retriever["Safe public-source retriever<br/>role hosts, DNS, redirect,<br/>timeout, type + size limits"]
-        GenAI["Google GenAI SDK<br/>structured Gemini requests"]
-        Validator["Zod schema + semantic validation<br/>evidence roles, citations + project constraints"]
-        Feedback["One bounded feedback turn<br/>adapt one recommendation + clarify"]
+    subgraph CloudRun["Google Cloud Run — Signal Scout backend"]
+        API["Node + TypeScript API"]
+        Core["Retrieve → guard → analyze<br/>validate → report → adapt"]
+        API <--> Core
     end
 
-    Sources["Public event and project pages<br/>untrusted evidence"]
-    Gemini["Gemini 3.5 Flash<br/>Gemini API"]
-    Firestore[("Firestore Native<br/>scan, sources, activity,<br/>analysis + feedback")]
-    Usage[("Firestore usage counter<br/>atomic UTC-day capacity")]
-    Secret["Secret Manager<br/>Gemini API key"]
-    Identity["Dedicated Cloud Run<br/>runtime service identity"]
-    Mock["Deterministic mock mode<br/>synthetic fixtures only"]
-
-    Judge -->|"HTTPS"| UI
-    UI -->|"/api/scans + /feedback"| API
-    API --> Guard
-    Guard -->|"capacity reserved"| Runner
-    Guard -->|"atomic increment"| Usage
-    Runner --> Retriever
-    Retriever -->|"bounded HTTP(S)"| Sources
-    Sources -->|"event / project evidence roles"| Retriever
-    Retriever --> Runner
-    Runner --> GenAI
-    GenAI -->|"Gemini API"| Gemini
-    Gemini -->|"structured response"| GenAI
-    GenAI --> Validator
-    Validator -->|"accepted analysis"| Runner
-    Validator -.->|"reject unsafe or unsupported output"| Runner
-    Runner -->|"durable state"| Firestore
-    API -->|"poll persisted job"| Firestore
-    API --> Feedback
-    Feedback --> GenAI
-    Feedback -->|"persist adapted recommendation"| Firestore
-    Firestore --> API
-    API --> UI
-    Secret -->|"server-side secret reference"| GenAI
-    Identity -->|"least-privilege access"| Secret
-    Identity -->|"Firestore access"| Firestore
-    Judge -.->|"offline demonstration"| Mock
-    Mock -.->|"never live evidence"| UI
+    Browser <-->|"HTTPS / JSON"| API
+    Core <-->|"bounded retrieval"| Sources
+    Core <-->|"Google GenAI SDK"| Gemini
+    Core <-->|"durable state"| Firestore
+    Secret -->|"runtime reference"| Core
 ```
 
 ## Trust and evidence boundaries

@@ -12,7 +12,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Public repository available
 - [x] Reproducible clean setup tested from a fresh remote clone
 - [x] Current 15 August candidate reproduced from an isolated dependency-free copy with `npm ci` and matching 63-test preflight output
-- [x] Architecture diagram and portable PNG present and aligned with revision `signal-scout-00014-rhj`
+- [x] Compact architecture diagram plus portable PNG/SVG present and aligned with revision `signal-scout-00016-c9x`
 - [x] Real local and cloud-deployed end-to-end scans demonstrated, including neutral-project and event/project evidence-role cases on revision `signal-scout-00007-vb6`
 - [x] Judge-clarity and partial-result correction slice passed 55-test local preflight on 14 August and was subsequently included in verified revision `signal-scout-00009-wrp`
 - [x] Current local public-demo protection, source-policy, DNS, and responsive correction slice passed 63-test preflight and local production verification on 15 August 2026

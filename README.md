@@ -1,6 +1,6 @@
 # Signal Scout
 
-> **Current verified status (18 August 2026):** Signal Scout is publicly deployed on Cloud Run revision `signal-scout-00016-c9x` from commit `8307d80` with a live React/TypeScript UI, refresh-stable Execution selection, bounded Node/TypeScript API, Gemini 3.5 Flash through the Google GenAI SDK, Firestore persistence, sourced Activity evidence, one feedback/adaptation turn, one persisted clarification response without a second model call, bounded transient retries for analysis and feedback, public-demo usage limits, role-specific source hosts, DNS checks, and fail-closed handling. Current golden proof scan: `689924a1-2fdd-456f-9479-0a5b5b5899f0`.
+> **Current verified status (20 August 2026):** Signal Scout is publicly deployed on Cloud Run revision `signal-scout-00016-c9x` from product commit `8307d80`. The final golden workflow, evidence package, honest partial state, and explicit failure state are preserved at repository checkpoint `6bd3027`. Current golden proof scan: `c3c0f521-0b3d-41ea-855d-83a42db22df8`.
 
 Signal Scout turns a hackathon and a builder's goals into a sourced field analysis, strategic project gaps, a learning shortlist, and an actionable build plan, while preserving a visible trace of every source and processing step.
 
@@ -21,6 +21,20 @@ official Devpost URL + builder context + optional public GitHub project URLs
 - Public repository: https://github.com/SkillSpringAI/Signal-Scout
 
 The live path is the submission workflow. The deterministic mock is visibly labelled and exists only for tests, offline development, and a no-cost product orientation.
+
+## Submission essentials
+
+| Requirement | Signal Scout evidence |
+|---|---|
+| Spin-up instructions | Follow [Install and verify](#install-and-verify), then choose the deterministic Mock path or the Live local path below. Cloud deployment guidance is under [Container and Cloud Run](#container-and-cloud-run). |
+| Architecture diagram | The diagram below explicitly connects the React frontend, Cloud Run backend, public sources, Gemini 3.5 Flash, Firestore, and Secret Manager. A [portable PNG](docs/architecture-diagram.png), [SVG](docs/architecture-diagram.svg), and [annotated architecture page](docs/architecture-diagram.md) are included. |
+| Demonstration video | Final video must be public, no longer than four minutes, explain the problem and value proposition, show the application working end to end, and visibly prove the backend is running on Google Cloud. |
+
+## Architecture at a glance
+
+![Signal Scout live architecture showing the browser, Cloud Run service, public sources, Gemini, Firestore, and Secret Manager](docs/architecture-diagram.png)
+
+The browser receives structured results only. Retrieval, Gemini calls, validation, persistence, capacity checks, and credentials remain in the Cloud Run backend. The [architecture notes](docs/architecture-diagram.md) document the trust boundaries and prototype limitation without crowding the submission diagram.
 
 ## Prerequisites
 
@@ -90,6 +104,14 @@ For Cloud Run:
 - verify the health route, one complete event-plus-project scan, one feedback turn, Firestore persistence, and error-severity logs after deployment.
 
 The exact verified commands, revisions, identities, and proof jobs are recorded in [Gate 2 runtime guide](docs/gate-2-runtime.md). Never copy credentials or unrelated Firestore records into deployment evidence.
+
+## Demonstration video checklist
+
+- Keep the public YouTube or Vimeo video at **four minutes or less**.
+- Briefly explain the problem, target builder, and value proposition.
+- Show one unedited Live scan through sourced evidence, Field Report, feedback adaptation, and clarification recording.
+- Visibly prove the backend is on Google Cloud using the public `.run.app` URL and a sanitized Cloud Run revision/traffic view.
+- Exclude credentials, secret values, billing identifiers, unrelated Firestore records, and private browser/account details.
 
 ## Public API
 
