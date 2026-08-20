@@ -276,9 +276,9 @@ Capture only from the final judge-facing revision.
 - [x] Firestore proof for the exact golden-path job without unrelated records
 - [x] Cloud Run revision/traffic proof
 - [x] Model identifier shown through safe configuration evidence
-- [ ] Final repository checkpoint and public license
+- [x] Final repository checkpoint and public license
 
-Final-revision evidence for the checked items above is archived in `docs/evidence/final-candidate/2026-08-20/`. The golden scan is `c3c0f521-0b3d-41ea-855d-83a42db22df8`; honest partial and failure scans are `2f6c053a-5fdf-4bde-ac0b-5723a61259b8` and `c716b724-684c-46f3-92e2-f9a21d42cf80` respectively.
+Final-revision evidence for the checked items above is archived in `docs/evidence/final-candidate/2026-08-20/`. The golden scan is `c3c0f521-0b3d-41ea-855d-83a42db22df8`; honest partial and failure scans are `2f6c053a-5fdf-4bde-ac0b-5723a61259b8` and `c716b724-684c-46f3-92e2-f9a21d42cf80` respectively. The final repository checkpoint, license, and compact architecture captures are under the `github/` subdirectory.
 
 ## Tonight evidence queue — 13 August 2026
 

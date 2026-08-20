@@ -27,6 +27,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Different-hackathon/same-project control scan `b370d15f-5c83-4efa-84d8-2f04c374444d` changed the event-specific analysis without prior-event leakage on revision `signal-scout-00014-rhj`
 - [x] Execution selection continuity verified on revision `signal-scout-00016-c9x`: first-time default remains Mock; an explicit Live selection survives page refresh without rendering mock content
 - [x] Final-candidate evidence captured on revision `signal-scout-00016-c9x`: completed golden scan `c3c0f521-0b3d-41ea-855d-83a42db22df8`, retained-source partial scan `2f6c053a-5fdf-4bde-ac0b-5723a61259b8`, zero-source failed scan `c716b724-684c-46f3-92e2-f9a21d42cf80`, sanitized Cloud Run/Firestore proof, and zero post-run error-severity logs (`docs/evidence/final-candidate/2026-08-20/`)
+- [x] Final public repository checkpoint `2b08d14`, rendered MIT license, and compact README architecture screenshot captured (`docs/evidence/final-candidate/2026-08-20/github/`)
 - [ ] Unedited live action segment recorded
 - [ ] Public YouTube or Vimeo video is no longer than four minutes
 - [ ] English audio or English subtitles verified

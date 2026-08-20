@@ -393,7 +393,7 @@ The demo is now targeted for tomorrow, so Thursday freeze verification and Frida
 
 - [x] Capture clean final-revision screens for Live entry, Activity in progress, collected event/project evidence, requirements/criteria, findings/opportunities, uncertainty, Field Report, feedback input, adapted recommendation, `Changed because`, supporting sources, clarification input/recorded answer, and the honest partial/failure state. Archived under `docs/evidence/final-candidate/2026-08-20/`.
 - [x] Capture sanitized Cloud Run revision/traffic/configuration proof and named Firestore golden-record metadata without unrelated records, credentials, billing identifiers, or secret values. Archived under `docs/evidence/final-candidate/2026-08-20/powershell/`.
-- [ ] Capture the final public repository checkpoint, MIT license, architecture diagram, and safe Gemini model/configuration proof.
+- [x] Capture the final public repository checkpoint, MIT license, architecture diagram, and safe Gemini model/configuration proof. Repository checkpoint `2b08d14`, rendered MIT license, compact README architecture, and sanitized `gemini-3.5-flash` configuration evidence are archived under `docs/evidence/final-candidate/2026-08-20/`.
 - [x] Reconcile and check off the screenshot/recording checklist in `docs/demo-evidence-ledger.md`; final-candidate screenshots are indexed in `docs/evidence/final-candidate/2026-08-20/`, while older revision screenshots remain supporting evidence.
 
 #### P1 — lock and rehearse tomorrow's demo
