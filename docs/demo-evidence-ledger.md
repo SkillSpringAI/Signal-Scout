@@ -264,19 +264,21 @@ The official-overview scan exercised a priority-change feedback case, but it doe
 
 Capture only from the final judge-facing revision.
 
-- [ ] Landing/overview showing purpose, live mode, and primary action
-- [ ] Live scan in progress with understandable Activity state
-- [ ] Completed Field Report with findings and next actions
-- [ ] Evidence link and collection timestamp adjacent to a supported claim
-- [ ] Uncertainty section clearly distinct from recommendations
-- [ ] Feedback input before submission
-- [ ] Adapted recommendation showing what changed and why
-- [ ] One targeted clarifying question
-- [ ] Honest partial/failure state with retained evidence
-- [ ] Firestore proof for the exact golden-path job without unrelated records
-- [ ] Cloud Run revision/traffic proof
-- [ ] Model identifier shown through safe configuration evidence
+- [x] Landing/overview showing purpose, live mode, and primary action
+- [x] Live scan in progress with understandable Activity state
+- [x] Completed Field Report with findings and next actions
+- [x] Evidence link and collection timestamp adjacent to a supported claim
+- [x] Uncertainty section clearly distinct from recommendations
+- [x] Feedback input before submission
+- [x] Adapted recommendation showing what changed and why
+- [x] One targeted clarifying question
+- [x] Honest partial/failure state with retained evidence
+- [x] Firestore proof for the exact golden-path job without unrelated records
+- [x] Cloud Run revision/traffic proof
+- [x] Model identifier shown through safe configuration evidence
 - [ ] Final repository checkpoint and public license
+
+Final-revision evidence for the checked items above is archived in `docs/evidence/final-candidate/2026-08-20/`. The golden scan is `c3c0f521-0b3d-41ea-855d-83a42db22df8`; honest partial and failure scans are `2f6c053a-5fdf-4bde-ac0b-5723a61259b8` and `c716b724-684c-46f3-92e2-f9a21d42cf80` respectively.
 
 ## Tonight evidence queue — 13 August 2026
 
@@ -384,6 +386,6 @@ Quantum Pacing is part of the user’s broader intellectual background but was n
 
 - Six moderate transitive `uuid` findings are accepted as non-blocking; do not apply the breaking Firebase Admin downgrade without a separate decision.
 - Container interruption is not deliberately demonstrated and remains a documented prototype limitation; do not interrupt the public service merely to capture evidence.
-- The current golden-path input and feedback text are verified by scan `689924a1-2fdd-456f-9479-0a5b5b5899f0` on revision `signal-scout-00014-rhj`; retain `e543fe32-96fa-458c-af5e-a9ea61706a58` as the prior corrected baseline.
+- The final golden-path input, feedback text, adaptation, and clarification are verified by scan `c3c0f521-0b3d-41ea-855d-83a42db22df8` on revision `signal-scout-00016-c9x`; retain `689924a1-2fdd-456f-9479-0a5b5b5899f0` and `e543fe32-96fa-458c-af5e-a9ea61706a58` as prior corrected baselines.
 - Project creation-date eligibility, repository licensing, prior-work factual confirmation, budget evidence, deployment evidence, and golden runtime evidence are complete. Participant registration/account evidence and the final rendered-media rights check remain user-owned.
 - MIT is implemented for Signal Scout; the third-party-rights inventory is prepared and must be rechecked against the final video, narration, screenshots, and any music before upload.

@@ -384,17 +384,17 @@ The demo is now targeted for tomorrow, so Thursday freeze verification and Frida
 
 #### P0 — freeze the exact deployed candidate
 
-- [ ] Run one complete golden workflow against current revision `signal-scout-00016-c9x`, including feedback, `Changed because`, supporting evidence, one clarification answer, Activity, and persisted retrieval by scan ID.
-- [ ] Confirm the final revision still has 100% traffic, passing health, the dedicated runtime identity, Firestore mode, Secret Manager reference, maximum scale 2, and no error-severity logs after the golden run.
-- [ ] Capture one nondestructive honest partial/failure state on the final judge-facing revision with retained evidence or an explicit no-report result. Existing automated cancellation, unavailable-API, polling-limit, unsupported-content, event-source fail-closed, retry, and semantic-rejection tests remain supporting evidence; do not interrupt the public container merely for proof.
-- [ ] Re-run `npm run preflight` only if code changes after `8307d80`; otherwise retain the verified 16-file, 78-test preflight as the candidate build proof.
+- [x] Run one complete golden workflow against current revision `signal-scout-00016-c9x`, including feedback, `Changed because`, supporting evidence, one clarification answer, Activity, and persisted retrieval by scan ID. Completed 20 August as scan `c3c0f521-0b3d-41ea-855d-83a42db22df8`.
+- [x] Confirm the final revision still has 100% traffic, passing health, the dedicated runtime identity, Firestore mode, Secret Manager reference, maximum scale 2, and no error-severity logs after the golden run. Sanitized proof and a post-run log check were completed 20 August.
+- [x] Capture one nondestructive honest partial/failure state on the final judge-facing revision with retained evidence or an explicit no-report result. Partial scan `2f6c053a-5fdf-4bde-ac0b-5723a61259b8` retained the project source and withheld recommendations; failed scan `c716b724-684c-46f3-92e2-f9a21d42cf80` produced an explicit zero-source no-report result.
+- [x] Re-run `npm run preflight` only if code changes after `8307d80`; otherwise retain the verified 16-file, 78-test preflight as the candidate build proof. No product-code change followed `8307d80`; the verified preflight remains the candidate proof.
 
 #### P0 — complete the judge-facing evidence package
 
-- [ ] Capture clean final-revision screens for Live entry, Activity in progress, collected event/project evidence, requirements/criteria, findings/opportunities, uncertainty, Field Report, feedback input, adapted recommendation, `Changed because`, supporting sources, clarification input/recorded answer, and the honest partial/failure state.
-- [ ] Capture sanitized Cloud Run revision/traffic/configuration proof and named Firestore golden-record metadata without unrelated records, credentials, billing identifiers, or secret values.
+- [x] Capture clean final-revision screens for Live entry, Activity in progress, collected event/project evidence, requirements/criteria, findings/opportunities, uncertainty, Field Report, feedback input, adapted recommendation, `Changed because`, supporting sources, clarification input/recorded answer, and the honest partial/failure state. Archived under `docs/evidence/final-candidate/2026-08-20/`.
+- [x] Capture sanitized Cloud Run revision/traffic/configuration proof and named Firestore golden-record metadata without unrelated records, credentials, billing identifiers, or secret values. Archived under `docs/evidence/final-candidate/2026-08-20/powershell/`.
 - [ ] Capture the final public repository checkpoint, MIT license, architecture diagram, and safe Gemini model/configuration proof.
-- [ ] Reconcile and check off the screenshot/recording checklist in `docs/demo-evidence-ledger.md`; older revision screenshots remain supporting evidence, not substitutes for the final candidate package.
+- [x] Reconcile and check off the screenshot/recording checklist in `docs/demo-evidence-ledger.md`; final-candidate screenshots are indexed in `docs/evidence/final-candidate/2026-08-20/`, while older revision screenshots remain supporting evidence.
 
 #### P1 — lock and rehearse tomorrow's demo
 

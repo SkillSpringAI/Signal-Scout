@@ -1,6 +1,6 @@
 # Submission Compliance
 
-Checked items require runtime or submission evidence, not intent or documentation alone. Last reviewed: 18 August 2026.
+Checked items require runtime or submission evidence, not intent or documentation alone. Last reviewed: 20 August 2026.
 
 - [x] Project creation date eligibility verified: official build window began 3 August 2026; local folder, first project thread, and first Git commits are dated 9 August 2026 (evidence ledger, 13 August 2026)
 - [x] Official category selected: The Collaborative Partner
@@ -26,6 +26,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Gap-closure scan `689924a1-2fdd-456f-9479-0a5b5b5899f0` verified safe `503` partial handling, Firestore analysis retry, bounded feedback retry, dual-source adaptation, persisted clarification response, and the one-response limit on revision `signal-scout-00014-rhj`
 - [x] Different-hackathon/same-project control scan `b370d15f-5c83-4efa-84d8-2f04c374444d` changed the event-specific analysis without prior-event leakage on revision `signal-scout-00014-rhj`
 - [x] Execution selection continuity verified on revision `signal-scout-00016-c9x`: first-time default remains Mock; an explicit Live selection survives page refresh without rendering mock content
+- [x] Final-candidate evidence captured on revision `signal-scout-00016-c9x`: completed golden scan `c3c0f521-0b3d-41ea-855d-83a42db22df8`, retained-source partial scan `2f6c053a-5fdf-4bde-ac0b-5723a61259b8`, zero-source failed scan `c716b724-684c-46f3-92e2-f9a21d42cf80`, sanitized Cloud Run/Firestore proof, and zero post-run error-severity logs (`docs/evidence/final-candidate/2026-08-20/`)
 - [ ] Unedited live action segment recorded
 - [ ] Public YouTube or Vimeo video is no longer than four minutes
 - [ ] English audio or English subtitles verified
