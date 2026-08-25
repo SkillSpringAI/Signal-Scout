@@ -7,7 +7,8 @@
 - Public runtime: **3:26** (206 seconds), within the four-minute limit
 - Prepared thumbnail: `docs/assets/signal-scout-youtube-thumbnail.png`
 - Owner review on 25 August 2026 confirmed the English captions are correctly spelled and synchronized with the voiceover.
-- Still user-owned before asset freeze: verify the YouTube account, apply the thumbnail, add repository/deployment links to the description, review the continuous Live segment, and complete the final rights/privacy check.
+- Owner confirmation on 25 August 2026 records that the prepared thumbnail was applied, the required Live-action segment remains continuous and unedited, and the final rights/privacy/secret-exposure review passed.
+- Sole remaining item before asset freeze: wait for YouTube's 24-hour account verification delay to clear, then add the repository and deployment links to the public video description.
 
 ## Published Devpost submission — 25 August 2026
 

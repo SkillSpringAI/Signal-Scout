@@ -110,7 +110,7 @@ The exact verified commands, revisions, identities, and proof jobs are recorded 
 ## Demonstration video checklist
 
 - Watch the public demo: [Signal Scout: Your AI Hackathon Copilot | Live Demo](https://youtu.be/Lc3Z60dAFNI) — **3:26**.
-- The prepared YouTube thumbnail is preserved at [`docs/assets/signal-scout-youtube-thumbnail.png`](docs/assets/signal-scout-youtube-thumbnail.png).
+- The applied YouTube thumbnail is preserved at [`docs/assets/signal-scout-youtube-thumbnail.png`](docs/assets/signal-scout-youtube-thumbnail.png).
 - Keep the public YouTube or Vimeo video at **four minutes or less**.
 - Briefly explain the problem, target builder, and value proposition.
 - Show one unedited Live scan through sourced evidence, Field Report, feedback adaptation, and clarification recording.
