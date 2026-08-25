@@ -1,5 +1,20 @@
 # Demo Evidence Ledger
 
+## Public demonstration video — 25 August 2026
+
+- Public URL: `https://youtu.be/Lc3Z60dAFNI`
+- Title: **Signal Scout: Your AI Hackathon Copilot | Live Demo**
+- Public runtime: **3:26** (206 seconds), within the four-minute limit
+- Prepared thumbnail: `docs/assets/signal-scout-youtube-thumbnail.png`
+- Still user-owned before asset freeze: verify the YouTube account, apply the thumbnail, add repository/deployment links to the description, review caption accuracy and the continuous Live segment, complete the final rights/privacy check, and reconfirm the Devpost category.
+
+## Published Devpost submission — 25 August 2026
+
+- Public URL: `https://devpost.com/software/signal-scout`
+- Public page status: HTTP 200 with title **Signal-Scout | Devpost**
+- Public evidence: final project summary, GitHub repository link, and YouTube demonstration link are present
+- Evidence boundary: the public page does not expose the selected judging category, so final category reconfirmation remains an owner-verified checklist item
+
 > **Rule:** this ledger distinguishes verified evidence from evidence still needed. Do not mark an item captured from memory or intention alone. Never include credentials, tokens, ADC contents, or unrelated Firestore records.
 
 ## Current deployed baseline

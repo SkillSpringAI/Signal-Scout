@@ -19,6 +19,7 @@ official Devpost URL + builder context + optional public GitHub project URLs
 - Implemented stack: Gemini 3.5 Flash, Google GenAI SDK, Cloud Run, and Firestore Native
 - Public verified deployment: https://signal-scout-212660130578.australia-southeast1.run.app
 - Public repository: https://github.com/SkillSpringAI/Signal-Scout
+- Published Devpost submission: https://devpost.com/software/signal-scout
 
 The live path is the submission workflow. The deterministic mock is visibly labelled and exists only for tests, offline development, and a no-cost product orientation.
 
@@ -28,7 +29,8 @@ The live path is the submission workflow. The deterministic mock is visibly labe
 |---|---|
 | Spin-up instructions | Follow [Install and verify](#install-and-verify), then choose the deterministic Mock path or the Live local path below. Cloud deployment guidance is under [Container and Cloud Run](#container-and-cloud-run). |
 | Architecture diagram | The diagram below explicitly connects the React frontend, Cloud Run backend, public sources, Gemini 3.5 Flash, Firestore, and Secret Manager. A [portable PNG](docs/architecture-diagram.png), [SVG](docs/architecture-diagram.svg), and [annotated architecture page](docs/architecture-diagram.md) are included. |
-| Demonstration video | Final video must be public, no longer than four minutes, explain the problem and value proposition, show the application working end to end, and visibly prove the backend is running on Google Cloud. |
+| Demonstration video | [Signal Scout: Your AI Hackathon Copilot \| Live Demo](https://youtu.be/Lc3Z60dAFNI) is public and runs 3:26. It explains the problem and value proposition, shows the application workflow, and includes Google Cloud deployment proof. |
+| Devpost submission | [Signal Scout on Devpost](https://devpost.com/software/signal-scout) is published with the final project summary, repository, and demonstration video. |
 
 ## Architecture at a glance
 
@@ -107,6 +109,8 @@ The exact verified commands, revisions, identities, and proof jobs are recorded 
 
 ## Demonstration video checklist
 
+- Watch the public demo: [Signal Scout: Your AI Hackathon Copilot | Live Demo](https://youtu.be/Lc3Z60dAFNI) — **3:26**.
+- The prepared YouTube thumbnail is preserved at [`docs/assets/signal-scout-youtube-thumbnail.png`](docs/assets/signal-scout-youtube-thumbnail.png).
 - Keep the public YouTube or Vimeo video at **four minutes or less**.
 - Briefly explain the problem, target builder, and value proposition.
 - Show one unedited Live scan through sourced evidence, Field Report, feedback adaptation, and clarification recording.
