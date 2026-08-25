@@ -1,6 +1,6 @@
 # Third-Party Rights Inventory
 
-Last reviewed: 15 August 2026. Reopen this inventory if submission media or repository assets change.
+Last reviewed: 25 August 2026. Reopen this inventory if submission media or repository assets change.
 
 | Material | Source / basis | Submission treatment |
 |---|---|---|
@@ -11,8 +11,11 @@ Last reviewed: 15 August 2026. Reopen this inventory if submission media or repo
 | Organizer email screenshots | Supplied by the project owner | Internal supplementary evidence only; do not use as promotional artwork without organizer permission |
 | Architecture diagram | Generated from the repository's authored Mermaid source | Original submission artifact |
 | Demo screenshots and screen recording | Capture of Signal Scout and narrowly scoped Google Cloud proof | Confirm no secrets, personal tabs, unrelated records, or third-party private data are visible |
+| YouTube thumbnail | Generated specifically for Signal Scout with OpenAI image generation, using the project's original UI screenshot only as a style reference; no third-party logos or stock assets | Repository copy: `docs/assets/signal-scout-youtube-thumbnail.png`; owner must add it after YouTube account verification |
 | Narration | Original English narration by the entrant | No third-party script or voice asset planned |
 | Music / stock media | None planned | If later added, record exact source, license, attribution, and proof before publishing |
 | PathWarden / Quantum Pacing | No code, schemas, UI/assets, prose, prompts, fixtures, templates, or distinctive written artifacts incorporated | PathWarden design influence is disclosed; Quantum Pacing remains internal background |
 
 Final owner check before upload: inspect the complete video, thumbnail, architecture image, screenshots, repository, and Devpost text for any newly added logo, music, stock image, generated voice, copied prose, or private data.
+
+Final owner review completed 25 August 2026: the published video, applied thumbnail, submission materials, rights inventory, privacy boundaries, and secret-exposure boundary were checked and confirmed.

@@ -116,13 +116,14 @@ Requirements were rechecked against the [official Devpost overview](https://allt
 
 Keep these in the Devpost form or repository rather than spending video time reading them:
 
-- Category: **The Collaborative Partner** — selected in project records; user must reconfirm it in the final form.
+- Category: **The Collaborative Partner** — reconfirmed by the project owner in the final Devpost submission on 25 August 2026.
+- Published Devpost submission: `https://devpost.com/software/signal-scout`.
 - Hosted project URL: `https://signal-scout-212660130578.australia-southeast1.run.app`.
 - Public repository URL: `https://github.com/SkillSpringAI/Signal-Scout`.
 - Text description must separately cover features and functionality, technologies used, public data sources, and findings/learnings.
 - README contains clean-checkout spin-up instructions and Cloud Run deployment guidance.
 - Compact architecture PNG/SVG is present and rendered in the README.
-- Video URL remains pending until the approved take is uploaded.
+- Public video: [Signal Scout: Your AI Hackathon Copilot | Live Demo](https://youtu.be/Lc3Z60dAFNI), 3:26 (uploaded 25 August 2026).
 - Optional article, social-post, and additional-model bonuses remain unclaimed unless completed later.
 
 ## Recording acceptance
