@@ -4,7 +4,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 
 - [x] Project creation date eligibility verified: official build window began 3 August 2026; local folder, first project thread, and first Git commits are dated 9 August 2026 (evidence ledger, 13 August 2026)
 - [x] Official category selected: The Collaborative Partner
-- [ ] The Collaborative Partner selection reconfirmed in the final Devpost submission
+- [x] The Collaborative Partner track reconfirmed by the project owner in the final Devpost submission (25 August 2026)
 - [x] Gemini 3.5+ verified in local runtime (`gemini-3.5-flash`, 13 August 2026)
 - [x] Qualifying Google agent framework verified in local runtime (Google GenAI SDK, 13 August 2026)
 - [x] Google Cloud infrastructure verified locally in runtime (Firestore Native via ADC, 13 August 2026)
@@ -31,7 +31,7 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Final public repository checkpoint `2b08d14`, rendered MIT license, and compact README architecture screenshot captured (`docs/evidence/final-candidate/2026-08-20/github/`)
 - [ ] Unedited live action segment recorded
 - [x] Public YouTube video uploaded at `https://youtu.be/Lc3Z60dAFNI`; public metadata reports a 3:26 runtime (206 seconds), below the four-minute limit
-- [ ] Final human review confirms accurate English audio/subtitles throughout the public render (a caption track is present, but accuracy still requires owner review)
+- [x] Project owner reviewed the uploaded render and confirmed the English captions are correctly spelled and synchronized with the voiceover (25 August 2026)
 - [ ] Source and third-party rights final media check complete (`docs/third-party-rights.md` inventory prepared)
 - [x] Pre-existing work disclosure factual review complete
 - [ ] YouTube account verification completed; prepared thumbnail and repository/deployment links added to the public video
