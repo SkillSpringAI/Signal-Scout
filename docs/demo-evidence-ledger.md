@@ -8,7 +8,8 @@
 - Prepared thumbnail: `docs/assets/signal-scout-youtube-thumbnail.png`
 - Owner review on 25 August 2026 confirmed the English captions are correctly spelled and synchronized with the voiceover.
 - Owner confirmation on 25 August 2026 records that the prepared thumbnail was applied, the required Live-action segment remains continuous and unedited, and the final rights/privacy/secret-exposure review passed.
-- Sole remaining item before asset freeze: wait for YouTube's 24-hour account verification delay to clear, then add the repository and deployment links to the public video description.
+- Owner confirmation on 25 August 2026 records that the YouTube metadata/link update is complete.
+- Sole remaining presentation item before asset freeze: pin the prepared link comment when YouTube exposes the pin control.
 
 ## Published Devpost submission — 25 August 2026
 

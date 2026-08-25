@@ -35,8 +35,9 @@ Checked items require runtime or submission evidence, not intent or documentatio
 - [x] Project owner completed the final source, rights, privacy, and secret-exposure review of the published media and submission assets (25 August 2026; inventory in `docs/third-party-rights.md`)
 - [x] Pre-existing work disclosure factual review complete
 - [x] Prepared Signal Scout thumbnail applied to the public YouTube video (owner confirmed 25 August 2026)
-- [ ] YouTube's 24-hour account verification delay has cleared and the repository/deployment links have been added to the public video description
-- [ ] Final submission assets frozen for judging after the YouTube thumbnail/description update and final owner review
+- [x] YouTube verification and public-video metadata update complete; repository, deployment, and submission links are available with the video (owner confirmed 25 August 2026)
+- [ ] Pin the prepared link comment after YouTube exposes the pin control; this is the only remaining presentation task
+- [ ] Final submission assets frozen for judging after the pinned comment is confirmed
 - [ ] Optional article bonus requirements satisfied, if claimed
 - [ ] Optional social-post bonus requirements satisfied, if claimed
 - [ ] Optional additional Google model genuinely integrated, if claimed
