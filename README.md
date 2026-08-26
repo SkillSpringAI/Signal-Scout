@@ -107,16 +107,6 @@ For Cloud Run:
 
 The exact verified commands, revisions, identities, and proof jobs are recorded in [Gate 2 runtime guide](docs/gate-2-runtime.md). Never copy credentials or unrelated Firestore records into deployment evidence.
 
-## Demonstration video checklist
-
-- Watch the public demo: [Signal Scout: Your AI Hackathon Copilot | Live Demo](https://youtu.be/Lc3Z60dAFNI) — **3:26**.
-- The applied YouTube thumbnail is preserved at [`docs/assets/signal-scout-youtube-thumbnail.png`](docs/assets/signal-scout-youtube-thumbnail.png).
-- Keep the public YouTube or Vimeo video at **four minutes or less**.
-- Briefly explain the problem, target builder, and value proposition.
-- Show one unedited Live scan through sourced evidence, Field Report, feedback adaptation, and clarification recording.
-- Visibly prove the backend is on Google Cloud using the public `.run.app` URL and a sanitized Cloud Run revision/traffic view.
-- Exclude credentials, secret values, billing identifiers, unrelated Firestore records, and private browser/account details.
-
 ## Public API
 
 - `POST /api/scans` — create a bounded scan
@@ -136,16 +126,34 @@ The client receives structured jobs and source evidence, never Gemini or Google 
 - Six moderate transitive `uuid` advisories currently arrive through Firebase Admin dependencies. The offered automated fix crosses a breaking Firebase Admin downgrade, so the risk is documented rather than force-fixed before the demo.
 - Mock permission modes are presentational outside their explicitly tested mock-memory boundary.
 
-## Authoritative project documents
+## Public demo and submission
 
-- [Hackathon execution plan](docs/hackathon-execution-plan.md)
-- [Submission compliance](docs/submission-compliance.md)
-- [Architecture](docs/architecture.md) and [diagram](docs/architecture-diagram.md)
-- [Demo evidence ledger](docs/demo-evidence-ledger.md)
-- [Product demo script](docs/demo-video-script.md) and [screenplay](docs/demo-screenplay.md)
-- [Gate 2 runtime guide](docs/gate-2-runtime.md)
+[![Watch the Signal Scout live demo](docs/assets/signal-scout-youtube-thumbnail.png)](https://youtu.be/Lc3Z60dAFNI)
+
+- [Watch the 3:26 public demo](https://youtu.be/Lc3Z60dAFNI)
+- [View the published Devpost submission](https://devpost.com/software/signal-scout)
+- [Try the deployed application](https://signal-scout-212660130578.australia-southeast1.run.app)
+
+The published video preserves the continuous Live workflow, sourced results, feedback adaptation, clarification, architecture, and sanitized Cloud Run proof. The project owner completed the final caption, rights, privacy, and secret-exposure review before submission.
+
+## Project documentation
+
+Current technical and submission references:
+
+- [Architecture](docs/architecture.md) and [portable diagram](docs/architecture-diagram.md)
+- [Gate 2 runtime and deployment guide](docs/gate-2-runtime.md)
+- [Submission compliance record](docs/submission-compliance.md)
 - [Safety and permissions](docs/safety-and-permissions.md)
 - [Prior-work disclosure](docs/prior-work-disclosure.md)
+
+Archived demo-production and verification records:
+
+- [Final demo evidence ledger](docs/demo-evidence-ledger.md)
+- [Demo narration script](docs/demo-video-script.md), [operator screenplay](docs/demo-screenplay.md), and [manual walkthrough](docs/manual-demo-walkthrough.md)
+- [Final-candidate screenshots and sanitized runtime proof](docs/evidence/final-candidate/2026-08-20/README.md)
+- [UI, scan-quality, cloud-budget, eligibility, and organizer-email evidence archive](docs/evidence/)
+- [Historical implementation plans and handoff notes](docs/archive/README.md)
+- [Hackathon execution plan](docs/hackathon-execution-plan.md)
 
 Official Devpost requirements override repository notes. Organizer emails are retained separately as supplementary guidance and do not replace the official overview or rules.
 
